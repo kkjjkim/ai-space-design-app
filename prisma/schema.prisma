@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// 인테리어 상담 신청(잠재고객 리드)
+model Lead {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String
+  region       String? // 지역 (예: 서울 강남구)
+  buildingType String? // 건물 유형: 아파트 / 주택 / 빌라 / 상가 / 오피스텔 / 사무실
+  areaPyeong   Int? // 평수
+  budget       String? // 예산 범위
+  desiredDate  String? // 희망 시공 시기
+  message      String? // 요청사항 / 메모
+  source       String? // 유입 경로 (예: 인스타그램, 네이버, 지인소개)
+  status       String   @default("NEW") // NEW / CONTACTED / CONSULTING / CONTRACTED / CLOSED
+  memo         String? // 관리자 내부 메모
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
