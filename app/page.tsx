@@ -39,26 +39,18 @@ export default function HomePage() {
       {/* 1) 히어로 — 시네마틱 풀블리드 영상 */}
       <SiteHero />
 
-      {/* 2) 공감 — 이미지 + 카피 분할 */}
+      {/* 2) 공감 — 강한 한 문장 */}
       <Section>
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <Eyebrow>공감</Eyebrow>
-            <h2 className="mt-4 text-3xl font-semibold leading-snug md:text-4xl">
-              큰 돈 들어가는데, 평범한 가게가 될까 봐 두렵지 않으세요?
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-              가게 하나 차리는 데 적은 돈이 들지 않죠. 막상 열고 보면 “어디서 본 듯한
-              가게”가 됩니다. 예쁘게는 했는데 손님이 한 번 오고 다시 안 와요. 업체 말은
-              다 비슷하고요.
-            </p>
-          </div>
-          <MediaFrame
-            kind="mood"
-            ratio="aspect-[4/5]"
-            alt="평범해질까 두려운 사장의 공간"
-            label="분위기 이미지 자리 — 운영자가 넣습니다"
-          />
+        <div className="mx-auto max-w-3xl text-center">
+          <Eyebrow>공감</Eyebrow>
+          <h2 className="mt-4 text-3xl font-semibold leading-snug md:text-4xl">
+            큰 돈 들어가는데, 평범한 가게가 될까 봐 두렵지 않으세요?
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-foreground/70">
+            가게 하나 차리는 데 적은 돈이 들지 않죠. 막상 열고 보면 “어디서 본 듯한
+            가게”가 됩니다. 예쁘게는 했는데 손님이 한 번 오고 다시 안 와요. 업체 말은
+            다 비슷하고요.
+          </p>
         </div>
       </Section>
 

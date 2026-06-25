@@ -64,10 +64,15 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(16px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        // 정지 이미지에 천천히 줌/팬을 줘서 공간을 둘러보는 듯한 느낌
+        kenburns: {
+          "0%": { transform: "scale(1.05) translate(0, 0)" },
+          "100%": { transform: "scale(1.2) translate(-2.5%, -2%)" },
+        },
       },
       animation: {
-        // 은은한 페이드인만 (AGENTS.md 9번: 무거운 효과 금지)
         "fade-in-up": "fade-in-up 0.7s ease-out both",
+        kenburns: "kenburns 22s ease-in-out infinite alternate",
       },
     },
   },

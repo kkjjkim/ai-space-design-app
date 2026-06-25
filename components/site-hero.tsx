@@ -1,38 +1,47 @@
 import Link from "next/link";
+import { existsSync } from "fs";
+import path from "path";
 import { ArrowDown } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 
-// 시네마틱 풀블리드 영상 히어로 (ZORGE식 레이아웃 + AvroKO 팔레트/명조).
-// 영상은 /public/hero/banner.mp4 + poster.jpg 를 떨어뜨리면 자동 적용된다.
-// 파일이 없으면 어두운 시네마틱 그라데이션이 폴백으로 보인다.
+// 시네마틱 풀블리드 히어로.
+// 기본: 공간 이미지(/hero/hero.jpg)에 슬로우 줌/팬(Ken Burns)으로 "공간을 둘러보는" 느낌.
+// /public/hero/banner.mp4 를 넣으면 영상이 우선 적용된다.
 export function SiteHero() {
+  const hasVideo = existsSync(
+    path.join(process.cwd(), "public", "hero", "banner.mp4")
+  );
+
   return (
-    <section className="relative flex min-h-[92vh] flex-col justify-end overflow-hidden">
-      {/* 폴백 배경 (영상 없을 때 보임) */}
-      <div aria-hidden className="absolute inset-0 -z-20 bg-foreground">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_72%_15%,rgba(166,128,63,0.28),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(100%_70%_at_20%_90%,rgba(120,92,42,0.18),transparent_60%)]" />
-        <span className="absolute bottom-4 right-5 text-[11px] tracking-wide text-background/35">
-          메인 배너 영상 자리 · /hero/banner.mp4
-        </span>
+    <section className="relative isolate flex min-h-[92vh] flex-col justify-end overflow-hidden bg-foreground">
+      {/* 배경 이미지 + Ken Burns */}
+      <div className="absolute inset-0 -z-20 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/hero/hero.jpg"
+          alt="공간 디자인 히어로"
+          className="h-full w-full object-cover motion-safe:animate-kenburns"
+        />
       </div>
 
-      {/* 배경 영상 */}
-      <video
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster="/hero/poster.jpg"
-      >
-        <source src="/hero/banner.mp4" type="video/mp4" />
-      </video>
+      {/* 배경 영상(있을 때만 — 없으면 위 Ken Burns 이미지가 보인다) */}
+      {hasVideo && (
+        <video
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero/hero.jpg"
+        >
+          <source src="/hero/banner.mp4" type="video/mp4" />
+        </video>
+      )}
 
       {/* 가독성 오버레이 */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/80 via-black/35 to-black/55"
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/45 to-black/40"
       />
 
       {/* 콘텐츠 */}
@@ -41,7 +50,7 @@ export function SiteHero() {
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
             창업 첫걸음부터 매출까지
           </p>
-          <h1 className="text-[2.6rem] font-semibold leading-[1.1] tracking-tight sm:text-6xl lg:text-[4.5rem]">
+          <h1 className="text-[2.6rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.5rem]">
             인테리어가 아니라,
             <br />
             장사 되는 브랜드를 짓습니다.
@@ -55,10 +64,10 @@ export function SiteHero() {
               무료 컨셉 상담받기 · 1분
             </Link>
             <Link
-              href="/portfolio"
+              href="#concepts"
               className="border-b border-background/50 pb-1 text-base text-background transition-colors hover:border-primary hover:text-primary"
             >
-              포트폴리오 보기
+              컨셉 둘러보기
             </Link>
           </div>
           <p className="mt-4 text-sm text-background/65">
@@ -66,7 +75,6 @@ export function SiteHero() {
           </p>
         </div>
 
-        {/* 스크롤 큐 */}
         <div className="mt-14 hidden items-center gap-3 text-background/60 md:flex">
           <ArrowDown className="h-5 w-5 animate-bounce" />
           <span className="text-xs uppercase tracking-[0.25em]">스크롤</span>
