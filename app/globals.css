@@ -1,0 +1,70 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  AvroKO 톤 디자인 토큰 (한 곳에서 정의).
+  배경: 따뜻한 아이보리/크림(순백 아님) · 글자: 짙은 차콜 · 포인트: 골드/브론즈 1색.
+*/
+@layer base {
+  :root {
+    --font-sans: "Pretendard", system-ui, -apple-system, sans-serif;
+    /* --font-serif 는 next/font(Noto Serif KR)가 layout 에서 주입 */
+
+    --background: 40 38% 95%; /* 아이보리 크림 */
+    --foreground: 38 14% 13%; /* 차콜 */
+
+    --card: 43 50% 98%;
+    --card-foreground: 38 14% 13%;
+
+    --primary: 38 45% 44%; /* 골드/브론즈 (유일한 포인트색) */
+    --primary-foreground: 40 38% 97%;
+
+    --secondary: 38 22% 90%;
+    --secondary-foreground: 38 14% 16%;
+
+    --muted: 40 20% 91%;
+    --muted-foreground: 36 9% 38%;
+
+    --accent: 38 28% 87%;
+    --accent-foreground: 38 14% 16%;
+
+    --destructive: 0 62% 47%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 38 18% 85%;
+    --input: 38 18% 82%;
+    --ring: 38 45% 44%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01";
+  }
+  h1,
+  h2,
+  h3,
+  blockquote {
+    @apply font-serif;
+    word-break: keep-all; /* 한글 줄바꿈 자연스럽게 */
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* 섹션 진입 시 은은한 페이드인 (무거운 효과 금지) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    @apply animate-fade-in-up;
+  }
+}
