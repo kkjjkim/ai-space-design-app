@@ -1,15 +1,12 @@
-import { ImageIcon, Film } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// 이미지/영상 자리. src 가 있으면 실제 미디어를, 없으면 운영자용 플레이스홀더를 보여준다.
-// kind="real" 은 포트폴리오 실사진 자리(AGENTS.md 7번: AI 가짜 금지),
-// kind="mood" 는 히어로/분위기 컷(생성 이미지·영상 허용).
+// 이미지/영상 자리. src 가 있으면 실제 미디어를, 없으면 어두운 시네마틱 타이틀카드를 보여준다.
 export function MediaFrame({
   src,
   alt,
   ratio = "aspect-[4/3]",
-  kind = "mood",
   label,
+  caption,
   className,
   video = false,
   rounded = true,
@@ -19,6 +16,7 @@ export function MediaFrame({
   ratio?: string;
   kind?: "mood" | "real";
   label?: string;
+  caption?: string;
   className?: string;
   video?: boolean;
   rounded?: boolean;
@@ -26,7 +24,7 @@ export function MediaFrame({
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-muted",
+        "relative overflow-hidden bg-foreground",
         rounded && "rounded-lg",
         ratio,
         className
@@ -53,14 +51,19 @@ export function MediaFrame({
           />
         )
       ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground">
-          {video ? <Film className="h-8 w-8" /> : <ImageIcon className="h-8 w-8" />}
-          <p className="px-4 text-center text-xs">
-            {label ??
-              (kind === "real"
-                ? "실사진 자리 — 운영자가 넣습니다 (로고 없는 컷)"
-                : "이미지/영상 자리 — 운영자가 넣습니다")}
-          </p>
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-background/55">
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[radial-gradient(120%_90%_at_70%_15%,rgba(166,128,63,0.22),transparent_55%)]"
+          />
+          {caption && (
+            <span className="relative font-semibold uppercase tracking-[0.2em] text-background/80">
+              {caption}
+            </span>
+          )}
+          <span className="relative text-xs tracking-wide">
+            {label ?? "이미지 자리 — 운영자가 넣습니다"}
+          </span>
         </div>
       )}
     </div>

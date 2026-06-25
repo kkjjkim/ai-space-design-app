@@ -48,10 +48,10 @@ export default function ConceptsPage() {
             >
               <MediaFrame
                 src={c.image}
-                kind="mood"
                 ratio="aspect-[4/3]"
                 alt={`${c.name} 컨셉 이미지`}
-                label={`${c.name} 컨셉 이미지 자리 — /concepts/${c.slug.split("-")[0]}.jpg`}
+                caption={c.name}
+                label={`이미지 자리 · /concepts/${c.slug}.jpg`}
               />
 
               <div>

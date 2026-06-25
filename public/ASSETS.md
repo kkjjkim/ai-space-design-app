@@ -8,15 +8,20 @@
 - `public/hero/poster.jpg` — 영상 로딩 전 첫 화면 이미지
 - 권장: 가로형(16:9), 8~15초, 1080p, 5MB 내외(모바일 성능). 어두운 톤이면 글자가 잘 보입니다.
 
-## 2) 컨셉 제안 이미지 (5종)
-`public/concepts/` 에 아래 이름으로 넣으세요. (가로형 4:3 권장)
-- `sora.jpg`   → SORA ROASTERS (프리미엄 로스터리 카페)
-- `mellow.jpg` → MELLOW OVEN (감성 베이커리)
-- `ember.jpg`  → EMBER TABLE (파인 캐주얼 레스토랑)
-- `nest.jpg`   → NEST EDIT (라이프스타일 편집샵)
-- `plate.jpg`  → PLATE LAB (프리미엄 패스트 캐주얼)
+## 2) 컨셉 제안 이미지 (10종)
+`public/concepts/` 에 아래 **파일명 그대로** 넣으세요. (가로형 권장, jpg)
+- `sora.jpg`       → SORA ROASTERS (프리미엄 로스터리 카페)
+- `mellow.jpg`     → MELLOW OVEN (감성 베이커리)
+- `ember.jpg`      → EMBER TABLE (파인 캐주얼 레스토랑)
+- `nest.jpg`       → NEST EDIT (라이프스타일 편집샵)
+- `plate.jpg`      → PLATE LAB (프리미엄 패스트 캐주얼)
+- `daon.jpg`       → 다온다방 (한옥 감성 카페)
+- `sodam.jpg`      → 소담제과 (한국적 감성 베이커리)
+- `cityline.jpg`   → CITY LINE (모던 패션 편집숍)
+- `forestpaws.jpg` → FOREST PAWS (반려동물 라이프스타일)
+- `noir.jpg`       → NOIR CELLAR (프리미엄 와인 바)
 > 컨셉 텍스트는 `lib/concepts.ts` 에서 수정.
-> ⚠️ 이 이미지들은 화면에 "컨셉 제안 예시"로 표기됩니다(실제 시공 사례 아님).
+> ⚠️ 화면에 "컨셉 제안 예시(실제 시공 사례 아님)"로 표기됩니다.
 
 ## 3) 포트폴리오 실사진
 `public/portfolio/` 에 실사진을 넣고, `lib/portfolio.ts` 의 목록에서

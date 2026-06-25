@@ -1,44 +1,39 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
-  AvroKO 톤 디자인 토큰 (한 곳에서 정의).
-  배경: 따뜻한 아이보리/크림(순백 아님) · 글자: 짙은 차콜 · 포인트: 골드/브론즈 1색.
+  팔레트: 따뜻한 아이보리 + 깊은 차콜 + 골드 포인트.
+  타이포: Pretendard 자체 호스팅(--font-sans). 제목은 굵게(800/900) — 프리미엄·시네마틱.
 */
 @layer base {
   :root {
-    --font-sans: "Pretendard", system-ui, -apple-system, sans-serif;
-    /* --font-serif 는 next/font(Noto Serif KR)가 layout 에서 주입 */
+    --background: 40 36% 95%;
+    --foreground: 36 14% 10%;
 
-    --background: 40 38% 95%; /* 아이보리 크림 */
-    --foreground: 38 14% 13%; /* 차콜 */
+    --card: 42 44% 98%;
+    --card-foreground: 36 14% 10%;
 
-    --card: 43 50% 98%;
-    --card-foreground: 38 14% 13%;
-
-    --primary: 38 45% 44%; /* 골드/브론즈 (유일한 포인트색) */
+    --primary: 36 46% 46%; /* 골드/브론즈 */
     --primary-foreground: 40 38% 97%;
 
-    --secondary: 38 22% 90%;
-    --secondary-foreground: 38 14% 16%;
+    --secondary: 38 20% 91%;
+    --secondary-foreground: 36 14% 14%;
 
-    --muted: 40 20% 91%;
-    --muted-foreground: 36 9% 38%;
+    --muted: 39 18% 90%;
+    --muted-foreground: 36 8% 38%;
 
-    --accent: 38 28% 87%;
-    --accent-foreground: 38 14% 16%;
+    --accent: 38 26% 87%;
+    --accent-foreground: 36 14% 14%;
 
     --destructive: 0 62% 47%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 38 18% 85%;
-    --input: 38 18% 82%;
-    --ring: 38 45% 44%;
+    --border: 38 16% 84%;
+    --input: 38 16% 80%;
+    --ring: 36 46% 46%;
 
-    --radius: 0.5rem;
+    --radius: 0.4rem;
   }
 }
 
@@ -48,13 +43,13 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-feature-settings: "ss01";
+    font-feature-settings: "ss01", "cv01";
   }
   h1,
   h2,
   h3,
-  blockquote {
-    @apply font-serif;
+  h4 {
+    @apply font-sans font-extrabold tracking-tight;
     word-break: keep-all; /* 한글 줄바꿈 자연스럽게 */
   }
   html {
@@ -62,7 +57,7 @@
   }
 }
 
-/* 섹션 진입 시 은은한 페이드인 (무거운 효과 금지) */
+/* 섹션 진입 시 은은한 페이드인 */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
     @apply animate-fade-in-up;

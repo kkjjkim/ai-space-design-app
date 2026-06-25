@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, ImageIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PROJECTS } from "@/lib/portfolio";
 
@@ -22,8 +22,8 @@ export function PortfolioSlider({
 
   return (
     <div className={className}>
-      <div className="relative overflow-hidden rounded-lg border border-border bg-muted">
-        <div className={cn("w-full", aspect)}>
+      <div className="relative overflow-hidden rounded-lg bg-foreground">
+        <div className={cn("relative w-full", aspect)}>
           {current.image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -32,10 +32,13 @@ export function PortfolioSlider({
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-muted-foreground">
-              <ImageIcon className="h-10 w-10" />
-              <p className="text-sm">시공 사례 사진 자리 — 운영자가 실사진을 넣습니다</p>
-              <p className="text-xs">로고 없는 컷</p>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-background/55">
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(120%_90%_at_70%_15%,rgba(166,128,63,0.20),transparent_55%)]"
+              />
+              <span className="relative text-sm">시공 사례 사진 자리 — 운영자가 실사진을 넣습니다</span>
+              <span className="relative text-xs text-background/40">로고 없는 컷</span>
             </div>
           )}
         </div>

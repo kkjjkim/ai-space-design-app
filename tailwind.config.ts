@@ -50,9 +50,9 @@ const config: Config = {
         gold: "hsl(var(--primary))",
       },
       fontFamily: {
-        // 큰 제목·인용문 = 명조(세리프), 본문·버튼·메뉴 = Pretendard(산세리프)
-        serif: ["var(--font-serif)", "Noto Serif KR", "serif"],
+        // 전체 Pretendard 자체 호스팅. font-serif 클래스도 동일 스택으로 통일.
         sans: ["var(--font-sans)", "Pretendard", "system-ui", "sans-serif"],
+        serif: ["var(--font-sans)", "Pretendard", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
