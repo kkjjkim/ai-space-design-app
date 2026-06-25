@@ -13,6 +13,14 @@
 - [x] 디자인 다듬기 — AvroKO 벤치마크 반영: 히어로 에디토리얼 레이아웃
       (좌 대형 명조 헤드라인 + 우 골드 이탤릭 인용구), 풀블리드 슬라이더 캡션 바
       (둥근 화살표 · 프로젝트명 · "01 OF 08"), 레터스페이싱 로고
+- [x] 비주얼 중심 재구성 (ZORGE 시네마틱 벤치마크) — 텍스트 과다 해소
+      · 시네마틱 풀블리드 영상 히어로(SiteHero) + 어두운 히어로 위 밝은 헤더
+      · 풀블리드 시네마틱 밴드(CinematicBand): 진짜문제 / 가격 섹션
+      · 우리 방식 = 이미지 타일 4단계, 공감 = 이미지+카피 분할
+      · MediaFrame 공용 슬롯, 포트폴리오 데이터화(lib/portfolio.ts)
+- [x] 컨셉 제안 5종(SORA/MELLOW/EMBER/NEST/PLATE) — lib/concepts.ts,
+      홈 갤러리 + /concepts 상세 페이지. "실제 시공 사례 아님(컨셉 예시)" 명시 (AGENTS.md 7번 준수)
+- [x] public/ASSETS.md — 영상/컨셉이미지/실사진 드롭인 가이드
 
 ## 다음 할 것 (운영자/대표님)
 - [ ] Supabase 프로젝트 생성 → `supabase/schema.sql` 실행 → `.env.local` 에 URL/anon 키 입력

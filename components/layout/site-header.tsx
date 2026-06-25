@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -8,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { navItems, site, CTA_LABEL } from "@/lib/site";
 
 export function SiteHeader() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -18,6 +20,9 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // 홈은 어두운 시네마틱 히어로 위에 떠 있으므로, 스크롤 전엔 밝은 글자.
+  const overDarkHero = pathname === "/" && !scrolled;
+
   return (
     <header
       className={cn(
@@ -27,11 +32,13 @@ export function SiteHeader() {
           : "bg-transparent"
       )}
     >
-      <div className="container flex h-16 items-center justify-between md:h-20">
-        <Link
-          href="/"
-          className="font-serif text-lg font-semibold uppercase tracking-[0.25em]"
-        >
+      <div
+        className={cn(
+          "container flex h-16 items-center justify-between md:h-20",
+          overDarkHero ? "text-background" : "text-foreground"
+        )}
+      >
+        <Link href="/" className="font-serif text-lg font-semibold uppercase tracking-[0.25em]">
           {site.brandName}
         </Link>
 
@@ -41,7 +48,12 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-foreground/70 transition-colors hover:text-foreground"
+              className={cn(
+                "text-sm transition-colors",
+                overDarkHero
+                  ? "text-background/80 hover:text-background"
+                  : "text-foreground/70 hover:text-foreground"
+              )}
             >
               {item.label}
             </Link>
@@ -63,7 +75,7 @@ export function SiteHeader() {
 
       {/* 모바일 메뉴 */}
       {open && (
-        <div className="border-t border-border bg-background md:hidden">
+        <div className="border-t border-border bg-background text-foreground md:hidden">
           <nav className="container flex flex-col gap-1 py-4">
             {navItems.map((item) => (
               <Link

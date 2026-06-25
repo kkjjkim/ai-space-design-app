@@ -3,16 +3,11 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PROJECTS } from "@/lib/portfolio";
 
-// 포트폴리오/히어로 슬라이드. 실제 사진은 운영자가 넣는 자리(플레이스홀더)만 제공한다.
+// 포트폴리오 슬라이드. 실사진은 운영자가 /public/portfolio 에 넣고 lib/portfolio.ts 에 등록.
 // (AGENTS.md 7번: AI 가짜 인테리어를 실제 시공 사례처럼 쓰지 않는다.)
-// 캡션 바(화살표 · 프로젝트명 · "01 OF 08")는 AvroKO 벤치마크 레이아웃을 따른다.
-
-// 프로젝트명은 운영자가 채울 자리.
-const SLIDES = Array.from({ length: 8 }, (_, i) => ({
-  name: `프로젝트 ${String(i + 1).padStart(2, "0")} — 운영자 입력`,
-}));
-
+// 캡션 바(화살표 · 프로젝트명 · "01 OF 08")는 AvroKO/ZORGE 벤치마크 레이아웃을 따른다.
 export function PortfolioSlider({
   className,
   aspect = "aspect-[16/10]",
@@ -21,22 +16,28 @@ export function PortfolioSlider({
   aspect?: string;
 }) {
   const [index, setIndex] = useState(0);
-  const total = SLIDES.length;
+  const total = PROJECTS.length;
   const go = (dir: 1 | -1) => setIndex((i) => (i + dir + total) % total);
+  const current = PROJECTS[index];
 
   return (
     <div className={className}>
-      <div className="relative overflow-hidden rounded-lg border border-border bg-foreground/90">
-        {/* 풀블리드 대형 사진 자리 */}
-        <div
-          className={cn(
-            "flex w-full flex-col items-center justify-center gap-3 bg-muted text-muted-foreground",
-            aspect
+      <div className="relative overflow-hidden rounded-lg border border-border bg-muted">
+        <div className={cn("w-full", aspect)}>
+          {current.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={current.image}
+              alt={current.name}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-muted-foreground">
+              <ImageIcon className="h-10 w-10" />
+              <p className="text-sm">시공 사례 사진 자리 — 운영자가 실사진을 넣습니다</p>
+              <p className="text-xs">로고 없는 컷</p>
+            </div>
           )}
-        >
-          <ImageIcon className="h-10 w-10" />
-          <p className="text-sm">시공 사례 사진 자리 — 운영자가 실사진을 넣습니다</p>
-          <p className="text-xs">로고 없는 컷</p>
         </div>
       </div>
 
@@ -61,7 +62,7 @@ export function PortfolioSlider({
           </button>
         </div>
 
-        <p className="flex-1 truncate text-foreground/80">{SLIDES[index].name}</p>
+        <p className="flex-1 truncate text-foreground/80">{current.name}</p>
 
         <span className="shrink-0 text-sm tabular-nums tracking-widest text-muted-foreground">
           {String(index + 1).padStart(2, "0")} OF {String(total).padStart(2, "0")}

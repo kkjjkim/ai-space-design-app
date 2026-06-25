@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { ImageIcon } from "lucide-react";
 import { Section, Eyebrow } from "@/components/section";
 import { CtaSection } from "@/components/cta-section";
+import { MediaFrame } from "@/components/media-frame";
+import { PROJECTS } from "@/lib/portfolio";
 
 export const metadata: Metadata = {
   title: "포트폴리오",
@@ -45,20 +46,24 @@ export default function PortfolioPage() {
 
         {/* 프로젝트 카드 그리드 — 실사진 자리 */}
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="overflow-hidden rounded-lg border border-border bg-card"
-            >
-              <div className="flex aspect-[4/3] items-center justify-center bg-muted text-muted-foreground">
-                <ImageIcon className="h-8 w-8" />
-              </div>
-              <div className="p-5">
-                <div className="h-4 w-2/3 rounded bg-muted" />
-                <div className="mt-2 h-3 w-1/3 rounded bg-muted" />
-                <p className="mt-3 text-xs text-muted-foreground">
-                  프로젝트 사진·내용은 운영자가 입력합니다.
+          {PROJECTS.map((p, i) => (
+            <div key={i} className="group">
+              <MediaFrame
+                src={p.image}
+                kind="real"
+                ratio="aspect-[4/3]"
+                alt={p.name}
+                label="실사진 자리 — 운영자가 넣습니다 (로고 없는 컷)"
+              />
+              <div className="mt-3 flex items-baseline justify-between gap-3">
+                <p className="truncate text-sm font-medium text-foreground">
+                  {p.name}
                 </p>
+                {p.category && (
+                  <span className="shrink-0 text-xs text-muted-foreground">
+                    {p.category}
+                  </span>
+                )}
               </div>
             </div>
           ))}
