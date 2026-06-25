@@ -28,7 +28,10 @@ export function SiteHeader() {
       )}
     >
       <div className="container flex h-16 items-center justify-between md:h-20">
-        <Link href="/" className="font-serif text-lg font-semibold tracking-tight">
+        <Link
+          href="/"
+          className="font-serif text-lg font-semibold uppercase tracking-[0.25em]"
+        >
           {site.brandName}
         </Link>
 

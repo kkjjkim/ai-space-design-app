@@ -32,31 +32,51 @@ const BADGES = [
 export default function HomePage() {
   return (
     <>
-      {/* 1) 히어로 */}
-      <section className="relative flex min-h-[88vh] items-center overflow-hidden">
-        {/* 풀블리드 대형 이미지/배경영상 자리 — 운영자가 넣음 */}
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-secondary/60 via-background to-background"
-        />
-        <div className="container max-w-3xl py-28 reveal">
-          <Eyebrow>창업 첫걸음부터 매출까지</Eyebrow>
-          <h1 className="mt-5 text-4xl font-semibold leading-[1.2] tracking-tight sm:text-5xl md:text-6xl">
-            인테리어가 아니라,
-            <br />
-            장사 되는 브랜드를 짓습니다.
-          </h1>
-          <p className="mt-6 text-lg leading-relaxed text-foreground/70 md:text-xl">
-            국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한
-            디자인드비. 창업 첫걸음부터 매출까지, 한 곳에서.
-          </p>
-          <div className="mt-9">
-            <Link href="#apply" className={buttonVariants({ size: "lg" })}>
-              무료 컨셉 상담받기 · 1분
-            </Link>
-            <p className="mt-3 text-sm text-muted-foreground">
-              영업 전화 안 합니다. 방향부터 들어드려요.
-            </p>
+      {/* 1) 히어로 — AvroKO 톤 에디토리얼 레이아웃 */}
+      <section className="relative overflow-hidden pt-28 md:pt-36">
+        <div className="container reveal">
+          <div className="grid gap-10 lg:grid-cols-[1.55fr_1fr] lg:items-end">
+            {/* 좌: 대형 명조 헤드라인 + 부제 + CTA */}
+            <div>
+              <h1 className="text-[2.6rem] font-semibold leading-[1.12] tracking-tight sm:text-6xl lg:text-[4.25rem]">
+                인테리어가 아니라,
+                <br />
+                장사 되는 브랜드를 짓습니다.
+              </h1>
+              <p className="mt-7 max-w-xl text-lg leading-relaxed text-foreground/70">
+                국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한
+                디자인드비. 창업 첫걸음부터 매출까지, 한 곳에서.
+              </p>
+              <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+                <Link href="#apply" className={buttonVariants({ size: "lg" })}>
+                  무료 컨셉 상담받기 · 1분
+                </Link>
+                <Link
+                  href="/portfolio"
+                  className="border-b border-foreground/40 pb-1 text-base text-foreground transition-colors hover:border-primary hover:text-primary"
+                >
+                  포트폴리오 보기
+                </Link>
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground">
+                영업 전화 안 합니다. 방향부터 들어드려요.
+              </p>
+            </div>
+
+            {/* 우: 골드 이탤릭 인용구 (우리의 철학 — PRD 회사·신뢰) */}
+            <div className="lg:pb-3 lg:text-right">
+              <blockquote className="font-serif text-2xl italic leading-snug text-primary md:text-[1.75rem]">
+                ‘공간 너머 브랜드 가치를 디자인한다.’
+              </blockquote>
+              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                우리의 철학
+              </p>
+            </div>
+          </div>
+
+          {/* 풀블리드 대형 이미지(분위기 컷) — 슬라이더로 노출. 운영자가 실사진 넣음 */}
+          <div className="mt-14 md:mt-16">
+            <PortfolioSlider aspect="aspect-[16/9]" />
           </div>
         </div>
       </section>
