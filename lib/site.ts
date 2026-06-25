@@ -7,6 +7,10 @@ export const site = {
   tagline: "인테리어가 아니라, 장사 되는 브랜드를 짓습니다.",
   description:
     "국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한 디자인드비. 창업 첫걸음부터 매출까지, 한 곳에서.",
+  // 히어로 배경 영상 URL (방문자 브라우저가 직접 로드). 비우면 hero.jpg + 슬로우줌으로 폴백.
+  // ⚠️ 현재는 Higgsfield CDN 직링크 — 영구 보관용으로는 추후 자체 호스팅/저장소 파일로 교체 권장.
+  heroVideoUrl:
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260625_144942_421da280-a4f3-4edb-b613-8d563c31966a.mp4",
   // 운영자가 채울 실적 숫자 — 지어내지 않는다.
   stats: {
     completed: "[ ]", // 완공 곳

@@ -1,20 +1,17 @@
 import Link from "next/link";
-import { existsSync } from "fs";
-import path from "path";
 import { ArrowDown } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { site } from "@/lib/site";
 
 // 시네마틱 풀블리드 히어로.
-// 기본: 공간 이미지(/hero/hero.jpg)에 슬로우 줌/팬(Ken Burns)으로 "공간을 둘러보는" 느낌.
-// /public/hero/banner.mp4 를 넣으면 영상이 우선 적용된다.
+// site.heroVideoUrl 이 있으면 배경 영상(방문자 브라우저가 직접 로드)을, 없으면
+// 공간 이미지(/hero/hero.jpg)에 슬로우 줌/팬(Ken Burns)을 적용한다.
 export function SiteHero() {
-  const hasVideo = existsSync(
-    path.join(process.cwd(), "public", "hero", "banner.mp4")
-  );
+  const videoUrl = site.heroVideoUrl;
 
   return (
     <section className="relative isolate flex min-h-[92vh] flex-col justify-end overflow-hidden bg-foreground">
-      {/* 배경 이미지 + Ken Burns */}
+      {/* 배경 이미지 + Ken Burns (영상 로딩 전/실패 시 폴백) */}
       <div className="absolute inset-0 -z-20 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -24,8 +21,8 @@ export function SiteHero() {
         />
       </div>
 
-      {/* 배경 영상(있을 때만 — 없으면 위 Ken Burns 이미지가 보인다) */}
-      {hasVideo && (
+      {/* 배경 영상 (URL 있을 때) */}
+      {videoUrl && (
         <video
           className="absolute inset-0 -z-10 h-full w-full object-cover"
           autoPlay
@@ -34,7 +31,7 @@ export function SiteHero() {
           playsInline
           poster="/hero/hero.jpg"
         >
-          <source src="/hero/banner.mp4" type="video/mp4" />
+          <source src={videoUrl} type="video/mp4" />
         </video>
       )}
 
