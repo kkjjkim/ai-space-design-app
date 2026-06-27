@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Check, Minus } from "lucide-react";
-import { Section, Eyebrow } from "@/components/section";
+import { Section } from "@/components/section";
 import { SiteHero } from "@/components/site-hero";
 import { CinematicBand } from "@/components/cinematic-band";
 import { MediaFrame } from "@/components/media-frame";
@@ -42,8 +42,7 @@ export default function HomePage() {
       {/* 2) 공감 — 강한 한 문장 */}
       <Section>
         <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>공감</Eyebrow>
-          <h2 className="mt-4 text-3xl font-semibold leading-snug md:text-4xl">
+          <h2 className="text-3xl font-semibold leading-snug md:text-4xl">
             큰 돈 들어가는데, 평범한 가게가 될까 봐 두렵지 않으세요?
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
@@ -56,7 +55,6 @@ export default function HomePage() {
 
       {/* 3) 진짜 문제 — 풀블리드 시네마틱 밴드 */}
       <CinematicBand
-        eyebrow="진짜 문제"
         title="망하는 진짜 이유는, 컨셉 없이 공사부터 시작해서입니다."
         body='예쁜 인테리어는 기본이에요. "여긴 왜 와야 하지?"가 없으면 돈을 써도 그냥 또 하나의 가게예요. 그래서 공사보다 사업·브랜드부터 잡습니다.'
         caption="WHY CONCEPT FIRST"
@@ -66,8 +64,7 @@ export default function HomePage() {
       {/* 4) 왜 우리가 다른가 — 비교표 */}
       <Section tone="muted">
         <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>왜 우리가 다른가</Eyebrow>
-          <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+          <h2 className="text-3xl font-semibold md:text-4xl">
             꾸미는 곳과, 매출을 만드는 곳의 차이
           </h2>
         </div>
@@ -101,8 +98,7 @@ export default function HomePage() {
       {/* 5) 우리 방식 — 이미지 타일 4단계 */}
       <Section>
         <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>우리 방식</Eyebrow>
-          <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+          <h2 className="text-3xl font-semibold md:text-4xl">
             사업의 첫걸음부터 매출까지, 이렇게 함께합니다.
           </h2>
         </div>
@@ -140,8 +136,7 @@ export default function HomePage() {
       {/* 5.5) 컨셉 제안 — 브랜드가 공간이 되는 방식 (실제 시공 사례 아님) */}
       <Section id="concepts" tone="muted">
         <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>컨셉 제안</Eyebrow>
-          <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+          <h2 className="text-3xl font-semibold md:text-4xl">
             당신의 생각과 가치가, 공간이 되는 방식
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
@@ -169,8 +164,7 @@ export default function HomePage() {
       {/* 6) 증거 (신뢰) + 포트폴리오 */}
       <Section>
         <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>증거</Eyebrow>
-          <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+          <h2 className="text-3xl font-semibold md:text-4xl">
             대형 백화점과 글로벌 명품 매장을 만들던 팀입니다.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
@@ -213,7 +207,6 @@ export default function HomePage() {
 
       {/* 7) 가격 뒤집기 — 풀블리드 시네마틱 밴드 */}
       <CinematicBand
-        eyebrow="가격에 대하여"
         title="컨설팅은 ‘추가 비용’이 아니라, 망하지 않으려는 첫 단계입니다."
         body="정말 비싼 건, 큰 돈 들여 만든 평범한 가게예요. 방향을 먼저 잡으면 헛돈을 줄이고 더 오래갑니다."
         caption="INVEST IN DIRECTION"
@@ -225,8 +218,7 @@ export default function HomePage() {
       <Section id="apply" tone="muted">
         <div className="mx-auto grid max-w-5xl items-start gap-12 lg:grid-cols-2">
           <div className="lg:sticky lg:top-28">
-            <Eyebrow>무료 컨셉 상담</Eyebrow>
-            <h2 className="mt-4 text-3xl font-semibold md:text-4xl">
+            <h2 className="text-3xl font-semibold md:text-4xl">
               머릿속 구상만 들고 오세요.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-foreground/70">
