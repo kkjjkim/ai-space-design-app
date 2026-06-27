@@ -2,6 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
 // 서브 페이지 끝마다 두는 신청 진입점 (모든 페이지에 "무료 상담" 진입점).
+// 전환 핵심이라 모션으로 숨기지 않고 항상 노출한다.
 export function CtaSection() {
   return (
     <section className="border-t border-border bg-foreground text-background">

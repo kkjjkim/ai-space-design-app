@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Reveal } from "@/components/reveal";
 
 // ZORGE식 풀블리드 시네마틱 밴드: 대형 이미지/영상 위에 텍스트가 떠 있는 섹션.
 // 이미지가 없으면 어두운 시네마틱 폴백을 보여주고, 운영자가 파일을 넣으면 교체된다.
@@ -49,7 +50,7 @@ export function CinematicBand({
           <img
             src={src}
             alt={title}
-            className="absolute inset-0 -z-10 h-full w-full object-cover"
+            className="absolute inset-0 -z-10 h-full w-full object-cover motion-safe:animate-kenburns"
           />
         )
       ) : (
@@ -75,11 +76,8 @@ export function CinematicBand({
       />
 
       <div className="container relative w-full py-20">
-        <div
-          className={cn(
-            "max-w-xl",
-            align === "right" && "ml-auto md:text-right"
-          )}
+        <Reveal
+          className={cn("max-w-xl", align === "right" && "ml-auto md:text-right")}
         >
           {eyebrow && (
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
@@ -94,7 +92,7 @@ export function CinematicBand({
               {body}
             </p>
           )}
-        </div>
+        </Reveal>
 
         {caption && (
           <p className="mt-16 text-sm uppercase tracking-[0.2em] text-background/70">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Section, Eyebrow } from "@/components/section";
+import { Reveal } from "@/components/reveal";
+import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
 import { MediaFrame } from "@/components/media-frame";
 import { cn } from "@/lib/utils";
@@ -14,21 +15,13 @@ export const metadata: Metadata = {
 export default function ConceptsPage() {
   return (
     <>
-      <Section className="pt-32 md:pt-40">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Concepts</Eyebrow>
-          <h1 className="mt-4 text-4xl font-semibold md:text-5xl">
-            당신의 생각과 가치가, 공간이 되는 방식
-          </h1>
-          <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-            대표자의 철학과 사업 의도가 입구·동선·조명·집기로 어떻게 번역되는지를
-            업종별 컨셉으로 정리했습니다.
-          </p>
-          <p className="mt-3 inline-block rounded-full bg-secondary px-4 py-1.5 text-sm text-muted-foreground">
-            ※ 실제 시공 사례가 아닌 컨셉 제안 예시입니다.
-          </p>
-        </div>
-      </Section>
+      <PageHero
+        image="/concepts/sora.jpg"
+        eyebrow="Concepts"
+        title="당신의 생각과 가치가, 공간이 되는 방식"
+        subtitle="대표자의 철학과 사업 의도가 입구·동선·조명·집기로 어떻게 번역되는지를 업종별 컨셉으로 정리했습니다."
+        note="※ 실제 시공 사례가 아닌 컨셉 제안 예시입니다."
+      />
 
       {CONCEPTS.map((c, i) => (
         <section
@@ -46,15 +39,17 @@ export default function ConceptsPage() {
                 i % 2 === 1 && "lg:[&>*:first-child]:order-2"
               )}
             >
-              <MediaFrame
-                src={c.image}
-                ratio="aspect-[4/3]"
-                alt={`${c.name} 컨셉 이미지`}
-                caption={c.name}
-                label={`이미지 자리 · /concepts/${c.slug}.jpg`}
-              />
+              <Reveal>
+                <MediaFrame
+                  src={c.image}
+                  ratio="aspect-[4/3]"
+                  alt={`${c.name} 컨셉 이미지`}
+                  caption={c.name}
+                  label={`이미지 자리 · /concepts/${c.slug}.jpg`}
+                />
+              </Reveal>
 
-              <div>
+              <Reveal delay={120}>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
                   {c.type}
                 </p>
@@ -88,7 +83,7 @@ export default function ConceptsPage() {
                 <p className="mt-6 border-l-2 border-primary pl-4 font-medium text-foreground">
                   {c.oneLiner}
                 </p>
-              </div>
+              </Reveal>
             </div>
           </div>
         </section>

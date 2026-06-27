@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Plus } from "lucide-react";
-import { Section, Eyebrow } from "@/components/section";
+import { Section } from "@/components/section";
+import { Reveal } from "@/components/reveal";
+import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
 
 export const metadata: Metadata = {
@@ -8,45 +10,84 @@ export const metadata: Metadata = {
   description: "사업의 뇌 + 공간의 뇌. 창업 첫걸음부터 매출까지, 끊김 없이.",
 };
 
+const PILLARS = [
+  {
+    name: "국가공인 경영지도사",
+    desc: "창업·사업 기획·자금·경영 전략",
+    image: "/concepts/cityline.jpg",
+  },
+  {
+    name: "디자인드비",
+    desc: "공간 브랜딩·프리미엄 시공·데이터 운영",
+    image: "/concepts/daon.jpg",
+  },
+];
+
 export default function ServicePage() {
   return (
     <>
-      <Section className="pt-32 md:pt-40">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Service</Eyebrow>
-          <h1 className="mt-4 text-4xl font-semibold md:text-5xl">
-            사업의 뇌 + 공간의 뇌
-          </h1>
-        </div>
+      <PageHero
+        image="/concepts/nest.jpg"
+        eyebrow="Service"
+        title="사업의 뇌 + 공간의 뇌"
+        subtitle="창업·경영 전략과 공간 브랜딩이 한 팀으로 움직입니다."
+      />
 
-        <div className="mx-auto mt-14 grid max-w-4xl items-stretch gap-6 md:grid-cols-[1fr_auto_1fr]">
-          <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-            <h2 className="font-serif text-2xl">국가공인 경영지도사</h2>
-            <p className="mt-4 leading-relaxed text-foreground/70">
-              창업·사업 기획·자금·경영 전략
-            </p>
-          </div>
+      <Section>
+        <div className="mx-auto grid max-w-5xl items-stretch gap-6 md:grid-cols-[1fr_auto_1fr]">
+          <Reveal>
+            <PillarCard {...PILLARS[0]} />
+          </Reveal>
 
+          {/* + 기호 (가운데) */}
           <div className="flex items-center justify-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <Plus className="h-5 w-5" />
+            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/25">
+              <Plus className="h-6 w-6" />
             </span>
           </div>
 
-          <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
-            <h2 className="font-serif text-2xl">디자인드비</h2>
-            <p className="mt-4 leading-relaxed text-foreground/70">
-              공간 브랜딩·프리미엄 시공·데이터 운영
-            </p>
-          </div>
+          <Reveal delay={120}>
+            <PillarCard {...PILLARS[1]} />
+          </Reveal>
         </div>
 
-        <p className="mx-auto mt-10 max-w-2xl text-center font-serif text-2xl font-semibold leading-snug md:text-3xl">
-          “창업 첫걸음부터 매출까지, 끊김 없이.”
-        </p>
+        <Reveal>
+          <p className="mx-auto mt-12 max-w-2xl text-center text-2xl font-bold leading-snug md:text-3xl">
+            “창업 첫걸음부터 매출까지, 끊김 없이.”
+          </p>
+        </Reveal>
       </Section>
 
       <CtaSection />
     </>
+  );
+}
+
+function PillarCard({
+  name,
+  desc,
+  image,
+}: {
+  name: string;
+  desc: string;
+  image: string;
+}) {
+  return (
+    <div className="group relative isolate flex aspect-[4/5] h-full flex-col justify-end overflow-hidden rounded-xl text-background">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={image}
+        alt={name}
+        className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/40 to-black/10"
+      />
+      <div className="p-8">
+        <h2 className="text-2xl font-bold">{name}</h2>
+        <p className="mt-3 leading-relaxed text-background/85">{desc}</p>
+      </div>
+    </div>
   );
 }

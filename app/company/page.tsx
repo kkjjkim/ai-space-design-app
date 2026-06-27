@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { Section, Eyebrow } from "@/components/section";
+import { ShieldCheck } from "lucide-react";
+import { Section } from "@/components/section";
+import { Reveal } from "@/components/reveal";
+import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
 import { site } from "@/lib/site";
 
@@ -19,38 +22,48 @@ const TRUST = [
 export default function CompanyPage() {
   return (
     <>
-      <Section className="pt-32 md:pt-40">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Company</Eyebrow>
-          <h1 className="mt-4 text-4xl font-semibold md:text-5xl">
-            왜 믿을 수 있나요?
-          </h1>
-          <blockquote className="mt-8 text-2xl font-semibold leading-snug text-foreground md:text-3xl">
-            “공간 너머 브랜드 가치를 디자인한다.”
-          </blockquote>
-        </div>
+      <PageHero
+        image="/concepts/sodam.jpg"
+        eyebrow="Company"
+        title="왜 믿을 수 있나요?"
+        subtitle="“공간 너머 브랜드 가치를 디자인한다.”"
+      />
 
-        <div className="mx-auto mt-14 grid max-w-3xl gap-4 sm:grid-cols-2">
+      <Section>
+        <Reveal className="mx-auto mt-2 grid max-w-4xl gap-4 sm:grid-cols-2">
           {TRUST.map((t) => (
             <div
               key={t}
-              className="rounded-lg border border-border bg-card p-6 text-center shadow-sm"
+              className="flex items-center gap-3 rounded-lg border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
             >
+              <ShieldCheck className="h-6 w-6 shrink-0 text-primary" />
               <p className="font-medium text-foreground">{t}</p>
             </div>
           ))}
-        </div>
+        </Reveal>
 
         {/* 대표·팀 — 상세는 운영자가 채움 */}
-        <div className="mx-auto mt-12 max-w-3xl rounded-lg border border-border bg-secondary/40 p-8 text-center">
-          <h2 className="text-xl font-semibold">대표 · 팀</h2>
-          <p className="mt-3 text-foreground/70">
-            디자인 전공 출신, 업계 경력 {site.stats.years}년.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            대표·팀 상세 소개는 운영자가 입력합니다.
-          </p>
-        </div>
+        <Reveal className="mx-auto mt-10 max-w-4xl overflow-hidden rounded-xl border border-border">
+          <div className="grid md:grid-cols-2">
+            <div className="relative min-h-[240px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/concepts/ember.jpg"
+                alt="대표·팀"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+            <div className="bg-secondary/40 p-8">
+              <h2 className="text-2xl font-bold">대표 · 팀</h2>
+              <p className="mt-4 leading-relaxed text-foreground/75">
+                디자인 전공 출신, 업계 경력 {site.stats.years}년.
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                대표·팀 상세 소개는 운영자가 입력합니다.
+              </p>
+            </div>
+          </div>
+        </Reveal>
       </Section>
 
       <CtaSection />
