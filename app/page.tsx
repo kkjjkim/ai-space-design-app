@@ -4,12 +4,9 @@ import { Section } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { SiteHero } from "@/components/site-hero";
 import { CinematicBand } from "@/components/cinematic-band";
-import { PortfolioSlider } from "@/components/portfolio-slider";
-import { ConceptCard } from "@/components/concept-card";
+import { ConceptCarousel } from "@/components/concept-carousel";
 import { LeadForm } from "@/components/lead-form";
 import { buttonVariants } from "@/components/ui/button";
-import { site } from "@/lib/site";
-import { CONCEPTS } from "@/lib/concepts";
 
 // 비교표 (일반 인테리어 업체 vs 우리) — PRD 4)
 const COMPARISON = [
@@ -147,12 +144,8 @@ export default function HomePage() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {CONCEPTS.map((c, i) => (
-            <Reveal key={c.slug} delay={(i % 3) * 90}>
-              <ConceptCard concept={c} />
-            </Reveal>
-          ))}
+        <div className="mx-auto mt-12 max-w-5xl">
+          <ConceptCarousel />
         </div>
 
         <div className="mt-10 text-center">
@@ -162,7 +155,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 6) 증거 (신뢰) + 포트폴리오 */}
+      {/* 6) 증거 (신뢰) */}
       <Section>
         <Reveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold md:text-4xl">
@@ -183,26 +176,6 @@ export default function HomePage() {
               {b}
             </span>
           ))}
-        </Reveal>
-
-        <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-muted-foreground">
-          <span>완공 {site.stats.completed}곳</span>
-          <span className="text-border">·</span>
-          <span>업계 경력 {site.stats.years}년</span>
-          <span className="text-border">·</span>
-          <span>{site.stats.highlight}</span>
-        </div>
-
-        <Reveal className="mx-auto mt-12 max-w-5xl">
-          <PortfolioSlider aspect="aspect-[16/9]" />
-          <div className="mt-8 text-center">
-            <Link
-              href="/portfolio"
-              className={buttonVariants({ variant: "outline" })}
-            >
-              포트폴리오 더 보기
-            </Link>
-          </div>
         </Reveal>
       </Section>
 

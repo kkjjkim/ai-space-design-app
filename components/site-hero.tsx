@@ -58,7 +58,7 @@ export function SiteHero() {
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
             <Link href="#apply" className={buttonVariants({ size: "lg" })}>
-              무료 컨셉 상담받기 · 1분
+              무료 상담 문의
             </Link>
             <Link
               href="#concepts"

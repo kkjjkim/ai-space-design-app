@@ -142,11 +142,8 @@ export function LeadForm() {
 
       <div>
         <Button type="submit" size="lg" className="w-full" disabled={loading}>
-          {loading ? "보내는 중…" : "무료 컨셉 상담받기"}
+          {loading ? "보내는 중…" : "무료 상담 문의"}
         </Button>
-        <p className="mt-3 text-center text-sm text-muted-foreground">
-          영업 전화 없음 · 상담 후 결정은 자유
-        </p>
       </div>
     </form>
   );

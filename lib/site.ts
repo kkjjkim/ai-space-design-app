@@ -23,9 +23,8 @@ export const navItems = [
   { href: "/", label: "홈" },
   { href: "/service", label: "서비스" },
   { href: "/concepts", label: "컨셉" },
-  { href: "/portfolio", label: "포트폴리오" },
   { href: "/company", label: "회사·신뢰" },
   { href: "/#apply", label: "상담 신청" },
 ] as const;
 
-export const CTA_LABEL = "무료 컨셉 상담받기";
+export const CTA_LABEL = "무료 상담 문의";

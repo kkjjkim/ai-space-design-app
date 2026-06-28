@@ -35,7 +35,7 @@ export function FloatingCta() {
           href={href}
           className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-colors hover:bg-primary/90"
         >
-          {CTA_LABEL} · 1분
+          {CTA_LABEL}
         </Link>
       </div>
     </div>

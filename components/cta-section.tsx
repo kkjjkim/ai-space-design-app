@@ -11,13 +11,13 @@ export function CtaSection() {
           머릿속 구상만 들고 오세요.
         </h2>
         <p className="mt-5 text-background/70">
-          무료고, 1분이면 됩니다. 영업 전화 없음 · 상담 후 결정은 자유.
+          머릿속 구상만 들고 오시면, 방향부터 함께 잡아드립니다.
         </p>
         <Link
           href="/#apply"
           className={buttonVariants({ size: "lg", className: "mt-8" })}
         >
-          무료 컨셉 상담받기 · 1분
+          무료 상담 문의
         </Link>
       </div>
     </section>
