@@ -5,6 +5,7 @@ import { Reveal } from "@/components/reveal";
 import { SiteHero } from "@/components/site-hero";
 import { CinematicBand } from "@/components/cinematic-band";
 import { ConceptCarousel } from "@/components/concept-carousel";
+import { VideoBg } from "@/components/video-bg";
 import { LeadForm } from "@/components/lead-form";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -16,12 +17,41 @@ const COMPARISON = [
   { label: "사후", them: "시공 끝나면 끝", us: "오픈 후 매출 데이터로 개선" },
 ];
 
-// 우리 방식 4단계 — PRD 5) (이미지는 컨셉 공간을 분위기 컷으로 사용)
+// 우리 방식 4단계 — PRD 5) (각 단계에 공간 워크스루 영상 배경)
+// 영상은 방문자 브라우저가 직접 로드(외부 URL). 영구 보관용은 추후 자체 호스팅 권장.
 const STEPS = [
-  { n: "01", t: "사업·브랜드 방향 잡기", d: '국가공인 경영지도사가 "되는 장사인지"부터.', img: "/concepts/sora.jpg" },
-  { n: "02", t: "철학이 보이는 공간 설계", d: '들어선 순간 "여긴 다르다"가 느껴지게.', img: "/concepts/cityline.jpg" },
-  { n: "03", t: "검증된 프리미엄 시공", d: "백화점·명품 매장을 시공한 팀이 그대로 구현.", img: "/concepts/mellow.jpg" },
-  { n: "04", t: "오픈 후 매출까지", d: "동선·체류시간 데이터로 계속 개선.", img: "/concepts/plate.jpg" },
+  {
+    n: "01",
+    t: "사업·브랜드 방향 잡기",
+    d: '국가공인 경영지도사가 "되는 장사인지"부터.',
+    img: "/concepts/sora.jpg",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260628_065351_4972acea-fd2f-43db-a3a9-d54bffa47a75.mp4",
+  },
+  {
+    n: "02",
+    t: "철학이 보이는 공간 설계",
+    d: '들어선 순간 "여긴 다르다"가 느껴지게.',
+    img: "/concepts/cityline.jpg",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260628_065423_be6521f2-5eb0-4e1c-b806-3396be2c69aa.mp4",
+  },
+  {
+    n: "03",
+    t: "검증된 프리미엄 시공",
+    d: "백화점·명품 매장을 시공한 팀이 그대로 구현.",
+    img: "/concepts/mellow.jpg",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260628_065502_ffa8e2c8-5d9b-4ada-97a1-766c383477e1.mp4",
+  },
+  {
+    n: "04",
+    t: "오픈 후 매출까지",
+    d: "동선·체류시간 데이터로 계속 개선.",
+    img: "/concepts/plate.jpg",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260628_065526_e1ae93db-692e-4779-b28b-ca23b3e969ea.mp4",
+  },
 ];
 
 const BADGES = [
@@ -107,11 +137,10 @@ export default function HomePage() {
               delay={i * 80}
               className="group relative isolate overflow-hidden rounded-lg text-background"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={s.img}
-                alt={s.t}
-                className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 motion-safe:animate-kenburns"
+              <VideoBg
+                src={s.video}
+                poster={s.img}
+                className="absolute inset-0 -z-10 h-full w-full object-cover"
               />
               <div
                 aria-hidden
