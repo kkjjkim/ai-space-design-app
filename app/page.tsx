@@ -130,13 +130,6 @@ export default function HomePage() {
             </Reveal>
           ))}
         </div>
-        <Reveal>
-          <p className="mx-auto mt-8 max-w-3xl text-center text-sm leading-relaxed text-muted-foreground">
-            관광단지 안 대형 카페를 ‘도산서원’ 컨셉으로 — 한옥의 결을 살린 공간에
-            한국식 빵과 차. 공간·메뉴·이름이 하나의 이야기로 묶이자 일부러 찾아오는
-            곳이 됐습니다.
-          </p>
-        </Reveal>
       </Section>
 
       {/* 5.5) 컨셉 제안 (실제 시공 사례 아님) */}
