@@ -5,15 +5,32 @@
 
 > 이 폴더는 같은 저장소의 인테리어 사이트와 **독립**되어 있다. 추가 의존성 없이 Node 22로 바로 실행된다.
 
-## 실행
+## 전자동 실행 (소싱 리스트 자동 생성)
+
+제품 목록을 넣지 않는다. **발굴 → 원가 → 마진 → 소싱 리스트**를 한 번에 돌린다.
 
 ```bash
-node arbitrage/cli.mjs                         # 샘플 데이터로 실행
-node arbitrage/cli.mjs 내제품목록.csv           # 내 CSV로 실행
+node arbitrage/auto.mjs --mock                 # 키 없이 전체 흐름 점검
+node arbitrage/auto.mjs --source=ebay --query="korean skincare"
+# 실제: EBAY_CLIENT_ID/SECRET + NAVER_CLIENT_ID/SECRET 환경변수 필요
 ```
 
-- 콘솔에 점수 순 표를 출력하고
-- `arbitrage/report.html` 에 보기 좋은 리포트를 저장한다.
+흐름:
+```
+발굴(해외 인기 한국제품 + 판매가 + 수요)
+  → 원가(네이버 한국 최저가 자동 매칭)
+  → 마진 계산 → ⭐ 등급
+  → "이거 소싱하세요" 랭킹 리스트 + report.html
+```
+
+## 수동 실행 (CSV 직접 분석)
+
+이미 후보 목록이 있으면 계산기만 따로 쓸 수도 있다.
+
+```bash
+node arbitrage/cli.mjs                          # 샘플 CSV
+node arbitrage/cli.mjs 내제품목록.csv            # 내 CSV
+```
 
 ## 입력 CSV 형식
 
@@ -99,17 +116,34 @@ arbitrage/
     report.mjs         HTML 리포트
 ```
 
-## 다음 단계 (남은 자동화)
+## 자동화의 솔직한 제약 (꼭 읽기)
 
-1. ✅ **원가 자동수집** — 네이버 쇼핑 API (`enrich.mjs`) — 완료
-2. **판매가/판매량 자동수집** — 큐텐 QSM API, eBay Browse API
-   (실제 팔린 가격 데이터는 eBay가 가장 좋음. 셀러/개발자 계정 필요)
-3. **수요·경쟁 자동수집** — 큐텐 베스트셀러/검색 랭킹에서 `monthlySales`·`competitors`
-4. **환율 자동 갱신** — 환율 API로 `FX_KRW` 대체
-5. 마진 좋은 신상품이 뜨면 알림
+"완전 자동"이라도 **데이터 소스마다 필요한 것**이 다르다. 공짜·무계정으로 다 되진 않는다.
 
-커넥터는 모두 표준 컬럼(`name, sourceCostKrw, market, sellPriceLocal, ...`)만 채워주면 되고,
-마진 엔진·랭킹은 그대로 재사용한다.
+| 데이터 | 소스 | 필요한 것 | 한계 |
+|---|---|---|---|
+| 한국 원가 | 네이버 쇼핑 API | 무료 개발자 키 | 거의 완벽 |
+| 해외 판매가 | **eBay Browse API** | 무료 개발자 키(셀러계정 X) | 현재 시세만, **판매량 없음** |
+| 해외 판매가+판매량 | 큐텐 QSM API | **셀러 계정** | 계정 필요 |
+| 수요/판매량 | 큐텐 베스트셀러 랭킹 | 스크래핑 | 약관·차단 리스크 |
+
+→ **무계정 최단경로 = eBay Browse(판매가) + 네이버(원가).** 단, 판매량 신호가 빠져
+   "마진"은 정확해도 "잘 팔림"은 추정이 약하다.
+→ **수요까지 정확히** 하려면 큐텐 셀러 계정(QSM) 또는 베스트셀러 수집이 필요하다.
+
+## 발굴 소스 추가하는 법
+
+`src/discover.mjs` 의 `discoverProducts({ source })` 에 케이스를 하나 더 붙이면 된다.
+후보를 표준 형식 `{ name, category, market, sellPriceLocal, monthlySales?, competitors? }`
+으로만 돌려주면 원가 매칭·마진·랭킹은 그대로 재사용된다.
+
+## 남은 자동화
+
+1. ✅ 원가 자동수집 — 네이버 (`src/naver.mjs`)
+2. ✅ 발굴 + 전자동 오케스트레이션 — `auto.mjs` (mock + eBay)
+3. 큐텐 QSM 연동 — 판매가·판매량(셀러 계정 시)
+4. 환율 자동 갱신 — `FX_KRW` 를 환율 API로
+5. 정기 실행 + 마진 좋은 신상품 알림
 
 ## 주의
 

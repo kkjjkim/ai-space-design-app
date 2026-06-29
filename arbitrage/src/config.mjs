@@ -84,6 +84,18 @@ export function intlShippingKrw(weightKg, market) {
 // 한 건당 고정 부대비용(원): 포장재 + 라벨 + 국내 픽업/입고 등.
 export const PACKAGING_KRW = 1500;
 
+// 발굴된 제품에 무게 정보가 없을 때 카테고리로 추정(kg).
+const CATEGORY_WEIGHTS_KG = {
+  뷰티: 0.15,
+  식품: 0.5,
+  패션: 0.3,
+  생활: 0.3,
+  default: 0.3,
+};
+export function guessWeightKg(category) {
+  return CATEGORY_WEIGHTS_KG[category] ?? CATEGORY_WEIGHTS_KG.default;
+}
+
 // 랭킹 점수 가중치. 마진율·순이익·수요는 +, 경쟁(셀러 수)은 −.
 export const SCORE_WEIGHTS = {
   marginRate: 0.4, // 남는 비율

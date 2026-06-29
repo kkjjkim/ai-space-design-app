@@ -34,6 +34,21 @@ export function pickSourcePrice(items) {
   return cleaned[0] ?? prices[0];
 }
 
+// 키 없이 파이프라인을 검증하기 위한 결정적(deterministic) 가짜 최저가.
+// 제품명 글자코드 합으로 8,000~24,000원 사이를 만든다.
+export function mockLowestPrice(query) {
+  let h = 0;
+  for (const ch of String(query)) h = (h + ch.codePointAt(0)) % 100000;
+  const price = 8000 + (h % 161) * 100;
+  return Promise.resolve({
+    query,
+    price,
+    productCount: 50 + (h % 950),
+    sampleTitle: query,
+    sampleMall: "(mock)",
+  });
+}
+
 // 제품명으로 한국 최저가를 조회한다.
 // 반환: { query, price, productCount, sampleTitle, sampleMall }
 export async function searchLowestPrice(query, opts = {}) {
