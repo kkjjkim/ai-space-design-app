@@ -17,6 +17,13 @@ export const site = {
     years: "[ ]", // 업계 경력 년
     highlight: "[성과 한 줄]",
   },
+  // 사업자 정보 (푸터)
+  business: {
+    name: "폴앤마리",
+    registration: "720-11-01939",
+    address: "경기도 성남시 분당구",
+    phone: "010-8533-0140",
+  },
 } as const;
 
 export const navItems = [

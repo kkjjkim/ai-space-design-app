@@ -23,12 +23,18 @@ export function SiteFooter() {
               </Link>
             ))}
           </nav>
-          {/* 사업자 정보 등은 운영자가 채움 */}
-          <p className="mt-6 text-xs text-muted-foreground">
-            사업자 정보 · 주소 · 연락처는 운영자가 입력합니다.
-          </p>
-          <p className="mt-2 text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {site.brandName}. All rights reserved.
+          {/* 사업자 정보 */}
+          <div className="mt-6 space-y-1 text-xs leading-relaxed text-muted-foreground">
+            <p>{site.business.name} · 사업자등록번호 {site.business.registration}</p>
+            <p>{site.business.address}</p>
+            <p>
+              <a href={`tel:${site.business.phone}`} className="hover:text-foreground">
+                {site.business.phone}
+              </a>
+            </p>
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            © {new Date().getFullYear()} {site.business.name}. All rights reserved.
           </p>
         </div>
       </div>
