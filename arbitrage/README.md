@@ -63,33 +63,53 @@ ROI   = 순이익 / 사입가
 환율·수수료·배송비·등급 기준선 등 **모든 가정값은 `src/config.mjs` 한 곳**에서 바꾼다
 (등급 기준선은 `THRESHOLDS`).
 
+## 사입가 자동수집 (네이버 쇼핑 API)
+
+제품명만 있으면 한국 최저가를 자동으로 `sourceCostKrw`에 채운다.
+
+```bash
+# 1) 키 발급: https://developers.naver.com > 애플리케이션 등록 > "검색" API
+# 2) 환경변수로 키를 주고 실행 (키는 코드/깃에 넣지 말 것)
+NAVER_CLIENT_ID=... NAVER_CLIENT_SECRET=... \
+  node arbitrage/enrich.mjs data/sample-products.csv data/enriched.csv
+
+node arbitrage/enrich.mjs --only-missing   # 비어있는 사입가만 채우기
+node arbitrage/enrich.mjs --mock           # 키 없이 동작만 점검(가짜 가격)
+```
+
+- 중고·미끼성 초저가는 거르고(중앙값 30% 미만 제외) 현실적인 최저가를 고른다.
+- 채운 CSV를 그대로 `cli.mjs`에 넣어 분석한다.
+
+> **원격(웹) 환경 주의:** 이 저장소를 Claude Code 웹에서 돌리면 네트워크 egress
+> 허용목록에 `openapi.naver.com` 을 추가해야 한다(없으면 403). 본인 PC에서 실행하면 그냥 된다.
+
 ## 파일 구조
 
 ```
 arbitrage/
-  cli.mjs              실행 진입점
+  cli.mjs              분석 실행 진입점
+  enrich.mjs           네이버 사입가 자동수집
   data/sample-products.csv
   src/
-    config.mjs         환율·수수료·배송비·점수 가중치 (여기만 고치면 됨)
+    config.mjs         환율·수수료·배송비·등급 기준 (여기만 고치면 됨)
     margin.mjs         손익 계산 엔진
-    rank.mjs           점수·정렬
-    loadProducts.mjs   CSV 로더
+    rank.mjs           점수·등급·정렬
+    naver.mjs          네이버 쇼핑 API 커넥터
+    loadProducts.mjs   CSV 로더/직렬화
     report.mjs         HTML 리포트
 ```
 
-## 다음 단계 (데이터 자동수집)
+## 다음 단계 (남은 자동화)
 
-지금은 CSV 수동 입력이다. 자동화는 데이터 커넥터를 하나씩 붙이면 된다.
-
-1. **원가 자동수집** — 네이버 쇼핑 검색 API로 한국 최저가 조회
-   (쿠팡·올리브영은 공개 API가 없어 스크래핑이 필요하고 약관·차단 이슈가 있다)
-2. **판매가/판매량 자동수집** — eBay Browse API, 큐텐 QSM API
+1. ✅ **원가 자동수집** — 네이버 쇼핑 API (`enrich.mjs`) — 완료
+2. **판매가/판매량 자동수집** — 큐텐 QSM API, eBay Browse API
    (실제 팔린 가격 데이터는 eBay가 가장 좋음. 셀러/개발자 계정 필요)
-3. **환율 자동 갱신** — 환율 API로 `FX_KRW` 대체
-4. 마진 좋은 신상품이 뜨면 알림
+3. **수요·경쟁 자동수집** — 큐텐 베스트셀러/검색 랭킹에서 `monthlySales`·`competitors`
+4. **환율 자동 갱신** — 환율 API로 `FX_KRW` 대체
+5. 마진 좋은 신상품이 뜨면 알림
 
-커넥터는 모두 `{ name, sourceCostKrw, market, sellPriceLocal, ... }` 형태로
-제품 객체만 만들어 주면 되고, 마진 엔진·랭킹은 그대로 재사용한다.
+커넥터는 모두 표준 컬럼(`name, sourceCostKrw, market, sellPriceLocal, ...`)만 채워주면 되고,
+마진 엔진·랭킹은 그대로 재사용한다.
 
 ## 주의
 

@@ -36,6 +36,34 @@ const NUMERIC = new Set([
   "competitors",
 ]);
 
+// 분석 파이프라인이 쓰는 표준 컬럼 순서.
+export const PRODUCT_COLUMNS = [
+  "name",
+  "category",
+  "source",
+  "sourceCostKrw",
+  "weightKg",
+  "market",
+  "sellPriceLocal",
+  "promoRate",
+  "monthlySales",
+  "competitors",
+];
+
+function csvCell(v) {
+  const s = v === undefined || v === null ? "" : String(v);
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+// 제품 객체 배열을 표준 컬럼 CSV 문자열로 직렬화.
+export function serializeProductsCsv(products) {
+  const header = PRODUCT_COLUMNS.join(",");
+  const lines = products.map((p) =>
+    PRODUCT_COLUMNS.map((k) => csvCell(p[k])).join(","),
+  );
+  return [header, ...lines].join("\n") + "\n";
+}
+
 export function loadProductsFromCsv(path) {
   const text = readFileSync(path, "utf8");
   const lines = text
