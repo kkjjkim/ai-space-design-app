@@ -1,6 +1,6 @@
 // 실행 진입점.
 //   node arbitrage/cli.mjs [csv경로]
-// CSV를 읽어 마진을 계산하고, 점수 순으로 콘솔 표 + HTML 리포트를 만든다.
+// CSV를 읽어 마진을 계산하고, 마진×수요 등급 + 점수 순으로 표 + HTML 리포트를 만든다.
 import { fileURLToPath } from "node:url";
 import { dirname, join, resolve } from "node:path";
 import { loadProductsFromCsv } from "./src/loadProducts.mjs";
@@ -23,25 +23,25 @@ function main() {
     process.exit(1);
   }
 
-  const computed = computeAll(products);
-  const ranked = rankProducts(computed);
+  const ranked = rankProducts(computeAll(products));
 
-  console.log(`\n📊 한국제품 해외판매 마진 분석 — ${products.length}개 후보\n`);
-  console.log(
-    "  # 점수  마진율   ROI   순이익      제품 (마켓)",
-  );
-  console.log("  " + "─".repeat(64));
-  ranked.forEach((r, i) => {
-    const tag = r.recommended ? "✅" : "  ";
-    const rank = String(i + 1).padStart(2);
+  console.log(`\n📊 한국제품 → 큐텐 재팬 마진 분석 — ${products.length}개 후보\n`);
+  console.log("   등급            점수  마진율   ROI   순이익      월판매  제품");
+  console.log("  " + "─".repeat(76));
+  ranked.forEach((r) => {
+    const badge = `${r.icon} ${r.label}`.padEnd(16);
     console.log(
-      `${tag}${rank} ${String(Math.round(r.score)).padStart(3)}  ${pct(r.marginRate)} ${pct(r.roi)} ${won(r.netProfit)}  ${r.name} (${r.marketLabel})`,
+      `  ${badge} ${String(Math.round(r.score)).padStart(3)}  ${pct(r.marginRate)} ${pct(r.roi)} ${won(r.netProfit)}  ${String(r.monthlySales || 0).padStart(5)}  ${r.name}`,
     );
   });
 
-  const recCount = ranked.filter((r) => r.recommended).length;
-  console.log("\n  " + "─".repeat(64));
-  console.log(`  ✅ 추천(마진율 15%+ & 흑자): ${recCount} / ${ranked.length}개\n`);
+  const stars = ranked.filter((r) => r.tier === "star");
+  console.log("\n  " + "─".repeat(76));
+  console.log(
+    `  ⭐ 핵심(고마진+잘팔림): ${stars.length}개` +
+      (stars.length ? "  →  " + stars.map((s) => s.name).join(", ") : ""),
+  );
+  console.log("");
 
   const outPath = join(here, "report.html");
   writeHtmlReport(ranked, outPath);

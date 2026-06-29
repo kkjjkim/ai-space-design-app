@@ -31,7 +31,9 @@ const NUMERIC = new Set([
   "sourceCostKrw",
   "weightKg",
   "sellPriceLocal",
+  "promoRate",
   "monthlySales",
+  "competitors",
 ]);
 
 export function loadProductsFromCsv(path) {
