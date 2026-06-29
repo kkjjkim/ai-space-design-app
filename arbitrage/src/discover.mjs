@@ -94,10 +94,90 @@ async function ebayDiscover({ query = "korean skincare", limit = 30, env = proce
     }));
 }
 
+// ── (3) 큐텐 크롤링 소스: 베스트셀러/검색 페이지에서 발굴 + 수요 신호 ──────
+// 계정 불필요. 시장 전체에서 "잘 팔리는 한국제품"을 가져온다.
+// 주의:
+//  - Playwright 필요. 로컬에서 `pnpm add -D playwright` 후 실행.
+//  - 큐텐 실제 DOM에 맞춰 EXTRACT 의 셀렉터를 1회 확정해야 한다(--debug 로 확인).
+//  - 약관·차단 리스크가 있으니 과도한 호출 금지(아래는 단일 페이지, 지연 포함).
+import { writeFileSync } from "node:fs";
+
+// 브라우저 안에서 실행되는 추출 함수.
+// ⚠️ 셀렉터는 실제 페이지로 확정 필요 — 지금은 "가격 텍스트가 보이는 상품 카드"를
+//    폭넓게 긁는 best-effort. --debug 로 구조를 본 뒤 정교화한다.
+function EXTRACT() {
+  const out = [];
+  // 상품 카드로 보이는 앵커들(가격 숫자를 포함한 링크) 수집
+  const anchors = Array.from(document.querySelectorAll("a"));
+  for (const a of anchors) {
+    const text = (a.innerText || "").trim();
+    const priceMatch = text.match(/([0-9][0-9,]{2,})\s*円?/);
+    if (!priceMatch) continue;
+    const name = text.split("\n")[0].slice(0, 80);
+    if (name.length < 4) continue;
+    out.push({
+      name,
+      priceText: priceMatch[1],
+      link: a.href || null,
+    });
+    if (out.length >= 60) break;
+  }
+  return { items: out, title: document.title, htmlLen: document.body.innerHTML.length };
+}
+
+async function qoo10Discover(opts = {}) {
+  const { query = "韓国 化粧品", limit = 30, debug = false } = opts;
+  let chromium;
+  try {
+    ({ chromium } = await import("playwright"));
+  } catch {
+    throw new Error(
+      "playwright 미설치 — 로컬에서 `pnpm add -D playwright && pnpm exec playwright install chromium` 후 실행하세요.",
+    );
+  }
+
+  // 큐텐 재팬 검색 결과 페이지. (베스트셀러 URL 로 바꿔도 됨)
+  const url = `https://www.qoo10.jp/gmkt.inc/Search/Search.aspx?keyword=${encodeURIComponent(query)}`;
+
+  const browser = await chromium.launch();
+  try {
+    const page = await browser.newPage({
+      userAgent:
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36",
+    });
+    await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
+    await page.waitForTimeout(1500); // 동적 로딩 여유
+
+    const raw = await page.evaluate(EXTRACT);
+
+    if (debug) {
+      const html = await page.content();
+      writeFileSync(new URL("../debug-qoo10.html", import.meta.url), html, "utf8");
+      console.error(
+        `🐛 debug: title="${raw.title}" htmlLen=${raw.htmlLen} 추출=${raw.items.length}건 → arbitrage/debug-qoo10.html 저장`,
+      );
+    }
+
+    return raw.items.slice(0, limit).map((it) => ({
+      name: it.name,
+      category: "뷰티",
+      market: "qoo10_jp",
+      sellPriceLocal: Number(String(it.priceText).replace(/,/g, "")) || 0,
+      monthlySales: 0, // 검색 페이지에서 판매량 신호 확보 시 채움(리뷰수/찜수 등)
+      competitors: 0,
+      weightKg: guessWeightKg("뷰티"),
+      link: it.link,
+    }));
+  } finally {
+    await browser.close();
+  }
+}
+
 // 소스 선택 진입점.
 export async function discoverProducts(opts = {}) {
   const source = opts.source || "mock";
   if (source === "mock") return mockDiscover(opts);
   if (source === "ebay") return ebayDiscover(opts);
+  if (source === "qoo10") return qoo10Discover(opts);
   throw new Error(`알 수 없는 발굴 소스: ${source}`);
 }

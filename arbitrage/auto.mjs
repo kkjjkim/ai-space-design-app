@@ -26,8 +26,9 @@ const getFlag = (name, def) => {
   return hit ? hit.split("=").slice(1).join("=") : def;
 };
 const useMock = argv.includes("--mock");
+const debug = argv.includes("--debug");
 const source = getFlag("source", useMock ? "mock" : "ebay");
-const query = getFlag("query", "korean skincare");
+const query = getFlag("query", source === "qoo10" ? "韓国 化粧品" : "korean skincare");
 const limit = Number(getFlag("limit", "30"));
 
 const won = (n) => Math.round(n).toLocaleString("ko-KR").padStart(9) + "원";
@@ -38,7 +39,7 @@ async function main() {
   console.log(`\n🛰️  발굴 — source=${source}${source === "ebay" ? ` q="${query}"` : ""}`);
   let candidates;
   try {
-    candidates = await discoverProducts({ source, query, limit });
+    candidates = await discoverProducts({ source, query, limit, debug });
   } catch (e) {
     console.error(`발굴 실패: ${e.message}`);
     process.exit(1);
