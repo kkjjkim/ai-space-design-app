@@ -50,11 +50,12 @@ export function SiteHero() {
           <h1 className="text-[2.6rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.5rem]">
             인테리어가 아니라,
             <br />
-            장사 되는 브랜드를 짓습니다.
+            장사 되는 브랜드를 만듭니다.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-background/85">
-            국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한
-            디자인드비. 창업 첫걸음부터 매출까지, 한 곳에서.
+            국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한 디자인드비.
+            <br />
+            창업 첫걸음부터 매출까지, 한 곳에서.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
             <Link href="#apply" className={buttonVariants({ size: "lg" })}>
@@ -67,9 +68,6 @@ export function SiteHero() {
               컨셉 둘러보기
             </Link>
           </div>
-          <p className="mt-4 text-sm text-background/65">
-            영업 전화 안 합니다. 방향부터 들어드려요.
-          </p>
         </div>
 
         <div className="mt-14 hidden items-center gap-3 text-background/60 md:flex">
