@@ -118,16 +118,12 @@ export default function CompanyPage() {
                 People
               </p>
               <h2 className="mt-4 text-2xl font-bold md:text-[1.75rem]">
-                대표 · 팀
+                검증된 사람들이 만듭니다.
               </h2>
               <p className="mt-5 leading-relaxed text-background/85">
-                대표는 디자인 전공자는 아닙니다. 대신 “이 가게가 되는 장사인지”를
-                먼저 봅니다. 그래서 예쁘게가 아니라, 팔리는 공간을 설계합니다.
-              </p>
-              <p className="mt-4 leading-relaxed text-background/85">
-                디자인은 전문가에게. 팀에는 디자인 전공자와 업계 경력 10년 이상의
-                시공·설계 전문가가 다수 함께합니다. 백화점·명품 매장을 만들던
-                실력을, 이제 당신의 매장에 씁니다.
+                팀에는 디자인 전공자와 업계 경력 10년 이상의 설계·시공 전문가가
+                다수 함께합니다. 백화점·명품 매장을 만들던 실력을, 이제 당신의
+                매장에 씁니다.
               </p>
             </div>
           </div>
