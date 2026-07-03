@@ -8,11 +8,14 @@
 import { fileURLToPath } from "node:url";
 import { dirname, join, resolve } from "node:path";
 import { writeFileSync } from "node:fs";
+import { loadEnv } from "./src/env.mjs";
 import {
   loadProductsFromCsv,
   serializeProductsCsv,
 } from "./src/loadProducts.mjs";
 import { getNaverCreds, hasNaverCreds, searchLowestPrice } from "./src/naver.mjs";
+
+loadEnv(); // arbitrage/.env 에서 키를 읽어온다
 
 const here = dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);

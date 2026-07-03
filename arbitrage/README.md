@@ -3,17 +3,28 @@
 쿠팡·올리브영·이마트 등에서 **싸게 산 한국 제품**을 큐텐·eBay·쇼피 같은
 해외 마켓에 팔 때, **건당 실제로 남는 돈**을 계산해 "할만한 제품"을 점수 순으로 정렬한다.
 
-> 이 폴더는 같은 저장소의 인테리어 사이트와 **독립**되어 있다. 추가 의존성 없이 Node 22로 바로 실행된다.
+> 이 폴더는 같은 저장소의 인테리어 사이트와 **독립**되어 있다. 추가 의존성 없이 Node 20+ 로 바로 실행된다.
 
-## 전자동 실행 (소싱 리스트 자동 생성)
+## ⭐ 빠른 시작 (당신이 할 일은 이게 전부)
 
-제품 목록을 넣지 않는다. **발굴 → 원가 → 마진 → 소싱 리스트**를 한 번에 돌린다.
-
+**A. 키 없이 지금 바로 — 흐름 구경 (설치 0)**
 ```bash
-node arbitrage/auto.mjs --mock                 # 키 없이 전체 흐름 점검
-node arbitrage/auto.mjs --source=ebay --query="korean skincare"
-# 실제: EBAY_CLIENT_ID/SECRET + NAVER_CLIENT_ID/SECRET 환경변수 필요
+pnpm arb:mock
 ```
+
+**B. 진짜 데이터로 — 딱 2단계**
+```bash
+# 1) 키 파일 만들기 (한 번만): 복사 후 .env 안에 키만 붙여넣기
+cp arbitrage/.env.example arbitrage/.env
+#    → arbitrage/.env 를 열어 NAVER_CLIENT_ID / SECRET 채우기
+#      (발급: https://developers.naver.com, "검색" API. 무료)
+
+# 2) 실행
+pnpm arb:qoo10        # 큐텐 크롤링으로 발굴 → 소싱 리스트 (크롤은 아래 4번 설치 필요)
+pnpm arb:ebay         # eBay로 발굴 (.env 에 EBAY 키도 넣은 경우)
+```
+
+키는 `.env` 파일에만 넣으면 되고(깃에 안 올라감), OS별 환경변수 설정은 필요 없다.
 
 흐름:
 ```

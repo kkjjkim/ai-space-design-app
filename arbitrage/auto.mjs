@@ -8,7 +8,12 @@
 //   (실제: EBAY_CLIENT_ID/SECRET, NAVER_CLIENT_ID/SECRET 환경변수 필요)
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { loadEnv } from "./src/env.mjs";
 import { discoverProducts } from "./src/discover.mjs";
+
+loadEnv(); // arbitrage/.env 에서 키를 읽어온다
+
+
 import {
   getNaverCreds,
   hasNaverCreds,

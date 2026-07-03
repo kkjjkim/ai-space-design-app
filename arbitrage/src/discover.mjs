@@ -107,6 +107,7 @@ import { writeFileSync } from "node:fs";
 //    폭넓게 긁는 best-effort. --debug 로 구조를 본 뒤 정교화한다.
 function EXTRACT() {
   const out = [];
+  const seen = new Set();
   // 상품 카드로 보이는 앵커들(가격 숫자를 포함한 링크) 수집
   const anchors = Array.from(document.querySelectorAll("a"));
   for (const a of anchors) {
@@ -115,14 +116,29 @@ function EXTRACT() {
     if (!priceMatch) continue;
     const name = text.split("\n")[0].slice(0, 80);
     if (name.length < 4) continue;
+    if (a.href && seen.has(a.href)) continue;
+    if (a.href) seen.add(a.href);
+
+    // 카드 컨테이너의 텍스트에서 수요 신호(리뷰수/판매수)를 찾는다.
+    const card = a.closest("li, tr, div") || a;
+    const cardText = (card.innerText || "").replace(/,/g, "");
+    const review = cardText.match(/([0-9]+)\s*(?:件|レビュー|reviews?)/i);
+    const sold = cardText.match(/([0-9]+)\s*(?:個販売|販売|sold)/i);
+
     out.push({
       name,
       priceText: priceMatch[1],
+      reviewCount: review ? Number(review[1]) : 0,
+      soldCount: sold ? Number(sold[1]) : 0,
       link: a.href || null,
     });
     if (out.length >= 60) break;
   }
-  return { items: out, title: document.title, htmlLen: document.body.innerHTML.length };
+  return {
+    items: out,
+    title: document.title,
+    htmlLen: document.body.innerHTML.length,
+  };
 }
 
 async function qoo10Discover(opts = {}) {
@@ -163,7 +179,8 @@ async function qoo10Discover(opts = {}) {
       category: "뷰티",
       market: "qoo10_jp",
       sellPriceLocal: Number(String(it.priceText).replace(/,/g, "")) || 0,
-      monthlySales: 0, // 검색 페이지에서 판매량 신호 확보 시 채움(리뷰수/찜수 등)
+      // 판매수가 있으면 그것을, 없으면 리뷰수를 수요 신호로 쓴다(둘 다 없으면 0).
+      monthlySales: it.soldCount || it.reviewCount || 0,
       competitors: 0,
       weightKg: guessWeightKg("뷰티"),
       link: it.link,

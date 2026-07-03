@@ -8,7 +8,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "arb:mock": "node arbitrage/auto.mjs --mock",
+    "arb:qoo10": "node arbitrage/auto.mjs --source=qoo10",
+    "arb:qoo10:debug": "node arbitrage/auto.mjs --source=qoo10 --debug",
+    "arb:ebay": "node arbitrage/auto.mjs --source=ebay"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
