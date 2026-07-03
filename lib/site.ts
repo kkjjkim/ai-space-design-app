@@ -7,9 +7,9 @@ export const site = {
   tagline: "인테리어가 아니라, 장사 되는 브랜드를 만듭니다.",
   description:
     "국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한 디자인드비. 창업 첫걸음부터 매출까지, 한 곳에서.",
-  // 히어로 배경: 빈 값이면 hero.jpg + 매끄러운 슬로우 줌(드론 글라이드, 흔들림 0).
-  // AI 영상은 상하 흔들림(바비)이 있어 비활성화. 영상 URL을 넣으면 영상이 우선 적용된다.
-  heroVideoUrl: "",
+  // 히어로 배경 영상 (Seedance, 비-Kling). 빈 값이면 hero.jpg + 슬로우 줌(흔들림 0)으로 폴백.
+  heroVideoUrl:
+    "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_040517_7a424d9b-85f2-47b6-af66-c04440f0e843.mp4",
   // 운영자가 채울 실적 숫자 — 지어내지 않는다.
   stats: {
     completed: "[ ]", // 완공 곳
