@@ -20,7 +20,7 @@ export function CinematicBand({
   video?: boolean;
   eyebrow?: string;
   title: string;
-  body?: string;
+  body?: React.ReactNode;
   caption?: string;
   align?: "left" | "right";
   kind?: "mood" | "real";

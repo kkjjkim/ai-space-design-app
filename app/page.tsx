@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, Minus } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Section } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { SiteHero } from "@/components/site-hero";
@@ -92,31 +92,54 @@ export default function HomePage() {
             꾸미는 곳과, 매출을 만드는 곳의 차이
           </h2>
         </Reveal>
-        <Reveal className="mx-auto mt-12 max-w-3xl overflow-hidden rounded-lg border border-border bg-card">
-          <div className="grid grid-cols-[88px_1fr_1fr] border-b border-border bg-secondary/60 text-sm font-medium md:grid-cols-[120px_1fr_1fr]">
-            <div className="px-4 py-3" />
-            <div className="px-4 py-3 text-muted-foreground">일반 인테리어 업체</div>
-            <div className="px-4 py-3 text-primary">우리</div>
-          </div>
-          {COMPARISON.map((row) => (
-            <div
-              key={row.label}
-              className="grid grid-cols-[88px_1fr_1fr] border-b border-border last:border-0 md:grid-cols-[120px_1fr_1fr]"
-            >
-              <div className="bg-secondary/40 px-4 py-4 text-sm font-medium text-foreground/80">
-                {row.label}
-              </div>
-              <div className="flex items-start gap-2 px-4 py-4 text-sm text-muted-foreground">
-                <Minus className="mt-0.5 h-4 w-4 shrink-0" />
-                {row.them}
-              </div>
-              <div className="flex items-start gap-2 px-4 py-4 text-sm font-medium text-foreground">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                {row.us}
-              </div>
-            </div>
-          ))}
-        </Reveal>
+        <div className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-2">
+          {/* 일반 인테리어 업체 — 흐리게 */}
+          <Reveal className="rounded-2xl border border-border bg-secondary/50 p-8">
+            <p className="mb-7 text-sm font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+              일반 인테리어 업체
+            </p>
+            <ul className="space-y-6">
+              {COMPARISON.map((row) => (
+                <li key={row.label} className="flex gap-3.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-foreground/10 text-foreground/40">
+                    <X className="h-3 w-3" />
+                  </span>
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                      {row.label}
+                    </div>
+                    <div className="mt-1 text-foreground/70">{row.them}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          {/* 우리 — 다크 프리미엄 카드 */}
+          <Reveal
+            delay={120}
+            className="relative rounded-2xl bg-foreground p-8 text-background shadow-xl shadow-foreground/10 ring-1 ring-primary/25"
+          >
+            <p className="mb-7 text-sm font-semibold uppercase tracking-[0.15em] text-primary">
+              우리
+            </p>
+            <ul className="space-y-6">
+              {COMPARISON.map((row) => (
+                <li key={row.label} className="flex gap-3.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/25 text-primary">
+                    <Check className="h-3 w-3" />
+                  </span>
+                  <div>
+                    <div className="text-xs uppercase tracking-wide text-background/50">
+                      {row.label}
+                    </div>
+                    <div className="mt-1 font-medium">{row.us}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
       </Section>
 
       {/* 5) 우리 방식 — 이미지 타일 4단계 */}
@@ -207,8 +230,14 @@ export default function HomePage() {
       {/* 7) 가격 뒤집기 — 풀블리드 시네마틱 밴드 */}
       <CinematicBand
         src="/concepts/ember.jpg"
-        title="컨설팅은 ‘추가 비용’이 아니라, 망하지 않으려는 첫 단계입니다."
-        body="정말 비싼 건, 큰 돈 들여 만든 평범한 가게예요. 방향을 먼저 잡으면 헛돈을 줄이고 더 오래갑니다."
+        title="컨설팅은 ‘추가 비용’이 아니라, 더 큰 손실을 줄이는 첫 단계입니다."
+        body={
+          <>
+            정말 비싼 건, 큰 돈 들여 만든 평범한 가게예요.
+            <br />
+            방향을 먼저 잡으면 헛돈을 줄이고 더 오래갑니다.
+          </>
+        }
         caption="INVEST IN DIRECTION"
         align="right"
         minH="min-h-[70vh]"
@@ -222,8 +251,9 @@ export default function HomePage() {
               머릿속 구상만 들고 오세요.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-              아직 정리 안 되셨어도 괜찮습니다. “이런 가게 하고 싶다” 한마디면
-              시작이에요. 무료고, 1분이면 됩니다.
+              아직 정리 안 되셨어도 괜찮습니다.
+              <br />
+              “이런 가게 하고 싶다” 한마디면 시작이에요.
             </p>
           </Reveal>
           <div className="rounded-xl border border-border bg-card p-6 shadow-sm md:p-8">
