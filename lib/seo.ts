@@ -10,7 +10,7 @@ const abs = (path: string) => `${site.url}${path}`;
 export function localBusinessLd(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "GeneralContractor"],
+    "@type": ["ProfessionalService", "GeneralContractor"],
     "@id": `${site.url}/#business`,
     name: site.business.name, // 폴앤마리
     alternateName: site.brandName, // PAUL & MARIE
@@ -24,10 +24,8 @@ export function localBusinessLd(): Record<string, unknown> {
       addressRegion: "경기도",
       addressCountry: "KR",
     },
-    areaServed: [
-      { "@type": "City", name: "성남시" },
-      { "@type": "AdministrativeArea", name: "경기도" },
-    ],
+    // 본사는 분당이지만 서비스는 전국.
+    areaServed: { "@type": "Country", name: "대한민국" },
     knowsAbout: [
       "창업 컨설팅",
       "브랜드 컨설팅",

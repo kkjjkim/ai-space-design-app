@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Check, X } from "lucide-react";
 import { Section } from "@/components/section";
@@ -10,6 +11,13 @@ import { LeadForm } from "@/components/lead-form";
 import { JsonLd } from "@/components/json-ld";
 import { faqLd } from "@/lib/seo";
 import { buttonVariants } from "@/components/ui/button";
+
+// 홈 검색 노출용 제목·설명 (화면 히어로 문구와 별개로, 검색 결과에 뜨는 텍스트).
+export const metadata: Metadata = {
+  title: "창업 컨설팅·브랜드 컨설팅·공간 디자인",
+  description:
+    "국가공인 경영지도사의 창업·사업 전략과 백화점·명품 매장을 시공한 디자인드비의 공간 브랜딩·프리미엄 인테리어 시공. 창업 첫걸음부터 매출까지 전국 한 팀으로.",
+};
 
 // FAQ — 실제 서비스 내용에 근거한 문답만. (지어낸 숫자·실적 없음)
 // 질문·답변 형식이라 AI 답변엔진이 그대로 인용하기 좋다.
@@ -32,7 +40,7 @@ const FAQS = [
   },
   {
     q: "어느 지역에서 이용할 수 있나요?",
-    a: "경기도 성남시 분당구를 기반으로 상담을 진행합니다. 자세한 지역은 상담 시 안내드립니다.",
+    a: "전국에서 상담 가능합니다. 창업·브랜드 컨설팅은 전국 어디서나 진행하고, 공간 설계·시공은 현장 지역을 협의해 함께합니다.",
   },
 ];
 
