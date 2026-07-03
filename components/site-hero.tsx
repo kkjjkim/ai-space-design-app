@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { VideoBg } from "@/components/video-bg";
 import { site } from "@/lib/site";
 
 // 시네마틱 풀블리드 히어로.
@@ -21,18 +22,14 @@ export function SiteHero() {
         />
       </div>
 
-      {/* 배경 영상 (URL 있을 때) */}
+      {/* 배경 영상 (URL 있을 때) — 60% 속도로 더 느리고 여유롭게 */}
       {videoUrl && (
-        <video
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
+        <VideoBg
+          src={videoUrl}
           poster="/hero/hero.jpg"
-        >
-          <source src={videoUrl} type="video/mp4" />
-        </video>
+          playbackRate={0.6}
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
       )}
 
       {/* 가독성 오버레이 */}
