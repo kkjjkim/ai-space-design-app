@@ -53,6 +53,12 @@
   h3,
   h4 {
     @apply font-sans font-extrabold tracking-tight;
+    /* 제목은 줄 길이를 균형 있게 — 마지막 줄에 한 단어만 남는 어색함 방지 */
+    text-wrap: balance;
+  }
+  p {
+    /* 본문은 마지막 줄 고아 단어 방지 */
+    text-wrap: pretty;
   }
   html {
     scroll-behavior: smooth;
