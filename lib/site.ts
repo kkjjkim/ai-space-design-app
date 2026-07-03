@@ -53,6 +53,7 @@ export const navItems = [
   { href: "/", label: "홈" },
   { href: "/service", label: "서비스" },
   { href: "/concepts", label: "컨셉" },
+  { href: "/insights", label: "인사이트" },
   { href: "/company", label: "회사·신뢰" },
   { href: "/#apply", label: "상담 신청" },
 ] as const;

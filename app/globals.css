@@ -71,3 +71,40 @@
     @apply animate-fade-in-up;
   }
 }
+
+/* 인사이트(칼럼) 본문 서식 — 읽기 편한 긴 글 타이포 */
+@layer components {
+  .prose-insight {
+    @apply text-[1.0625rem] leading-[1.85] text-foreground/85;
+  }
+  .prose-insight h2 {
+    @apply mt-12 mb-4 text-2xl font-bold text-foreground;
+  }
+  .prose-insight h3 {
+    @apply mt-8 mb-3 text-xl font-bold text-foreground;
+  }
+  .prose-insight p {
+    @apply my-5;
+  }
+  .prose-insight ul {
+    @apply my-5 list-disc space-y-2 pl-6;
+  }
+  .prose-insight ol {
+    @apply my-5 list-decimal space-y-2 pl-6;
+  }
+  .prose-insight li {
+    @apply leading-relaxed;
+  }
+  .prose-insight strong {
+    @apply font-bold text-foreground;
+  }
+  .prose-insight a {
+    @apply font-medium text-primary underline underline-offset-4;
+  }
+  .prose-insight blockquote {
+    @apply my-6 border-l-4 border-primary/40 bg-secondary/40 py-3 pl-5 pr-4 text-foreground/75;
+  }
+  .prose-insight hr {
+    @apply my-10 border-border;
+  }
+}

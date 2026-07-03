@@ -93,6 +93,29 @@ export function serviceLd(): Record<string, unknown> {
   };
 }
 
+// 블로그 글(Article) — 검색·AI가 "이 주제의 콘텐츠"로 인식하게.
+export function articleLd(a: {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  date: string;
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: a.title,
+    description: a.description,
+    image: abs(a.cover),
+    datePublished: a.date,
+    dateModified: a.date,
+    inLanguage: "ko-KR",
+    mainEntityOfPage: `${site.url}/insights/${a.slug}`,
+    author: { "@type": "Organization", name: site.brandName },
+    publisher: { "@id": `${site.url}/#business` },
+  };
+}
+
 // FAQ — 질문·답변. AI 답변엔진이 그대로 인용하기 좋은 포맷.
 export function faqLd(
   items: { q: string; a: string }[]
