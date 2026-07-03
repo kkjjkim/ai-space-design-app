@@ -52,8 +52,8 @@ export default function ServicePage() {
         </div>
 
         <Reveal>
-          <p className="mx-auto mt-12 max-w-2xl text-center text-2xl font-bold leading-snug md:text-3xl">
-            “창업 첫걸음부터 매출까지, 끊김 없이.”
+          <p className="mx-auto mt-12 max-w-3xl text-center text-2xl font-bold leading-snug md:text-3xl">
+            “창업 첫걸음부터 매출까지, 최고의 브랜드, 최고의 공간으로 태어납니다.”
           </p>
         </Reveal>
       </Section>
