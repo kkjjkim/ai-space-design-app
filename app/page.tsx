@@ -66,7 +66,7 @@ export default function HomePage() {
       <Section>
         <Reveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold leading-snug md:text-4xl">
-            큰 돈 들어가는데, 평범한 가게가 될까 봐 두렵지 않으세요?
+            큰 돈 들어가는데, 평범한 가게가 될까 봐 두렵지&nbsp;않으세요?
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
             가게 하나 차리는 데 적은 돈이 들지 않죠. 막상 열고 보면 “어디서 본 듯한
@@ -80,7 +80,7 @@ export default function HomePage() {
       <CinematicBand
         src="/concepts/noir.jpg"
         title="망하는 진짜 이유는, 컨셉 없이 공사부터 시작해서입니다."
-        body='예쁜 인테리어는 기본이에요. "여긴 왜 와야 하지?"가 없으면 돈을 써도 그냥 또 하나의 가게예요. 그래서 공사보다 사업·브랜드부터 잡습니다.'
+        body={'예쁜 인테리어는 기본이에요. "여긴 왜 와야 하지?"가 없으면 돈을 써도 그냥 또 하나의 가게예요. 그래서 공사보다 사업·브랜드부터 잡습니다.'}
         caption="WHY CONCEPT FIRST"
         align="left"
       />
