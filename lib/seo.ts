@@ -3,7 +3,9 @@ import { site } from "@/lib/site";
 // 구조화 데이터(JSON-LD) 빌더 모음.
 // 지어내지 않은 값만 쓴다 — 사업자 정보는 lib/site.ts 의 실제 값에서만 가져온다.
 
-const abs = (path: string) => `${site.url}${path}`;
+// 절대 URL(외부 이미지)은 그대로, 상대 경로만 사이트 도메인을 붙인다.
+const abs = (path: string) =>
+  path.startsWith("http") ? path : `${site.url}${path}`;
 
 // 로컬 비즈니스(+조직) — 상호·전화·주소·업종을 기계가 읽는 형식으로.
 // 로컬 검색·지도·AI 답변에서 가장 효과가 큰 스키마.

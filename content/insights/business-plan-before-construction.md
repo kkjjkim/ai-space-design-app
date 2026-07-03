@@ -2,7 +2,7 @@
 title: "인테리어 공사 전에 사업계획부터 — 경영지도사가 필요한 이유"
 description: "공사부터 시작하면 되돌리기 어렵습니다. 인테리어 전에 사업계획을 세워야 하는 이유와, 국가공인 경영지도사가 창업에 어떤 도움을 주는지 정리했습니다."
 category: "창업 컨설팅"
-cover: "/concepts/sora.jpg"
+cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_144932_cd98bfdb-6e4f-46f9-9cd4-77f0ac96cb49.png"
 date: "2026-06-26"
 keywords: ["사업계획", "경영지도사", "창업 컨설팅", "창업 자금", "사업 계획서"]
 ---

@@ -2,7 +2,7 @@
 title: "카페 창업, 무엇부터? 망하지 않는 준비 순서 5단계"
 description: "카페 창업을 준비할 때 순서만 지켜도 실패 확률이 크게 줄어듭니다. 인테리어보다 먼저 잡아야 하는 것부터 오픈까지, 5단계로 정리했습니다."
 category: "창업 컨설팅"
-cover: "/concepts/cityline.jpg"
+cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_143030_5c051c9b-f2d2-49af-9c16-64920eac0c12.png"
 date: "2026-07-03"
 keywords: ["카페 창업", "카페 창업 준비", "창업 순서", "창업 컨설팅", "매장 창업"]
 ---

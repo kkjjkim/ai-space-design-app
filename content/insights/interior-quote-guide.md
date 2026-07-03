@@ -2,7 +2,7 @@
 title: "상가 인테리어 견적, 이렇게 봐야 안 속는다"
 description: "인테리어 견적서는 업체마다 기준이 달라 비교가 어렵습니다. 견적을 볼 때 꼭 확인해야 할 항목과 흔한 함정을 정리했습니다."
 category: "인테리어"
-cover: "/concepts/plate.jpg"
+cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_143132_e4fdde7c-4133-4897-a9d6-d112bf175bd8.png"
 date: "2026-07-01"
 keywords: ["인테리어 견적", "상가 인테리어", "매장 인테리어 비용", "인테리어 견적서", "인테리어 시공"]
 ---

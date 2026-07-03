@@ -2,7 +2,7 @@
 title: "가게가 망하는 진짜 이유, 컨셉 없이 공사부터 시작해서다"
 description: "돈을 많이 써도 평범한 가게가 되는 이유는 순서에 있습니다. 왜 공사보다 컨셉이 먼저인지, 사례로 풀어 설명합니다."
 category: "브랜드 컨설팅"
-cover: "/concepts/daon.jpg"
+cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_145005_69087ced-1c49-4a36-a619-c3d0bccdf1ac.png"
 date: "2026-06-23"
 keywords: ["가게 컨셉", "창업 실패", "컨셉 우선", "브랜드 컨설팅", "매장 기획"]
 ---

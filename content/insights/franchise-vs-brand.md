@@ -2,7 +2,7 @@
 title: "프랜차이즈 vs 개인 브랜드, 어떤 게 맞을까"
 description: "창업할 때 프랜차이즈와 개인 브랜드는 장단점이 뚜렷합니다. 비용, 자유도, 위험, 성장성을 기준으로 나에게 맞는 길을 정리했습니다."
 category: "브랜드 컨설팅"
-cover: "/concepts/ember.jpg"
+cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_144923_46424150-3174-4227-9246-383c81a403eb.png"
 date: "2026-06-28"
 keywords: ["프랜차이즈 창업", "개인 브랜드", "창업 방식", "브랜드 컨설팅", "자영업 창업"]
 ---

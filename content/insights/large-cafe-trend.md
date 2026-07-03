@@ -2,7 +2,7 @@
 title: "대형 카페·베이커리, 공간으로 승부하는 법"
 description: "대형 카페와 베이커리는 공간 경험이 곧 경쟁력입니다. 넓은 매장을 매출로 연결하는 공간 전략을 정리했습니다."
 category: "공간 디자인"
-cover: "/concepts/mellow.jpg"
+cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_144934_ed387215-04bc-4cc5-bf02-d66624b5f166.png"
 date: "2026-06-25"
 keywords: ["대형 카페", "베이커리 창업", "대형 카페 인테리어", "공간 디자인", "카페 트렌드"]
 ---

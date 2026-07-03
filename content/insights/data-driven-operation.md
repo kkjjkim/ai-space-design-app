@@ -2,7 +2,7 @@
 title: "매장 오픈 후 매출을 만드는 데이터 운영"
 description: "오픈은 끝이 아니라 시작입니다. 동선·체류시간·메뉴 데이터로 오픈 후 매출을 꾸준히 끌어올리는 운영 방법을 정리했습니다."
 category: "인테리어"
-cover: "/concepts/noir.jpg"
+cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_143201_b678e346-5130-41bb-941c-c04f15b58b56.png"
 date: "2026-06-24"
 keywords: ["매장 운영", "매출 관리", "데이터 운영", "체류시간", "재방문율"]
 ---
