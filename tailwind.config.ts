@@ -64,15 +64,15 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(16px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
-        // 정지 이미지에 아주 천천히 밀어들어가기(드론 글라이드 느낌, 흔들림 없음)
+        // 정지 이미지에 천천히 밀어들어가기(드론 글라이드 느낌, 흔들림 없음)
         kenburns: {
-          "0%": { transform: "scale(1.06) translate(0, 0)" },
-          "100%": { transform: "scale(1.18) translate(-1.5%, -1%)" },
+          "0%": { transform: "scale(1.05) translate(0, 0)" },
+          "100%": { transform: "scale(1.22) translate(-2%, -1.5%)" },
         },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.7s ease-out both",
-        kenburns: "kenburns 32s ease-in-out infinite alternate",
+        kenburns: "kenburns 16s ease-in-out infinite alternate",
       },
     },
   },
