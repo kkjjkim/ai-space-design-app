@@ -7,7 +7,34 @@ import { CinematicBand } from "@/components/cinematic-band";
 import { ConceptCarousel } from "@/components/concept-carousel";
 import { VideoBg } from "@/components/video-bg";
 import { LeadForm } from "@/components/lead-form";
+import { JsonLd } from "@/components/json-ld";
+import { faqLd } from "@/lib/seo";
 import { buttonVariants } from "@/components/ui/button";
+
+// FAQ — 실제 서비스 내용에 근거한 문답만. (지어낸 숫자·실적 없음)
+// 질문·답변 형식이라 AI 답변엔진이 그대로 인용하기 좋다.
+const FAQS = [
+  {
+    q: "인테리어만 해주나요, 사업·브랜드 컨설팅도 하나요?",
+    a: "국가공인 경영지도사의 창업·사업 전략과 디자인드비의 공간 설계·시공을 한 팀으로 제공합니다. 창업 첫걸음부터 매출까지 이어서 함께합니다.",
+  },
+  {
+    q: "상담은 무료인가요?",
+    a: "네, 무료 컨셉 상담을 제공합니다. 아직 정리가 안 되셨어도 '이런 가게를 하고 싶다'는 구상만 있으면 신청할 수 있습니다.",
+  },
+  {
+    q: "왜 공사보다 컨셉·브랜드를 먼저 잡나요?",
+    a: "컨셉 없이 공사부터 시작하면 큰 돈을 써도 '어디서 본 듯한 가게'가 되기 쉽습니다. 사업·브랜드 방향을 먼저 잡아야 헛돈을 줄이고 더 오래갑니다.",
+  },
+  {
+    q: "어떤 업종을 도와주나요?",
+    a: "매장·레스토랑·대형 카페 등 고급 상업 공간을 준비하는 사장님을 돕습니다.",
+  },
+  {
+    q: "어느 지역에서 이용할 수 있나요?",
+    a: "경기도 성남시 분당구를 기반으로 상담을 진행합니다. 자세한 지역은 상담 시 안내드립니다.",
+  },
+];
 
 // 비교표 (일반 인테리어 업체 vs 우리) — PRD 4)
 const COMPARISON = [
@@ -242,6 +269,31 @@ export default function HomePage() {
         align="right"
         minH="min-h-[70vh]"
       />
+
+      {/* 7.5) 자주 묻는 질문 (FAQ) — 검색·AI 답변 노출용 */}
+      <Section>
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-semibold md:text-4xl">자주 묻는 질문</h2>
+        </Reveal>
+        <div className="mx-auto mt-10 max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border">
+          {FAQS.map((f, i) => (
+            <Reveal key={f.q} delay={i * 60}>
+              <details className="group px-6 py-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-foreground">
+                  {f.q}
+                  <span className="shrink-0 text-primary transition-transform group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 leading-relaxed text-foreground/70">{f.a}</p>
+              </details>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* FAQ 구조화 데이터 (AI 답변엔진 인용용) */}
+      <JsonLd data={faqLd(FAQS.map((f) => ({ q: f.q, a: f.a })))} />
 
       {/* 8) 신청 (폼) */}
       <Section id="apply" tone="muted">
