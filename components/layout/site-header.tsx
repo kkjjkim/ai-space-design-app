@@ -20,8 +20,11 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // 홈은 어두운 시네마틱 히어로 위에 떠 있으므로, 스크롤 전엔 밝은 글자.
-  const overDarkHero = pathname === "/" && !scrolled;
+  // 홈·서브페이지 모두 상단에 어두운 시네마틱 히어로가 깔린다.
+  // 스크롤 전에는 그 위에 떠 있으므로 밝은 글자로 보여야 한다.
+  // (히어로가 없는 /complete 등은 제외 → 기본 짙은 글자)
+  const darkHeroRoutes = ["/", "/service", "/company", "/concepts"];
+  const overDarkHero = !scrolled && darkHeroRoutes.includes(pathname);
 
   return (
     <header

@@ -24,7 +24,7 @@ export function PageHero({
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/45 to-black/40"
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/45 to-black/55"
       />
       <div className="container relative w-full pb-16 pt-32 md:pb-20">
         <Reveal className="max-w-3xl">
