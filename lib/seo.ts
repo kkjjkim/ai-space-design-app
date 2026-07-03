@@ -26,6 +26,13 @@ export function localBusinessLd(): Record<string, unknown> {
     },
     // 본사는 분당이지만 서비스는 전국.
     areaServed: { "@type": "Country", name: "대한민국" },
+    // 같은 브랜드의 외부 프로필 (있는 것만) — 검색엔진이 하나로 묶어 신뢰도 반영.
+    sameAs: [
+      site.social.instagram,
+      site.social.threads,
+      site.social.youtube,
+      site.social.blog,
+    ].filter(Boolean),
     knowsAbout: [
       "창업 컨설팅",
       "브랜드 컨설팅",

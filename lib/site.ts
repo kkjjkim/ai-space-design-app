@@ -40,6 +40,13 @@ export const site = {
     years: "[ ]", // 업계 경력 년
     highlight: "[성과 한 줄]",
   },
+  // 소셜/외부 프로필 (링크만 — 검색엔진이 같은 브랜드로 인식하도록 sameAs 연결)
+  social: {
+    instagram: "https://www.instagram.com/onetopkkj/",
+    threads: "https://www.threads.com/@onetopkkj",
+    youtube: "",
+    blog: "https://blog.naver.com/thegungri", // 네이버 블로그
+  },
   // 사업자 정보 (푸터)
   business: {
     name: "폴앤마리",
