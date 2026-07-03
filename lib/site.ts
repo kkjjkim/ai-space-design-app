@@ -28,7 +28,7 @@ export const site = {
   ],
   // 검색엔진 사이트 소유확인 코드 (있으면 넣기, 없으면 빈 값)
   verification: {
-    google: "", // Google Search Console → HTML 태그 인증 코드
+    google: "CiLGc9VaMh8Sn8RLoXDCaw6uMsz4R8gN816SI3XwQ_U", // Google Search Console → HTML 태그 인증 코드
     naver: "", // 네이버 서치어드바이저 → 사이트 확인 코드
   },
   // 히어로 배경 영상 (Seedance, 비-Kling). 빈 값이면 hero.jpg + 슬로우 줌(흔들림 0)으로 폴백.
