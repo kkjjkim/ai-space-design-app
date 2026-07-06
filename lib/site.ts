@@ -55,6 +55,9 @@ export const site = {
     youtube: "",
     blog: "https://blog.naver.com/thegungri", // 네이버 블로그
   },
+  // 상담 알림 메일 제목 앞에 붙는 프로젝트 식별 태그.
+  // 여러 프로젝트를 운영할 때 메일함에서 어느 사이트에서 온 신청인지 구분하기 위함.
+  mailTag: "브랜드각",
   // 사업자 정보 (푸터)
   business: {
     name: "폴앤마리",

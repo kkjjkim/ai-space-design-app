@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { leadSchema } from "@/lib/leads";
 import { getSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase";
+import { site } from "@/lib/site";
 
 export const runtime = "nodejs";
 
@@ -32,8 +33,8 @@ async function notifyOwner(lead: Record<string, unknown>) {
     await resend.emails.send({
       from,
       to: to.split(",").map((s) => s.trim()),
-      subject: `[새 상담 신청] ${lead.name} (${lead.phone})`,
-      html: `<h2>새 무료 컨셉 상담 신청</h2><table cellpadding="6">${rows}</table>`,
+      subject: `[${site.mailTag} · 새 상담 신청] ${lead.name} (${lead.phone})`,
+      html: `<h2>[${site.mailTag}] 새 무료 컨셉 상담 신청</h2><table cellpadding="6">${rows}</table>`,
     });
   } catch (err) {
     console.error("알림 메일 발송 실패:", err);
