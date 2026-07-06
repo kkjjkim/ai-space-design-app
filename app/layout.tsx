@@ -4,6 +4,7 @@ import { pretendard } from "./fonts";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { FloatingCta } from "@/components/layout/floating-cta";
+import { RecentLeadsToast } from "@/components/recent-leads-toast";
 import { JsonLd } from "@/components/json-ld";
 import { localBusinessLd, websiteLd, serviceLd } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -63,6 +64,7 @@ export default function RootLayout({
         <main>{children}</main>
         <SiteFooter />
         <FloatingCta />
+        <RecentLeadsToast />
       </body>
     </html>
   );
