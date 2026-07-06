@@ -26,7 +26,7 @@ export function RecentLeadsToast() {
 
   useEffect(() => {
     let alive = true;
-    fetch("/api/recent-leads")
+    fetch("/api/recent-leads", { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => {
         if (alive && Array.isArray(d.items)) setItems(d.items);
