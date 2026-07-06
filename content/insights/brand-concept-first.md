@@ -2,7 +2,7 @@
 title: "인테리어보다 먼저: 매장 브랜드 컨셉 잡는 법"
 description: "공사부터 시작하면 평범한 가게가 됩니다. 손님을 부르는 매장 브랜드 컨셉을 어떻게 잡는지, 4가지 질문으로 정리했습니다."
 category: "브랜드 컨설팅"
-cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_143127_22234d79-d709-4df8-a570-1bd5353e957a.png"
+cover: "/insights/brand-concept-first.png"
 date: "2026-07-02"
 keywords: ["브랜드 컨셉", "매장 브랜딩", "브랜드 컨설팅", "가게 컨셉", "공간 브랜딩"]
 ---

@@ -2,7 +2,7 @@
 title: "레스토랑 창업 체크리스트: 오픈 전 꼭 확인할 것"
 description: "레스토랑 창업은 챙길 게 많아 하나만 놓쳐도 오픈이 밀립니다. 자리 선정부터 인허가, 인테리어, 오픈까지 순서대로 정리한 체크리스트입니다."
 category: "창업 컨설팅"
-cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_144913_b8f5fa5c-0c8e-4e6b-a523-3b14f72dcf9e.png"
+cover: "/insights/restaurant-checklist.png"
 date: "2026-06-29"
 keywords: ["레스토랑 창업", "음식점 창업", "창업 체크리스트", "외식 창업", "창업 준비"]
 ---

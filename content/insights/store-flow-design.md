@@ -2,7 +2,7 @@
 title: "장사 되는 매장은 동선이 다르다 — 공간 설계의 힘"
 description: "같은 평수라도 동선 설계에 따라 매출이 달라집니다. 손님을 오래 머물게 하고 더 사게 만드는 매장 동선의 원리를 정리했습니다."
 category: "공간 디자인"
-cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_144907_2fabb7e7-43e9-4a3f-b5ea-b68fb39cac48.png"
+cover: "/insights/store-flow-design.png"
 date: "2026-06-30"
 keywords: ["매장 동선", "공간 설계", "공간 디자인", "매장 레이아웃", "인테리어 설계"]
 ---

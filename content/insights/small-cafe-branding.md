@@ -2,7 +2,7 @@
 title: "작은 카페도 브랜딩이 필요한 이유"
 description: "작은 가게일수록 브랜딩이 더 중요합니다. 큰 자본 없이 단골을 만드는 소규모 매장 브랜딩의 핵심을 정리했습니다."
 category: "브랜드 컨설팅"
-cover: "https://d8j0ntlcm91z4.cloudfront.net/user_3ENGcOxBKgSEY8wEkyt8qggU2YN/hf_20260703_144928_22956b83-b9d5-4d7a-ba5b-8c662c22e2d0.png"
+cover: "/insights/small-cafe-branding.png"
 date: "2026-06-27"
 keywords: ["소규모 카페", "작은 가게 브랜딩", "카페 브랜딩", "동네 카페", "브랜드 컨설팅"]
 ---
