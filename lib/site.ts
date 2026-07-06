@@ -33,7 +33,11 @@ export const site = {
       "MkC2zgMQQbj-Wo07wg5iAa6Hvcc5pfhYu_rK49YHOgk", // www.brandgak.com
       "CiLGc9VaMh8Sn8RLoXDCaw6uMsz4R8gN816SI3XwQ_U", // 기존 vercel.app
     ],
-    naver: "3d429b597536edad2479d872dfc7e3109fdf5a91", // 네이버 서치어드바이저 → 사이트 확인 코드
+    // 네이버 서치어드바이저 사이트 확인 코드 (여러 사이트 지원)
+    naver: [
+      "8141454da817137204d585651bb68d6e94d373a1", // www.brandgak.com
+      "3d429b597536edad2479d872dfc7e3109fdf5a91", // 기존 vercel.app
+    ],
   },
   // 히어로 배경 영상 (Seedance, 비-Kling). 빈 값이면 hero.jpg + 슬로우 줌(흔들림 0)으로 폴백.
   heroVideoUrl:

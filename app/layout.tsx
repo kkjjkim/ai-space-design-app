@@ -42,8 +42,8 @@ export const metadata: Metadata = {
     ...(site.verification.google.length
       ? { google: [...site.verification.google] }
       : {}),
-    ...(site.verification.naver
-      ? { other: { "naver-site-verification": site.verification.naver } }
+    ...(site.verification.naver.length
+      ? { other: { "naver-site-verification": [...site.verification.naver] } }
       : {}),
   },
 };
