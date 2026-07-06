@@ -56,6 +56,14 @@ export const site = {
     youtube: "",
     blog: "",
   },
+  // 분석/광고 추적 ID (값이 있을 때만 해당 스크립트가 로드됨).
+  // 공개용 클라이언트 ID라 코드/깃에 있어도 안전 (비밀키 아님).
+  analytics: {
+    ga4: "", // Google Analytics 4 측정 ID (G-XXXXXXXXXX)
+    googleAdsId: "", // Google Ads 전환 ID (AW-XXXXXXXXXX)
+    googleAdsLabel: "", // Google Ads 전환 라벨
+    metaPixelId: "", // Meta(페북·인스타) 픽셀 ID
+  },
   // 상담 알림 메일 제목 앞에 붙는 프로젝트 식별 태그.
   // 여러 프로젝트를 운영할 때 메일함에서 어느 사이트에서 온 신청인지 구분하기 위함.
   mailTag: "브랜드각",

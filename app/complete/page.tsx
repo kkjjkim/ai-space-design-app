@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { ConversionTracker } from "@/components/conversion-tracker";
 
 export const metadata: Metadata = {
   title: "신청 완료",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default function CompletePage() {
   return (
     <section className="flex min-h-[80vh] items-center">
+      <ConversionTracker />
       <div className="container max-w-xl py-32 text-center">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
           <Check className="h-8 w-8" />

@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { BUDGET_OPTIONS } from "@/lib/leads";
+import { readSource } from "@/lib/attribution";
 
 type Form = {
   name: string;
@@ -42,8 +43,7 @@ export function LeadForm() {
     setError(null);
     setLoading(true);
     try {
-      const source =
-        typeof window !== "undefined" ? window.location.search.slice(0, 200) : "";
+      const source = readSource();
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

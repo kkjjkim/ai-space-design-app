@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { FloatingCta } from "@/components/layout/floating-cta";
 import { RecentLeadsToast } from "@/components/recent-leads-toast";
+import { Analytics } from "@/components/analytics";
 import { JsonLd } from "@/components/json-ld";
 import { localBusinessLd, websiteLd, serviceLd } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -65,6 +66,7 @@ export default function RootLayout({
         <SiteFooter />
         <FloatingCta />
         <RecentLeadsToast />
+        <Analytics />
       </body>
     </html>
   );
