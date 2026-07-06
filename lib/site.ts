@@ -28,7 +28,11 @@ export const site = {
   ],
   // 검색엔진 사이트 소유확인 코드 (있으면 넣기, 없으면 빈 값)
   verification: {
-    google: "CiLGc9VaMh8Sn8RLoXDCaw6uMsz4R8gN816SI3XwQ_U", // Google Search Console → HTML 태그 인증 코드
+    // Google Search Console 인증 코드 (여러 속성 지원 — brandgak.com + 기존 vercel.app)
+    google: [
+      "MkC2zgMQQbj-Wo07wg5iAa6Hvcc5pfhYu_rK49YHOgk", // www.brandgak.com
+      "CiLGc9VaMh8Sn8RLoXDCaw6uMsz4R8gN816SI3XwQ_U", // 기존 vercel.app
+    ],
     naver: "3d429b597536edad2479d872dfc7e3109fdf5a91", // 네이버 서치어드바이저 → 사이트 확인 코드
   },
   // 히어로 배경 영상 (Seedance, 비-Kling). 빈 값이면 hero.jpg + 슬로우 줌(흔들림 0)으로 폴백.

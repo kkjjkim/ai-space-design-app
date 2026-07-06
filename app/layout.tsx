@@ -39,7 +39,9 @@ export const metadata: Metadata = {
   },
   // 검색엔진 소유확인 (코드가 있을 때만 태그가 나간다)
   verification: {
-    ...(site.verification.google ? { google: site.verification.google } : {}),
+    ...(site.verification.google.length
+      ? { google: [...site.verification.google] }
+      : {}),
     ...(site.verification.naver
       ? { other: { "naver-site-verification": site.verification.naver } }
       : {}),
