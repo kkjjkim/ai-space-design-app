@@ -48,12 +48,13 @@ export const site = {
     years: "[ ]", // 업계 경력 년
     highlight: "[성과 한 줄]",
   },
-  // 소셜/외부 프로필 (링크만 — 검색엔진이 같은 브랜드로 인식하도록 sameAs 연결)
+  // 소셜/외부 프로필 (브랜드각 본인 계정이 생기면 여기에 넣으면 푸터+sameAs 자동 연결).
+  // 지금은 브랜드각 소유 계정이 없어 비워둔다. (타 브랜드 계정을 넣으면 SEO 정체성이 흐려짐)
   social: {
-    instagram: "https://www.instagram.com/onetopkkj/",
-    threads: "https://www.threads.com/@onetopkkj",
+    instagram: "",
+    threads: "",
     youtube: "",
-    blog: "https://blog.naver.com/thegungri", // 네이버 블로그
+    blog: "",
   },
   // 상담 알림 메일 제목 앞에 붙는 프로젝트 식별 태그.
   // 여러 프로젝트를 운영할 때 메일함에서 어느 사이트에서 온 신청인지 구분하기 위함.
