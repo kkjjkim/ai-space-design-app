@@ -245,8 +245,8 @@ export default function HomePage() {
             대형 백화점과 글로벌 명품 매장을 만들던 팀입니다.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-            까다로운 대형 유통사와 명품 브랜드가 믿고 맡긴 실력을, 이제 당신의
-            매장에 씁니다.
+            신세계·롯데·현대 백화점과 글로벌 명품 브랜드 매장을 시공해 왔습니다.
+            까다로운 대형 유통사가 믿고 맡긴 실력을, 이제 당신의 매장에 씁니다.
           </p>
         </Reveal>
 
