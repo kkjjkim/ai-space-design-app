@@ -73,8 +73,9 @@ const STEPS = [
     n: "03",
     t: "검증된 프리미엄 시공",
     d: "백화점·명품 매장을 시공한 팀이 그대로 구현.",
-    img: "/concepts/mellow.jpg",
-    video: "/videos/mellow.mp4",
+    // 완성 매장이 실제 시공작처럼 보이지 않도록, 시공 과정(도면·자재) 느낌 이미지 + 영상 제거
+    img: "/insights/interior-quote-guide.png",
+    video: "",
   },
   {
     n: "04",
@@ -183,6 +184,9 @@ export default function HomePage() {
           <h2 className="text-3xl font-semibold md:text-4xl">
             사업의 첫걸음부터 매출까지, 이렇게 함께합니다.
           </h2>
+          <p className="mt-4 text-sm font-medium text-foreground/60">
+            이미지는 실제 시공 사례가 아닌 컨셉·분위기 예시입니다.
+          </p>
         </Reveal>
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {STEPS.map((s, i) => (
@@ -191,11 +195,23 @@ export default function HomePage() {
               delay={i * 80}
               className="group relative isolate overflow-hidden rounded-lg text-background"
             >
-              <VideoBg
-                src={s.video}
-                poster={s.img}
-                className="absolute inset-0 -z-10 h-full w-full object-cover"
-              />
+              {s.video ? (
+                <VideoBg
+                  src={s.video}
+                  poster={s.img}
+                  className="absolute inset-0 -z-10 h-full w-full object-cover"
+                />
+              ) : (
+                // 시공 과정 느낌의 정적 이미지 (영상 없음)
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={s.img}
+                  alt={s.t}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 -z-10 h-full w-full object-cover"
+                />
+              )}
               <div
                 aria-hidden
                 className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/45 to-black/15"
@@ -222,7 +238,7 @@ export default function HomePage() {
             “이런 브랜드를 하고 싶다”가 공간으로 어떻게 풀리는지, 업종별 컨셉으로
             보여드립니다.
           </p>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="mt-2 text-sm font-medium text-foreground/60">
             ※ 아래는 실제 시공 사례가 아닌, 방향을 보여주는 <b>컨셉 제안 예시</b>입니다.
           </p>
         </Reveal>
