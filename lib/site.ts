@@ -59,7 +59,7 @@ export const site = {
   // 분석/광고 추적 ID (값이 있을 때만 해당 스크립트가 로드됨).
   // 공개용 클라이언트 ID라 코드/깃에 있어도 안전 (비밀키 아님).
   analytics: {
-    ga4: "", // Google Analytics 4 측정 ID (G-XXXXXXXXXX)
+    ga4: "G-DL2TCKGL02", // Google Analytics 4 측정 ID (G-XXXXXXXXXX)
     googleAdsId: "", // Google Ads 전환 ID (AW-XXXXXXXXXX)
     googleAdsLabel: "", // Google Ads 전환 라벨
     metaPixelId: "", // Meta(페북·인스타) 픽셀 ID
