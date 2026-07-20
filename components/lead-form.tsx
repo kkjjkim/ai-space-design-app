@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { BUDGET_OPTIONS } from "@/lib/leads";
 import { readSource } from "@/lib/attribution";
+import { site } from "@/lib/site";
 
 type Form = {
   name: string;
@@ -29,8 +30,9 @@ const initial: Form = {
   message: "",
 };
 
-// 봇 방지 캡차(Cloudflare Turnstile) 사이트 키 — 없으면 캡차 없이 동작.
-const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+// 봇 방지 캡차(Cloudflare Turnstile) 사이트 키(공개용) — 없으면 캡차 없이 동작.
+const TURNSTILE_SITE_KEY =
+  site.analytics.turnstileSiteKey || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 export function LeadForm() {
   const router = useRouter();

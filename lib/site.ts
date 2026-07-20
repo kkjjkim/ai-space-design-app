@@ -63,6 +63,9 @@ export const site = {
     googleAdsId: "", // Google Ads 전환 ID (AW-XXXXXXXXXX)
     googleAdsLabel: "", // Google Ads 전환 라벨
     metaPixelId: "", // Meta(페북·인스타) 픽셀 ID
+    // Turnstile 사이트 키는 공개용이라 코드에 둬도 안전(브라우저에 어차피 노출됨).
+    // 비밀 키(TURNSTILE_SECRET_KEY)는 절대 코드에 두지 말고 Vercel 환경변수로만.
+    turnstileSiteKey: "0x4AAAAAAD5YbmWz8SD3yjtc",
   },
   // 상담 알림 메일 제목 앞에 붙는 프로젝트 식별 태그.
   // 여러 프로젝트를 운영할 때 메일함에서 어느 사이트에서 온 신청인지 구분하기 위함.
