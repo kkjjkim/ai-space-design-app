@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { pretendard } from "./fonts";
-import { MarketingChrome } from "@/components/layout/marketing-chrome";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { FloatingCta } from "@/components/layout/floating-cta";
+import { RecentLeadsToast } from "@/components/recent-leads-toast";
 import { Analytics } from "@/components/analytics";
 import { JsonLd } from "@/components/json-ld";
 import { localBusinessLd, websiteLd, serviceLd } from "@/lib/seo";
@@ -58,7 +61,11 @@ export default function RootLayout({
         <JsonLd data={localBusinessLd()} />
         <JsonLd data={websiteLd()} />
         <JsonLd data={serviceLd()} />
-        <MarketingChrome>{children}</MarketingChrome>
+        <SiteHeader />
+        <main>{children}</main>
+        <SiteFooter />
+        <FloatingCta />
+        <RecentLeadsToast />
         <Analytics />
       </body>
     </html>

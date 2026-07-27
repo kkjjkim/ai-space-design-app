@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/complete", "/studio"], // 완료 페이지·비공개 제작 도구는 색인 제외
+      disallow: "/complete", // 신청 완료 페이지는 색인 제외
     },
     sitemap: `${site.url}/sitemap.xml`,
   };

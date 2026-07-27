@@ -22,23 +22,6 @@
       홈 갤러리 + /concepts 상세 페이지. "실제 시공 사례 아님(컨셉 예시)" 명시 (AGENTS.md 7번 준수)
 - [x] public/ASSETS.md — 영상/컨셉이미지/실사진 드롭인 가이드
 
-## 카드뉴스 스튜디오 (사장님·사모님이 쓰는 제작 도구) — 같은 앱 `/studio`
-- [x] 1단계 뼈대: 로그인 + 작업물 저장 (라이브러리 추가 0개, 기존 Supabase 재사용)
-      · `/studio/login` 이메일+비밀번호 로그인·가입 (Supabase Auth)
-      · `/studio` 내 카드뉴스 목록 — 새로 만들기 / 열기 / 삭제
-      · `/studio/[id]` 편집기 — 제목·슬라이드(제목+본문) 추가/삭제/순서, 정사각 미리보기,
-        입력 멈추면 0.8초 뒤 자동저장 (뒤로 가도 안 없어짐)
-      · 각자 자기 작업물만 보임 — `supabase/studio-schema.sql` 의 RLS(auth.uid()=user_id)
-      · 마케팅 껍데기(헤더/푸터/상담CTA)는 `/studio` 에서 숨김(MarketingChrome), robots 색인 제외
-- [ ] 다음(2단계): 편집기 디자인 — 색/배경/이미지, 폰트, 실제 카드 레이아웃
-- [ ] 그다음(3단계): 완성 카드뉴스를 이미지(PNG)로 내려받기 / 여러 장 한 번에
-
-### 스튜디오 켜는 법 (배포 시)
-1. Supabase 대시보드 SQL Editor 에서 `supabase/studio-schema.sql` 실행
-2. Authentication > Providers > Email 켜기 (사용자 적으면 "Confirm email" 꺼두면 즉시 사용)
-3. Vercel 환경변수는 상담폼과 동일한 `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` 그대로 사용
-   → 배포하면 사장님 컴퓨터가 꺼져 있어도 사모님이 주소만 열어 사용
-
 ## 다음 할 것 (운영자/대표님)
 - [ ] Supabase 프로젝트 생성 → `supabase/schema.sql` 실행 → `.env.local` 에 URL/anon 키 입력
 - [ ] Resend 가입 → 도메인 인증 → `RESEND_API_KEY`, `LEAD_NOTIFY_TO`, `LEAD_NOTIFY_FROM` 입력
