@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 // 핵심 지표 — 지어내지 않은 사실만. (업계 경력 10년+ / 소셜벤처 확인 / 시공 이력)
 const FACTS = [
-  { value: "10년+", label: "디자인드비 업계 경력" },
+  { value: "10년+", label: "시공 파트너 업계 경력" },
   { value: "소셜벤처", label: "확인 기업" },
   { value: "백화점·명품", label: "매장 시공 팀" },
 ];
@@ -53,7 +53,7 @@ export default function CompanyPage() {
             말보다, 쌓아온 것으로 증명합니다.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-            공간 브랜딩·시공을 맡는 (주)디자인드비는 업계 경력 10년 이상.
+            공간 브랜딩·시공을 맡는 파트너 팀은 업계 경력 10년 이상.
             <br />
             거기에 국가공인 경영지도사의 사업 전략이 한 팀으로 더해집니다.
           </p>

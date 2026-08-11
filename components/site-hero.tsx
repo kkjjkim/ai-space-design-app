@@ -50,7 +50,7 @@ export function SiteHero() {
             장사 되는 브랜드를 만듭니다.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-background/85">
-            국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한 디자인드비.
+            국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한 파트너 팀.
             <br />
             창업 첫걸음부터 매출까지, 한 곳에서.
           </p>
