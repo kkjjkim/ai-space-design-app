@@ -5,6 +5,8 @@ import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbLd } from "@/lib/seo";
+import Link from "next/link";
+import { INDUSTRIES } from "@/lib/industries";
 
 export const metadata: Metadata = {
   title: "서비스",
@@ -73,6 +75,34 @@ export default function ServicePage() {
             “창업 첫걸음부터 매출까지, 최고의 브랜드, 최고의 공간으로 태어납니다.”
           </p>
         </Reveal>
+      </Section>
+
+      {/* 업종별 상세 — 검색에서 "미용실 인테리어"처럼 좁은 조합으로 들어오는 사람이
+          바로 자기 업종 페이지로 가게 한다. 크롤러가 랜딩을 찾아가는 길이기도 하다. */}
+      <Section tone="muted">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="font-serif text-2xl leading-snug md:text-3xl">
+            업종별로 더 자세히
+          </h2>
+          <p className="mt-3 text-muted-foreground">
+            업종마다 공간이 해야 하는 일이 다릅니다. 준비 중인 업종을 골라보세요.
+          </p>
+          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            {INDUSTRIES.map((i) => (
+              <li key={i.slug}>
+                <Link
+                  href={`/interior/${i.slug}`}
+                  className="block rounded-lg border border-border bg-card px-5 py-4 transition-colors hover:border-primary hover:bg-primary/5"
+                >
+                  <span className="block font-medium">{i.keyword}</span>
+                  <span className="mt-1 block text-sm text-muted-foreground">
+                    {i.headline}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Section>
 
       <CtaSection />
