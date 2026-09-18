@@ -6,18 +6,9 @@ import { cn } from "@/lib/utils";
 
 // 최근 상담 신청(익명)을 좌하단에 은은하게 순환 노출 — 소셜 프루프.
 // 진짜 데이터만 사용하며, 신청이 없으면 아무것도 표시하지 않는다.
+// 경과일은 표시하지 않는다: 신청이 뜸한 기간에 "71일 전"이 뜨면 신뢰를 주려던 장치가
+// 오히려 사이트가 죽었다고 광고하게 된다.
 type Item = { name: string; industry: string; at: string };
-
-function ago(iso: string): string {
-  const t = new Date(iso).getTime();
-  if (!t) return "";
-  const m = Math.floor((Date.now() - t) / 60000);
-  if (m < 1) return "방금 전";
-  if (m < 60) return `${m}분 전`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `${h}시간 전`;
-  return `${Math.floor(h / 24)}일 전`;
-}
 
 export function RecentLeadsToast() {
   const [items, setItems] = useState<Item[]>([]);
@@ -57,7 +48,6 @@ export function RecentLeadsToast() {
 
   if (items.length === 0) return null;
   const it = items[idx];
-  const when = ago(it.at);
 
   return (
     <div
@@ -76,7 +66,6 @@ export function RecentLeadsToast() {
         <p className="text-sm leading-tight text-foreground">
           <b>{it.name}</b>님이 {it.industry ? `${it.industry} ` : ""}상담을
           신청했어요
-          {when && <span className="ml-1 text-muted-foreground">· {when}</span>}
         </p>
       </div>
     </div>
