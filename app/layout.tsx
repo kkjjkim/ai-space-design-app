@@ -19,7 +19,11 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [...site.keywords],
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    // RSS 위치를 <head>로 알린다 — 수집기가 새 글을 스스로 찾아온다.
+    types: { "application/rss+xml": `${site.url}/feed.xml` },
+  },
   openGraph: {
     title: `${site.tagline} | ${site.brandNameKo}`,
     description: site.description,
