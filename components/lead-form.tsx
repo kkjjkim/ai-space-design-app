@@ -34,11 +34,13 @@ const initial: Form = {
 const TURNSTILE_SITE_KEY =
   site.analytics.turnstileSiteKey || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
-export function LeadForm() {
+// 진단 결과처럼 앞 단계에서 이미 받은 정보는 미리 채워준다.
+// 같은 걸 두 번 묻지 않아야 폼을 끝까지 채운다.
+export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
-  const [form, setForm] = useState<Form>(initial);
+  const [form, setForm] = useState<Form>({ ...initial, ...defaults });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

@@ -85,6 +85,7 @@ export const site = {
 
 export const navItems = [
   { href: "/", label: "홈" },
+  { href: "/diagnosis", label: "컨셉 진단" },
   { href: "/service", label: "서비스" },
   { href: "/concepts", label: "컨셉" },
   { href: "/insights", label: "인사이트" },
