@@ -2,7 +2,7 @@
 title: "장사 잘 되는 자리는 어떻게 고르나 — 상권분석의 기본"
 description: "좋은 자리는 유동인구가 많은 자리가 아니라 내 업종과 맞는 자리입니다. 계약 전에 직접 확인할 수 있는 상권분석 방법을 정리했습니다."
 category: "창업 컨설팅"
-cover: "/concepts/cityline.jpg"
+cover: "/insights/location-analysis.jpg"
 date: "2026-09-18"
 keywords: ["상권분석", "상가 입지", "자리 고르는 법", "상권 조사", "창업 입지"]
 ---

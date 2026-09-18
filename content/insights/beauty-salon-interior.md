@@ -2,7 +2,7 @@
 title: "미용실·뷰티샵 인테리어, 카페와 다른 점"
 description: "미용실과 네일샵은 손님이 오래 앉아 있고 예약제로 돌아갑니다. 카페 기준으로 설계하면 놓치는 것들을 정리했습니다."
 category: "공간 디자인"
-cover: "/concepts/sodam.jpg"
+cover: "/insights/beauty-salon-interior.jpg"
 date: "2026-09-18"
 keywords: ["미용실 인테리어", "헤어샵 인테리어", "네일샵 인테리어", "뷰티샵 창업", "미용실 창업"]
 ---

@@ -2,7 +2,7 @@
 title: "매출이 꺾였을 때, 리뉴얼을 해야 하는 신호"
 description: "매출이 떨어졌다고 전부 공사로 풀리지는 않습니다. 리뉴얼이 답인 경우와 아닌 경우를 구분하는 기준을 정리했습니다."
 category: "인테리어"
-cover: "/concepts/ember.jpg"
+cover: "/insights/store-renewal.jpg"
 date: "2026-09-18"
 keywords: ["매장 리뉴얼", "가게 리뉴얼", "인테리어 리뉴얼", "매출 하락", "매장 개선"]
 ---

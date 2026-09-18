@@ -2,7 +2,7 @@
 title: "권리금, 얼마가 적정한지 판단하는 기준"
 description: "권리금은 정해진 값이 없어 부르는 게 값처럼 느껴집니다. 무엇을 사는 돈인지 나눠서 보면 판단 기준이 생깁니다."
 category: "창업 컨설팅"
-cover: "/concepts/plate.jpg"
+cover: "/insights/key-money.jpg"
 date: "2026-09-18"
 keywords: ["권리금", "권리금 계산", "권리금 협상", "상가 권리금", "권리금 회수"]
 ---

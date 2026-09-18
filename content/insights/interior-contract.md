@@ -2,7 +2,7 @@
 title: "인테리어 계약서, 이 조항이 빠지면 나중에 싸웁니다"
 description: "인테리어 분쟁은 대부분 계약서에 안 적힌 것에서 시작됩니다. 계약 전에 반드시 문서로 남겨야 할 항목을 정리했습니다."
 category: "인테리어"
-cover: "/concepts/noir.jpg"
+cover: "/insights/interior-contract.jpg"
 date: "2026-09-18"
 keywords: ["인테리어 계약서", "인테리어 분쟁", "인테리어 하자", "공사 계약", "하자보수"]
 ---

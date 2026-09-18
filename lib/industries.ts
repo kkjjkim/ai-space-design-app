@@ -33,7 +33,7 @@ export const INDUSTRIES: Industry[] = [
     keyword: "미용실 인테리어",
     shortName: "미용실",
     formIndustry: "미용실·뷰티샵",
-    image: "/concepts/nest.jpg",
+    image: "/interior/beauty-salon.jpg",
     headline: "카페와 기준이 다릅니다",
     lead: "손님이 서너 시간을 한자리에 앉아 있고, 조명이 곧 결과물을 보여주는 도구입니다. 카페 기준으로 설계하면 예쁜데 운영이 안 되는 공간이 나옵니다.",
     principle: [

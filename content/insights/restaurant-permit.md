@@ -2,7 +2,7 @@
 title: "음식점 오픈 전 인허가, 놓치면 오픈이 밀립니다"
 description: "인테리어가 끝나도 서류가 안 되면 문을 못 엽니다. 공사 전에 확인해야 할 인허가 항목을 순서대로 정리했습니다."
 category: "창업 컨설팅"
-cover: "/concepts/daon.jpg"
+cover: "/insights/restaurant-permit.jpg"
 date: "2026-09-18"
 keywords: ["음식점 영업신고", "다중이용업소", "위생교육", "음식점 인허가", "영업신고 절차"]
 ---
