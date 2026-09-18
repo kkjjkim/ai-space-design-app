@@ -12,25 +12,26 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  // 제목 꼬리에 한글 브랜드명을 둔다 — "브랜드각" 검색에 잡히는 유일한 온페이지 신호.
   title: {
-    default: `${site.tagline} | ${site.brandName}`,
-    template: `%s | ${site.brandName}`,
+    default: `${site.tagline} | ${site.brandNameKo}`,
+    template: `%s | ${site.brandNameKo}`,
   },
   description: site.description,
   keywords: [...site.keywords],
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${site.tagline} | ${site.brandName}`,
+    title: `${site.tagline} | ${site.brandNameKo}`,
     description: site.description,
     url: site.url,
-    siteName: site.brandName,
+    siteName: `${site.brandNameKo} (${site.brandName})`,
     type: "website",
     locale: "ko_KR",
     images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.tagline }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.tagline} | ${site.brandName}`,
+    title: `${site.tagline} | ${site.brandNameKo}`,
     description: site.description,
     images: [site.ogImage],
   },

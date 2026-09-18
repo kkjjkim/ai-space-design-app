@@ -13,8 +13,10 @@ import { faqLd } from "@/lib/seo";
 import { buttonVariants } from "@/components/ui/button";
 
 // 홈 검색 노출용 제목·설명 (화면 히어로 문구와 별개로, 검색 결과에 뜨는 텍스트).
+// 주의: 홈은 루트 레이아웃과 같은 단계라 title 템플릿(`%s | 브랜드각`)이 적용되지 않는다.
+// 브랜드 검색이 가장 먼저 닿는 페이지라 꼬리표를 직접 붙인다.
 export const metadata: Metadata = {
-  title: "창업 컨설팅·브랜드 컨설팅·공간 디자인",
+  title: "창업 컨설팅·브랜드 컨설팅·공간 디자인 | 브랜드각",
   description:
     "국가공인 경영지도사의 창업·사업 전략과 백화점·명품 매장을 시공한 파트너 팀의 공간 브랜딩·프리미엄 인테리어 시공. 창업 첫걸음부터 매출까지 전국 한 팀으로.",
 };

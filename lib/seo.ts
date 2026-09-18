@@ -15,7 +15,8 @@ export function localBusinessLd(): Record<string, unknown> {
     "@type": ["ProfessionalService", "GeneralContractor"],
     "@id": `${site.url}/#business`,
     name: site.business.name, // 폴앤마리
-    alternateName: site.brandName, // PAUL & MARIE
+    // 별칭에 한글 브랜드명을 먼저 둔다 — 검색엔진이 "브랜드각 = 이 사업자"로 묶게.
+    alternateName: [site.brandNameKo, site.brandName],
     description: site.description,
     url: site.url,
     image: abs(site.ogImage),
@@ -52,7 +53,8 @@ export function websiteLd(): Record<string, unknown> {
     "@type": "WebSite",
     "@id": `${site.url}/#website`,
     url: site.url,
-    name: site.brandName,
+    name: site.brandNameKo,
+    alternateName: site.brandName,
     description: site.description,
     inLanguage: "ko-KR",
     publisher: { "@id": `${site.url}/#business` },
@@ -120,7 +122,7 @@ export function articleLd(a: {
     dateModified: a.date,
     inLanguage: "ko-KR",
     mainEntityOfPage: `${site.url}/insights/${a.slug}`,
-    author: { "@type": "Organization", name: site.brandName },
+    author: { "@type": "Organization", name: site.brandNameKo },
     publisher: { "@id": `${site.url}/#business` },
   };
 }
