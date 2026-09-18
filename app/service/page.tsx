@@ -3,6 +3,8 @@ import { Section } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "서비스",
@@ -37,6 +39,8 @@ const SERVICES = [
 export default function ServicePage() {
   return (
     <>
+      <JsonLd data={breadcrumbLd([{ name: "서비스", path: "/service" }])} />
+
       <PageHero
         image="/concepts/nest.jpg"
         eyebrow="Service"

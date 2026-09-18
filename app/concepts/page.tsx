@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/reveal";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd } from "@/lib/seo";
 import { MediaFrame } from "@/components/media-frame";
 import { cn } from "@/lib/utils";
 import { CONCEPTS } from "@/lib/concepts";
@@ -15,6 +17,8 @@ export const metadata: Metadata = {
 export default function ConceptsPage() {
   return (
     <>
+      <JsonLd data={breadcrumbLd([{ name: "컨셉 제안", path: "/concepts" }])} />
+
       <PageHero
         image="/concepts/sora.jpg"
         eyebrow="Concepts"

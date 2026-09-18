@@ -6,7 +6,7 @@ import { Section } from "@/components/section";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
 import { JsonLd } from "@/components/json-ld";
-import { articleLd } from "@/lib/seo";
+import { articleLd, breadcrumbLd } from "@/lib/seo";
 import { getAllInsights, getInsight } from "@/lib/insights";
 
 // 빌드 시 모든 글을 정적 생성 (빠르고 SEO 유리).
@@ -76,6 +76,12 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
           cover: post.cover,
           date: post.date,
         })}
+      />
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "인사이트", path: "/insights" },
+          { name: post.title, path: `/insights/${post.slug}` },
+        ])}
       />
     </>
   );

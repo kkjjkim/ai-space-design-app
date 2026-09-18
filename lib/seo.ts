@@ -36,6 +36,25 @@ export function localBusinessLd(): Record<string, unknown> {
       site.social.youtube,
       site.social.blog,
     ].filter(Boolean),
+    // 자격·면허 — 화면(회사·신뢰 페이지)에 이미 쓰인 문구를 기계가 읽는 형식으로 옮긴 것.
+    // 새로운 주장을 추가하지 않는다.
+    hasCredential: [
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "국가공인 자격",
+        name: "국가공인 경영지도사",
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "면허",
+        name: "실내건축공사업 면허",
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "정부 인정",
+        name: "정부 인정 R&D 전담부서",
+      },
+    ],
     knowsAbout: [
       "창업 컨설팅",
       "브랜드 컨설팅",
@@ -123,6 +142,8 @@ export function articleLd(a: {
     inLanguage: "ko-KR",
     mainEntityOfPage: `${site.url}/insights/${a.slug}`,
     author: { "@type": "Organization", name: site.brandNameKo },
+    // 감수 표기는 직함까지만 (실명 비공개 — 대표님 결정).
+    reviewedBy: { "@type": "Person", name: "국가공인 경영지도사" },
     publisher: { "@id": `${site.url}/#business` },
   };
 }
@@ -138,6 +159,45 @@ export function faqLd(
       "@type": "Question",
       name: it.q,
       acceptedAnswer: { "@type": "Answer", text: it.a },
+    })),
+  };
+}
+
+// 빵부스러기 — 검색 결과에 "홈 > 인사이트 > 글제목" 경로가 뜨게 한다.
+export function breadcrumbLd(
+  trail: { name: string; path: string }[]
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [{ name: "홈", path: "/" }, ...trail].map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      item: `${site.url}${it.path === "/" ? "" : it.path}`,
+    })),
+  };
+}
+
+// 인사이트 전체 — 낱개 글이 아니라 "이 브랜드가 운영하는 콘텐츠 묶음"으로 인식시킨다.
+export function blogLd(
+  posts: { slug: string; title: string; description: string; date: string }[]
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${site.url}/insights#blog`,
+    name: `${site.brandNameKo} 인사이트`,
+    description: "창업·브랜드·공간에 대한 실무 정보.",
+    url: `${site.url}/insights`,
+    inLanguage: "ko-KR",
+    publisher: { "@id": `${site.url}/#business` },
+    blogPost: posts.map((p) => ({
+      "@type": "BlogPosting",
+      headline: p.title,
+      description: p.description,
+      datePublished: p.date,
+      url: `${site.url}/insights/${p.slug}`,
     })),
   };
 }

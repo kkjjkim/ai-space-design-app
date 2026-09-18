@@ -3,6 +3,8 @@ import { Section } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "회사·신뢰",
@@ -39,6 +41,8 @@ const TRUST = [
 export default function CompanyPage() {
   return (
     <>
+      <JsonLd data={breadcrumbLd([{ name: "회사·신뢰", path: "/company" }])} />
+
       <PageHero
         image="/concepts/sodam.jpg"
         eyebrow="Company"

@@ -3,6 +3,8 @@ import { Section } from "@/components/section";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
 import { InsightList } from "@/components/insight-list";
+import { JsonLd } from "@/components/json-ld";
+import { blogLd, breadcrumbLd } from "@/lib/seo";
 import { getAllInsights } from "@/lib/insights";
 
 export const metadata: Metadata = {
@@ -16,6 +18,9 @@ export default function InsightsPage() {
 
   return (
     <>
+      <JsonLd data={blogLd(posts)} />
+      <JsonLd data={breadcrumbLd([{ name: "인사이트", path: "/insights" }])} />
+
       <PageHero
         image="/concepts/mellow.jpg"
         eyebrow="Insights"
