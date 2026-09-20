@@ -37,6 +37,10 @@ export const site = {
       "MkC2zgMQQbj-Wo07wg5iAa6Hvcc5pfhYu_rK49YHOgk", // www.brandgak.com
       "CiLGc9VaMh8Sn8RLoXDCaw6uMsz4R8gN816SI3XwQ_U", // 기존 vercel.app
     ],
+    // 빙 웹마스터 도구 사이트 확인 코드 (msvalidate.01).
+    // 챗지피티 검색은 자체 색인과 함께 빙 계열 색인도 참고한다 — 빙에 없으면 인용 후보에서 빠진다.
+    // 구글 서치콘솔이 이미 인증돼 있으면 빙 웹마스터에서 "GSC에서 가져오기"로 이 코드 없이 끝난다.
+    bing: [] as string[],
     // 네이버 서치어드바이저 사이트 확인 코드 (여러 사이트 지원)
     naver: [
       "8141454da817137204d585651bb68d6e94d373a1", // www.brandgak.com
@@ -71,6 +75,10 @@ export const site = {
     // 비밀 키(TURNSTILE_SECRET_KEY)는 절대 코드에 두지 말고 Vercel 환경변수로만.
     turnstileSiteKey: "0x4AAAAAAD5YbmWz8SD3yjtc",
   },
+  // IndexNow 키 — 새 글·새 페이지를 빙·네이버·얀덱스에 즉시 알린다(구글은 미지원).
+  // 비밀키가 아니다. 규격상 사이트에 공개하게 돼 있다(/indexnow-key.txt 로 서빙).
+  // 값을 바꾸면 그 파일 내용도 같이 바뀌므로 따로 관리할 것이 없다.
+  indexNowKey: "74a29fbd1f7d0a69050d15eef2fcd1d4",
   // 상담 알림 메일 제목 앞에 붙는 프로젝트 식별 태그.
   // 여러 프로젝트를 운영할 때 메일함에서 어느 사이트에서 온 신청인지 구분하기 위함.
   mailTag: "브랜드각",

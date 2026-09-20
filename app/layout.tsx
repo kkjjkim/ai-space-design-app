@@ -49,8 +49,18 @@ export const metadata: Metadata = {
     ...(site.verification.google.length
       ? { google: [...site.verification.google] }
       : {}),
-    ...(site.verification.naver.length
-      ? { other: { "naver-site-verification": [...site.verification.naver] } }
+    // 네이버·빙은 표준 필드가 없어 other 로 내보낸다.
+    ...(site.verification.naver.length || site.verification.bing.length
+      ? {
+          other: {
+            ...(site.verification.naver.length
+              ? { "naver-site-verification": [...site.verification.naver] }
+              : {}),
+            ...(site.verification.bing.length
+              ? { "msvalidate.01": [...site.verification.bing] }
+              : {}),
+          },
+        }
       : {}),
   },
 };
