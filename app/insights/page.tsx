@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Section } from "@/components/section";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
@@ -29,6 +30,21 @@ export default function InsightsPage() {
       />
 
       <Section>
+        {/* 글을 읽으러 온 분과 답을 찾으러 온 분은 다르다. 질문으로 찾는 입구를 위에 둔다. */}
+        <div className="mx-auto mb-14 max-w-2xl rounded-xl border border-border bg-secondary/40 px-6 py-6">
+          <p className="leading-relaxed text-foreground/80">
+            궁금한 게 정해져 있으시면 질문으로 바로 찾으실 수 있습니다. 권리금
+            계산, 창업 자금 배분, 인테리어 평당 단가, 음식점 인허가 순서 등을
+            한 줄 답으로 정리해 뒀습니다.
+          </p>
+          <Link
+            href="/answers"
+            className="mt-4 inline-flex items-center gap-2 font-medium text-primary underline-offset-4 hover:underline"
+          >
+            질문과 답 보기 →
+          </Link>
+        </div>
+
         <InsightList posts={posts} />
       </Section>
 

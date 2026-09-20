@@ -23,8 +23,21 @@ export function SiteHeader() {
   // 홈·서브페이지 모두 상단에 어두운 시네마틱 히어로가 깔린다.
   // 스크롤 전에는 그 위에 떠 있으므로 밝은 글자로 보여야 한다.
   // (히어로가 없는 /complete 등은 제외 → 기본 짙은 글자)
-  const darkHeroRoutes = ["/", "/service", "/company", "/concepts"];
-  const overDarkHero = !scrolled && darkHeroRoutes.includes(pathname);
+  // 하위 경로(글·업종·질문 상세)까지 같은 히어로를 쓰므로 접두사로 본다.
+  // 이걸 빠뜨리면 어두운 사진 위에 짙은 글자가 얹혀 메뉴가 안 보인다.
+  // /complete(신청 완료)와 404 는 히어로가 없어 목록에 넣지 않는다.
+  const darkHeroPrefixes = [
+    "/service",
+    "/company",
+    "/concepts",
+    "/insights",
+    "/interior",
+    "/answers",
+    "/diagnosis",
+  ];
+  const overDarkHero =
+    !scrolled &&
+    (pathname === "/" || darkHeroPrefixes.some((p) => pathname.startsWith(p)));
 
   return (
     <header

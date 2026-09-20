@@ -201,3 +201,56 @@ export function blogLd(
     })),
   };
 }
+
+// 질문 한 건을 담은 페이지(QAPage) — /answers/[slug] 용.
+// FAQPage 는 "여러 문답이 모인 페이지", QAPage 는 "질문 하나에 답하는 페이지"다.
+// 답변 엔진(챗지피티·퍼플렉시티 등)은 질문이 제목이고 답이 본문인 이 형식을 그대로 인용한다.
+export function qaPageLd(a: {
+  slug: string;
+  question: string;
+  askedAs: string[];
+  answerText: string;
+  image: string;
+  keywords: string[];
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "QAPage",
+    inLanguage: "ko-KR",
+    mainEntity: {
+      "@type": "Question",
+      name: a.question,
+      // 같은 질문의 다른 표현 — 어떤 말투로 물어도 이 페이지가 걸리게.
+      alternateName: a.askedAs,
+      text: a.question,
+      answerCount: 1,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: a.answerText,
+        url: `${site.url}/answers/${a.slug}`,
+        author: { "@id": `${site.url}/#business` },
+      },
+    },
+    image: abs(a.image),
+    keywords: a.keywords.join(", "),
+    publisher: { "@id": `${site.url}/#business` },
+  };
+}
+
+// 목록 페이지의 항목 순서를 기계가 읽게 한다 (질문 허브 목록).
+export function itemListLd(
+  name: string,
+  items: { name: string; path: string }[]
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      url: `${site.url}${it.path}`,
+    })),
+  };
+}

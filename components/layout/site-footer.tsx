@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { Instagram } from "lucide-react";
-import { site, navItems } from "@/lib/site";
+import { site, navItems, footerOnlyItems } from "@/lib/site";
 
 export function SiteFooter() {
+  // "상담 신청"은 항상 마지막에 두고, 그 앞에 푸터 전용 링크를 끼운다.
+  const links = [
+    ...navItems.slice(0, -1),
+    ...footerOnlyItems,
+    ...navItems.slice(-1),
+  ];
+
   return (
     <footer className="border-t border-border bg-secondary/40">
       <div className="container grid gap-8 py-14 md:grid-cols-2">
@@ -14,7 +21,7 @@ export function SiteFooter() {
         </div>
         <div className="md:text-right">
           <nav className="flex flex-wrap gap-x-6 gap-y-2 md:justify-end">
-            {navItems.map((item) => (
+            {links.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

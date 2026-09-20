@@ -2,10 +2,11 @@ import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { getAllInsights } from "@/lib/insights";
 import { INDUSTRIES } from "@/lib/industries";
+import { ANSWERS } from "@/lib/answers";
 
 // 검색엔진에 전달할 페이지 목록. /complete(신청 완료)는 색인 제외라 넣지 않는다.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/diagnosis", "/service", "/concepts", "/insights", "/company"];
+  const routes = ["", "/diagnosis", "/answers", "/service", "/concepts", "/insights", "/company"];
   const staticPages: MetadataRoute.Sitemap = routes.map((path) => ({
     url: `${site.url}${path}`,
     changeFrequency: "monthly",
@@ -26,5 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  return [...staticPages, ...industryPages, ...insightPages];
+  // 질문·답 — 답변 엔진이 인용하는 페이지라 글과 같은 가중치로 둔다.
+  const answerPages: MetadataRoute.Sitemap = ANSWERS.map((a) => ({
+    url: `${site.url}/answers/${a.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...industryPages, ...answerPages, ...insightPages];
 }

@@ -93,4 +93,11 @@ export const navItems = [
   { href: "/#apply", label: "상담 신청" },
 ] as const;
 
+// 푸터에만 두는 링크. 상단 내비는 지금 개수가 한계라(중간 화면에서 줄바꿈이 생긴다)
+// 여기에 둔다. 질문·답 허브는 검색·AI를 타고 직접 들어오는 페이지라
+// 내비에 없어도 유입에는 영향이 적다.
+export const footerOnlyItems = [
+  { href: "/answers", label: "질문과 답" },
+] as const;
+
 export const CTA_LABEL = "무료 상담 문의";

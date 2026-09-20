@@ -316,6 +316,16 @@ export default function HomePage() {
             </Reveal>
           ))}
         </div>
+
+        {/* 창업 실무 질문은 별도 허브로 — 여기 FAQ는 우리 서비스에 대한 질문만 둔다 */}
+        <div className="mx-auto mt-10 max-w-3xl text-center">
+          <Link
+            href="/answers"
+            className="inline-flex items-center gap-2 font-medium text-primary underline-offset-4 hover:underline"
+          >
+            권리금·자금·견적·인허가 질문도 정리해 뒀습니다 →
+          </Link>
+        </div>
       </Section>
 
       {/* FAQ 구조화 데이터 (AI 답변엔진 인용용) */}
