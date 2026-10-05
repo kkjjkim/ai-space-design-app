@@ -22,7 +22,8 @@ scripts/to_vertical.sh ~/원본.mp4 public/clip.mp4
 # 2) 음량을 쇼츠 기준(-14 LUFS)으로
 scripts/normalize_audio.sh public/clip.mp4 public/clip_norm.mp4
 
-# 3) 자동 자막 (단어 타임스탬프 JSON + SRT). 첫 실행 때 모델(약 1.6GB)을 받는다
+# 3) 자동 자막 (단어 타임스탬프 JSON + SRT). 첫 실행 때 huggingface.co 에서 모델(약 1.6GB)을 받는다
+#    ※ 클라우드 환경 네트워크 설정에서 huggingface.co 를 허용해야 동작한다
 python3 scripts/transcribe.py public/clip_norm.mp4 public/clip_caps
 
 # 4) props.json 작성
