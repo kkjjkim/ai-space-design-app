@@ -7,7 +7,12 @@
 |---|---|
 | ffmpeg 6.1 (libx264, libass, drawtext, xfade) | 컷편집·인코딩·9:16 변환·음량 정규화 |
 | Remotion 4 + React 19 | 코드로 만드는 모션그래픽(타이틀·단어 자막·전환) 렌더러 |
-| faster-whisper | 음성 → 한국어 자막(단어 단위 타임스탬프) |
+| sherpa-onnx + SenseVoice(2024-07-17) + silero VAD | 음성 → 한국어 자막(단어 단위 타임스탬프). **네트워크 없이** 로컬에서 동작 |
+| sherpa-onnx + Whisper large-v3-turbo ONNX | 더 정확한 인식이 필요할 때 `--engine whisper` (느림, 약 1GB, `scripts/get_models.sh --whisper`) |
+| kiwipiepy | 인식 결과의 한국어 띄어쓰기 교정 |
+| sherpa-onnx + mimic3 ko_KO | 로컬 한국어 TTS. 가이드 음성용. 발음이 투박해 최종 나레이션에는 vidIQ·Higgsfield 보이스를 쓴다 |
+| PySceneDetect + OpenCV | 긴 영상에서 장면 전환 지점 찾기 (쇼츠로 자를 구간 고르기) |
+| @remotion/captions | SRT 파싱, 틱톡 스타일 자막 묶기 |
 | Pillow, numpy, ImageMagick | 썸네일·이미지 합성 |
 | 한글 폰트 | Pretendard(9굵기), Noto Sans KR, Noto Serif KR, Black Han Sans, Do Hyeon, Gothic A1 Black |
 | Chromium headless shell (`/opt/pw-browsers`) | Remotion 렌더용 브라우저. 별도 다운로드 없음 |
@@ -22,9 +27,17 @@ scripts/to_vertical.sh ~/원본.mp4 public/clip.mp4
 # 2) 음량을 쇼츠 기준(-14 LUFS)으로
 scripts/normalize_audio.sh public/clip.mp4 public/clip_norm.mp4
 
-# 3) 자동 자막 (단어 타임스탬프 JSON + SRT). 첫 실행 때 huggingface.co 에서 모델(약 1.6GB)을 받는다
-#    ※ 클라우드 환경 네트워크 설정에서 huggingface.co 를 허용해야 동작한다
+# 3) 자동 자막 (단어 타임스탬프 JSON + SRT). 기본 엔진은 로컬 SenseVoice 라 네트워크가 필요 없다
 python3 scripts/transcribe.py public/clip_norm.mp4 public/clip_caps
+#    더 정확히: --engine whisper  (models/ 에 whisper-turbo 가 있어야 함)
+#    faster-whisper 를 쓰려면: --engine fw  (huggingface.co 허용 필요)
+#    ※ 자동 자막은 반드시 사람이 읽고 오타를 고친다. 특히 고유명사·숫자
+
+# (선택) 긴 원본에서 쇼츠로 자를 구간 찾기
+python3 -m scenedetect -i 원본.mp4 -o out detect-adaptive list-scenes
+
+# (선택) 가이드 나레이션 (로컬 TTS, 임시용)
+python3 scripts/tts.py "첫 문장입니다." public/guide.wav --speed 1.05
 
 # 4) props.json 작성
 cat > props.json <<'JSON'
@@ -45,6 +58,11 @@ pnpm render Shorts out/result.mp4 --props=./props.json --concurrency=4
 ```bash
 node -e 'const c=require("./public/clip_caps.json");const p=require("./props.json");p.captions=c.lines;require("fs").writeFileSync("props.json",JSON.stringify(p,null,1))'
 ```
+
+## 모델 파일
+`models/` 는 git 에 올리지 않는다. 세션 시작 훅이 `scripts/get_models.sh` 로 GitHub 릴리스에서 받는다 (약 310MB).
+Whisper turbo 까지 받으려면 `scripts/get_models.sh --whisper`.
+※ SenseVoice 2025-09-09 int8 판은 한국어를 중국어로 출력하는 불량이 있다. 2024-07-17 판을 쓴다.
 
 ## 템플릿 구조
 - `src/compositions/Shorts.tsx` — 전체 레이아웃. 배경(영상/이미지 켄번즈) + 상단 진행바 + 브랜드 태그 + 훅 타이틀(명조) + 단어 자막

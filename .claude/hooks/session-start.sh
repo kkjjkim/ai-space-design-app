@@ -49,8 +49,15 @@ if [ -f "$VIDEO_DIR/package.json" ]; then
   cp -n "$FONT_DIR"/Pretendard-*.otf "$VIDEO_DIR/public/fonts/" 2>/dev/null || true
 fi
 
-# 4) 자동 자막(faster-whisper) + 이미지 처리 라이브러리
-log "pip install (faster-whisper, pillow, numpy)"
-pip3 install -q --user --disable-pip-version-check pillow numpy faster-whisper 2>&1 | grep -v "WARNING: Running pip" || true
+# 4) 음성 인식·합성(sherpa-onnx), 장면 분할(scenedetect), 이미지 처리 라이브러리
+log "pip install (sherpa-onnx, kiwipiepy, scenedetect, opencv, pillow, numpy, soundfile, faster-whisper)"
+pip3 install -q --user --disable-pip-version-check \
+  sherpa-onnx kiwipiepy scenedetect opencv-python-headless soundfile pillow numpy faster-whisper 2>&1 | grep -v "WARNING: Running pip" || true
+
+# 5) 한국어 음성 인식·합성 모델 (GitHub 릴리스에서 받음. huggingface 는 이 환경에서 막혀 있다)
+if [ -x "$VIDEO_DIR/scripts/get_models.sh" ]; then
+  log "ASR/TTS models"
+  "$VIDEO_DIR/scripts/get_models.sh" 2>&1 | tail -1
+fi
 
 log "done"

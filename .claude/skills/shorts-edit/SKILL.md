@@ -12,12 +12,13 @@ description: 릴스·쇼츠·숏폼 영상을 편집·렌더링할 때 사용. �
 ```bash
 fc-list : family | grep -c Pretendard        # 0이면 .claude/hooks/session-start.sh 를 먼저 실행
 ls tools/video/node_modules/.bin/remotion    # 없으면 (cd tools/video && pnpm install)
+ls tools/video/models/silero_vad.onnx        # 없으면 tools/video/scripts/get_models.sh
 ```
 
 ## 순서
 1. **재료 정리**: 영상·사진·음성 파일을 `tools/video/public/` 에 복사한다. 가로 영상은 `scripts/to_vertical.sh` 로 9:16 으로 바꾼다. 인물이 중앙에 없으면 `--blur` 를 쓴다.
 2. **소리**: `scripts/normalize_audio.sh` 로 -14 LUFS 에 맞춘다. 건너뛰지 않는다.
-3. **자막**: 음성이 있으면 `scripts/transcribe.py` 로 단어 타임스탬프를 뽑는다. huggingface.co 가 막혀 있으면 사용자에게 대본을 받아 `public/sample/captions.json` 형식으로 직접 타이밍을 적는다. 오타·띄어쓰기는 반드시 사람이 읽는 것처럼 고친다.
+3. **자막**: 음성이 있으면 `scripts/transcribe.py` 로 단어 타임스탬프를 뽑는다 (로컬 SenseVoice, 네트워크 불필요). 결과 JSON 을 열어 **오타·고유명사·숫자를 직접 고친다.** 사용자가 대본을 줬다면 인식 결과의 글자를 대본으로 교체하고 타이밍만 유지한다. 인식이 심하게 틀리면 `--engine whisper` 로 다시 돌린다.
 4. **훅 문장**: 첫 1초에 뜰 한 줄을 정한다. 사용자 대본에 없으면 핵심 주장 한 문장을 뽑아 제안한다. 2줄, 각 줄 10자 안팎.
 5. **props.json 작성 → 렌더**: `pnpm render Shorts out/<이름>.mp4 --props=./props.json --concurrency=4`
 6. **눈으로 검수**: 렌더 전후로 `pnpm still Shorts out/check.png --frame=N` 으로 훅 구간·자막 구간·마지막 구간 프레임을 3장 뽑아 Read 로 직접 본다. 글자 잘림, 폰트 깨짐, 안전영역 침범이 있으면 고치고 다시 렌더한다.
@@ -37,4 +38,5 @@ ls tools/video/node_modules/.bin/remotion    # 없으면 (cd tools/video && pnpm
 ## 하지 말 것
 - 사이트 CLAUDE.md 금지선은 여기서도 유효하다: "비교견적" 문구 금지, AI 생성 인테리어를 실제 시공 사례처럼 쓰지 않기, 숫자·실적 지어내지 않기
 - 자막을 못 뽑았다고 자막 없이 내보내지 않는다. 사용자에게 대본을 요청한다
+- 로컬 TTS(mimic3) 목소리를 최종 나레이션으로 쓰지 않는다. 나레이션은 사용자 음성이나 vidIQ·Higgsfield 보이스로
 - 렌더 결과를 보지 않고 "완성"이라고 하지 않는다

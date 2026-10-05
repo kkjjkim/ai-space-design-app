@@ -36,3 +36,4 @@ yarn-error.log*
 /tools/video/public/*.mov
 /tools/video/public/*.wav
 /tools/video/public/*.mp3
+/tools/video/models
