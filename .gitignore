@@ -27,3 +27,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 .vercel
+
+# 릴스·쇼츠 편집 작업장 (tools/video) — 설치물과 렌더 결과물은 올리지 않는다
+/tools/video/node_modules
+/tools/video/out
+/tools/video/public/fonts
+/tools/video/public/*.mp4
+/tools/video/public/*.mov
+/tools/video/public/*.wav
+/tools/video/public/*.mp3
