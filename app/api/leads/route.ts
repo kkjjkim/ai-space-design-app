@@ -31,10 +31,15 @@ function isKoreanMobile(phone: string): boolean {
 }
 
 // Cloudflare Turnstile 검증. 시크릿 미설정 시 캡차 단계 건너뜀.
-async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
+// "config" = 손님 잘못이 아닌 우리 쪽 문제(비밀키 오류·Cloudflare 장애). 이때 막으면
+// 진짜 손님을 잃으므로 통과시키고(허니팟·휴대폰·중복 검사는 그대로) 로그만 남긴다.
+type CaptchaResult = "ok" | "bad-token" | "config";
+const CONFIG_ERRORS = ["missing-input-secret", "invalid-input-secret", "internal-error"];
+
+async function verifyTurnstile(token: string, ip: string): Promise<CaptchaResult> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return true;
-  if (!token) return false;
+  if (!secret) return "ok";
+  if (!token) return "bad-token";
   try {
     const res = await fetch(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -44,10 +49,17 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
         body: new URLSearchParams({ secret, response: token, remoteip: ip }),
       }
     );
-    const data = (await res.json()) as { success?: boolean };
-    return Boolean(data.success);
-  } catch {
-    return false;
+    const data = (await res.json()) as {
+      success?: boolean;
+      "error-codes"?: string[];
+    };
+    if (data.success) return "ok";
+    const codes = data["error-codes"] || [];
+    console.warn("Turnstile 검증 실패:", codes.join(","));
+    return codes.some((c) => CONFIG_ERRORS.includes(c)) ? "config" : "bad-token";
+  } catch (err) {
+    console.error("Turnstile 검증 요청 실패:", err);
+    return "config";
   }
 }
 
@@ -114,11 +126,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  // 2) 캡차(Turnstile) 실패 → 조용히 폐기
+  // 2) 캡차(Turnstile) 실패 → 다시 눌러달라고 안내.
+  // 예전엔 성공처럼 응답하고 버렸는데, 사람 손님도 "접수됐다"고 믿고 떠나 신청이 증발했다.
+  // 봇은 허니팟과 이 단계에서 어차피 걸러진다.
   const ip = clientIp(req);
-  const captchaOk = await verifyTurnstile(String(body.captchaToken || ""), ip);
-  if (!captchaOk) {
-    return NextResponse.json({ ok: true });
+  const captcha = await verifyTurnstile(String(body.captchaToken || ""), ip);
+  if (captcha === "bad-token") {
+    return NextResponse.json(
+      { error: "봇 방지 확인이 만료됐어요. 확인 표시 후 한 번 더 눌러주세요." },
+      { status: 400 }
+    );
   }
 
   // 3) 스키마 검증

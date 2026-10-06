@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import { Button } from "@/components/ui/button";
@@ -34,6 +34,19 @@ const initial: Form = {
 const TURNSTILE_SITE_KEY =
   site.analytics.turnstileSiteKey || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
+type Turnstile = {
+  render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+  reset: (id: string) => void;
+  remove: (id: string) => void;
+  getResponse: (id: string) => string | undefined;
+};
+
+declare global {
+  interface Window {
+    turnstile?: Turnstile;
+  }
+}
+
 // 진단 결과처럼 앞 단계에서 이미 받은 정보는 미리 채워준다.
 // 같은 걸 두 번 묻지 않아야 폼을 끝까지 채운다.
 export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
@@ -43,6 +56,38 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
   const [form, setForm] = useState<Form>({ ...initial, ...defaults });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const captchaRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+
+  // 자동 렌더링(implicit)은 스크립트가 처음 로드될 때 한 번만 화면을 훑는다.
+  // 그래서 링크로 다른 폼 페이지에 넘어가면 위젯이 안 그려져 신청이 막혔다(7/20~10/6 신청 0건).
+  // 폼이 마운트될 때마다 직접 그린다.
+  const renderCaptcha = useCallback(() => {
+    const el = captchaRef.current;
+    if (!TURNSTILE_SITE_KEY || !el || !window.turnstile) return;
+    if (widgetIdRef.current) return;
+    widgetIdRef.current = window.turnstile.render(el, {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: "auto",
+    });
+  }, []);
+
+  useEffect(() => {
+    renderCaptcha();
+    return () => {
+      if (widgetIdRef.current && window.turnstile) {
+        window.turnstile.remove(widgetIdRef.current);
+      }
+      widgetIdRef.current = null;
+    };
+  }, [renderCaptcha]);
+
+  function resetCaptcha() {
+    // 토큰은 한 번만 쓸 수 있어서, 실패 후 다시 누르려면 새 토큰이 필요하다.
+    if (widgetIdRef.current && window.turnstile) {
+      window.turnstile.reset(widgetIdRef.current);
+    }
+  }
 
   function set<K extends keyof Form>(key: K, value: Form[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -53,11 +98,10 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
     setError(null);
     setLoading(true);
     try {
-      // Turnstile 토큰 (위젯이 폼에 주입하는 hidden 입력)
       const captchaToken =
-        formRef.current?.querySelector<HTMLInputElement>(
-          '[name="cf-turnstile-response"]'
-        )?.value || "";
+        (widgetIdRef.current &&
+          window.turnstile?.getResponse(widgetIdRef.current)) ||
+        "";
       if (TURNSTILE_SITE_KEY && !captchaToken) {
         setError("잠시만요, 봇 방지 확인이 끝나면 다시 눌러주세요.");
         setLoading(false);
@@ -81,6 +125,7 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
     } catch (err) {
       setError(err instanceof Error ? err.message : "잠시 후 다시 시도해주세요.");
       setLoading(false);
+      resetCaptcha();
     }
   }
 
@@ -181,14 +226,11 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
       {TURNSTILE_SITE_KEY && (
         <>
           <Script
-            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
             strategy="afterInteractive"
+            onReady={renderCaptcha}
           />
-          <div
-            className="cf-turnstile"
-            data-sitekey={TURNSTILE_SITE_KEY}
-            data-theme="auto"
-          />
+          <div ref={captchaRef} />
         </>
       )}
 
