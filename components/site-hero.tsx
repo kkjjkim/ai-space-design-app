@@ -50,7 +50,7 @@ export function SiteHero() {
             장사 되는 브랜드를 만듭니다.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-background/85">
-            국가공인 경영지도사의 사업 기획 + 백화점·명품 매장을 시공한 파트너 팀.
+            국가공인 경영지도사가 사업 계획부터 공간·시공까지 한 흐름으로.
             <br />
             창업 첫걸음부터 매출까지, 한 곳에서.
           </p>
@@ -58,11 +58,12 @@ export function SiteHero() {
             <Link href="#apply" className={buttonVariants({ size: "lg" })}>
               무료 상담 문의
             </Link>
+            {/* 아직 상담할 단계가 아닌 방문자(대부분 글로 들어온다)에게 주는 낮은 문턱 */}
             <Link
-              href="#concepts"
+              href="/diagnosis"
               className="border-b border-background/50 pb-1 text-base text-background transition-colors hover:border-primary hover:text-primary"
             >
-              컨셉 둘러보기
+              1분 컨셉 진단
             </Link>
           </div>
         </div>

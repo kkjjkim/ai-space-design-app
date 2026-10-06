@@ -265,6 +265,10 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
         <Button type="submit" size="lg" className="w-full" disabled={loading}>
           {loading ? "보내는 중…" : "무료 상담 문의"}
         </Button>
+        {/* PRD 원문 — 남기기 전의 마지막 망설임(영업 전화·계약 압박)을 없앤다 */}
+        <p className="mt-3 text-center text-sm text-muted-foreground">
+          영업 전화 없음 · 상담 후 결정은 자유
+        </p>
       </div>
     </form>
   );

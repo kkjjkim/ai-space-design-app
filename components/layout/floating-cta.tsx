@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { CTA_LABEL } from "@/lib/site";
+import { Phone } from "lucide-react";
+import { CTA_LABEL, site } from "@/lib/site";
 
 // 스크롤을 따라다니는 고정 CTA. AvroKO식 약한 링크로 숨기지 말고 또렷하게.
 export function FloatingCta() {
@@ -30,7 +31,15 @@ export function FloatingCta() {
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       )}
     >
-      <div className="container flex justify-center md:justify-end">
+      <div className="container flex justify-center gap-3 md:justify-end">
+        {/* 휴대폰에서는 글보다 전화가 빠른 손님이 많다 — 폼과 나란히 둔다 */}
+        <a
+          href={`tel:${site.business.phone}`}
+          aria-label={`전화 상담 ${site.business.phone}`}
+          className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-lg md:hidden"
+        >
+          <Phone className="h-5 w-5" />
+        </a>
         <Link
           href={href}
           className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-colors hover:bg-primary/90"
