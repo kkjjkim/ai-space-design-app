@@ -9,6 +9,7 @@ import { breadcrumbLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "회사·신뢰",
   description: "공간 너머 브랜드 가치를 디자인한다.",
+  alternates: { canonical: "/company" },
 };
 
 // 핵심 지표 — 지어내지 않은 사실만. (업계 경력 10년+ / 소셜벤처 확인 / 시공 이력)

@@ -10,6 +10,7 @@ import { VideoBg } from "@/components/video-bg";
 import { LeadForm } from "@/components/lead-form";
 import { JsonLd } from "@/components/json-ld";
 import { faqLd } from "@/lib/seo";
+import { site } from "@/lib/site";
 import { buttonVariants } from "@/components/ui/button";
 
 // 홈 검색 노출용 제목·설명 (화면 히어로 문구와 별개로, 검색 결과에 뜨는 텍스트).
@@ -19,6 +20,10 @@ export const metadata: Metadata = {
   title: "창업 컨설팅·브랜드 컨설팅·공간 디자인 | 브랜드각",
   description:
     "국가공인 경영지도사의 창업·사업 전략과 백화점·명품 매장을 시공한 파트너 팀의 공간 브랜딩·프리미엄 인테리어 시공. 창업 첫걸음부터 매출까지 전국 한 팀으로.",
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": `${site.url}/feed.xml` },
+  },
 };
 
 // FAQ — 실제 서비스 내용에 근거한 문답만. (지어낸 숫자·실적 없음)

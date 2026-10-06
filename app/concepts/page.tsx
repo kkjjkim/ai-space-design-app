@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "컨셉 제안",
   description:
     "“이런 브랜드를 하고 싶다”가 공간으로 어떻게 풀리는지 보여주는 업종별 컨셉 제안.",
+  alternates: { canonical: "/concepts" },
 };
 
 export default function ConceptsPage() {

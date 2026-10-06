@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "서비스",
   description:
     "창업 컨설팅 · 브랜드 컨설팅 · 공간 디자인. 창업 첫걸음부터 매출까지, 한 팀으로.",
+  alternates: { canonical: "/service" },
 };
 
 // 세 가지 색깔을 또렷하게: 창업 / 브랜드 / 공간.

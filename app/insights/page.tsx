@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "인사이트",
   description:
     "창업·브랜드·공간 디자인·인테리어에 관한 실전 인사이트. 매장·카페·레스토랑 창업을 준비하는 사장님을 위한 가이드.",
+  alternates: { canonical: "/insights" },
 };
 
 export default function InsightsPage() {

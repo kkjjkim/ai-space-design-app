@@ -19,8 +19,9 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [...site.keywords],
+  // canonical은 여기 두지 않는다 — 두면 자기 canonical이 없는 하위 페이지가 전부 홈을 가리켜
+  // 구글이 홈의 중복으로 보고 색인에서 뺀다(/service·/concepts·/company·/insights가 그랬다).
   alternates: {
-    canonical: "/",
     // RSS 위치를 <head>로 알린다 — 수집기가 새 글을 스스로 찾아온다.
     types: { "application/rss+xml": `${site.url}/feed.xml` },
   },
