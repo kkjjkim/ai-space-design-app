@@ -5,6 +5,8 @@ import { marked } from "marked";
 import { Section } from "@/components/section";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
+import { InsightDiagnosisCard } from "@/components/insight-diagnosis-card";
+import { ReadTracker } from "@/components/read-tracker";
 import { JsonLd } from "@/components/json-ld";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
 import { getAllInsights, getInsight } from "@/lib/insights";
@@ -43,6 +45,12 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
   if (!post) notFound();
 
   const html = marked.parse(post.content) as string;
+  // 두 번째 소제목 앞에서 본문을 나눠 진단 카드를 끼운다(첫 단락만 읽고 나가는 사람도 보게).
+  // 소제목이 두 개 미만인 짧은 글은 본문 뒤에 둔다.
+  const h2s = [...html.matchAll(/<h2[\s>]/g)];
+  const cut = h2s.length >= 2 ? h2s[1].index ?? html.length : html.length;
+  const htmlTop = html.slice(0, cut);
+  const htmlRest = html.slice(cut);
 
   return (
     <>
@@ -56,8 +64,16 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
       <Section>
         <article
           className="prose-insight mx-auto max-w-2xl"
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: htmlTop }}
         />
+        <InsightDiagnosisCard />
+        {htmlRest && (
+          <article
+            className="prose-insight mx-auto max-w-2xl"
+            dangerouslySetInnerHTML={{ __html: htmlRest }}
+          />
+        )}
+        <ReadTracker slug={post.slug} />
 
         <div className="mx-auto mt-14 max-w-2xl border-t border-border pt-8">
           <Link
