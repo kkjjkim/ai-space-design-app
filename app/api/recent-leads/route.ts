@@ -2,15 +2,12 @@ import { NextResponse } from "next/server";
 import { getSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase";
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+// 모든 페이지 방문마다 불리므로 캐시 없이 두면 방문 수만큼 함수 실행·DB 조회가 쌓인다.
+// 10분 캐시 — 새 신청은 최대 10분 늦게 보일 뿐이다.
+export const revalidate = 600;
 
-// 캐시 없이 항상 최신을 반환 (새 신청이 바로 반영되도록)
 function json(items: unknown[]) {
-  return NextResponse.json(
-    { items },
-    { headers: { "Cache-Control": "no-store, max-age=0" } }
-  );
+  return NextResponse.json({ items });
 }
 
 // 업종은 손님이 직접 적는 자유 입력이라 테스트·스팸으로 엉뚱한 값이 섞인다
