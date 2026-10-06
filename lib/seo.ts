@@ -44,16 +44,6 @@ export function localBusinessLd(): Record<string, unknown> {
         credentialCategory: "국가공인 자격",
         name: "국가공인 경영지도사",
       },
-      {
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: "면허",
-        name: "실내건축공사업 면허",
-      },
-      {
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: "정부 인정",
-        name: "정부 인정 R&D 전담부서",
-      },
     ],
     knowsAbout: [
       "창업 컨설팅",
@@ -115,7 +105,7 @@ export function serviceLd(): Record<string, unknown> {
             "@type": "Service",
             name: "공간 디자인·시공",
             description:
-              "백화점·명품 매장을 시공한 팀의 프리미엄 공간 설계·시공.",
+              "업종·규모에 맞는 시공 파트너와 함께하는 공간 설계·시공.",
           },
         },
       ],

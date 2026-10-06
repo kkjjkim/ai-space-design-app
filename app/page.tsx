@@ -11,7 +11,11 @@ import { LeadForm } from "@/components/lead-form";
 import { JsonLd } from "@/components/json-ld";
 import { faqLd } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { getAllInsights } from "@/lib/insights";
 import { buttonVariants } from "@/components/ui/button";
+
+// 인사이트 글 수가 예약 발행으로 늘어나므로 주기적으로 다시 만든다.
+export const revalidate = 21600;
 
 // 홈 검색 노출용 제목·설명 (화면 히어로 문구와 별개로, 검색 결과에 뜨는 텍스트).
 // 주의: 홈은 루트 레이아웃과 같은 단계라 title 템플릿(`%s | 브랜드각`)이 적용되지 않는다.
@@ -19,7 +23,7 @@ import { buttonVariants } from "@/components/ui/button";
 export const metadata: Metadata = {
   title: "창업 컨설팅·브랜드 컨설팅·공간 디자인 | 브랜드각",
   description:
-    "국가공인 경영지도사의 창업·사업 전략과 백화점·명품 매장을 시공한 파트너 팀의 공간 브랜딩·프리미엄 인테리어 시공. 창업 첫걸음부터 매출까지 전국 한 팀으로.",
+    "국가공인 경영지도사가 창업·사업 전략부터 브랜드 컨셉, 공간 디자인·인테리어 시공까지 한 흐름으로 함께합니다. 창업 첫걸음부터 매출까지, 전국 상담.",
   alternates: {
     canonical: "/",
     types: { "application/rss+xml": `${site.url}/feed.xml` },
@@ -55,7 +59,7 @@ const FAQS = [
 const COMPARISON = [
   { label: "목적", them: "예쁘게 꾸미기", us: "매출 나는 브랜드 만들기" },
   { label: "방식", them: "기획·설계·시공 따로따로", us: "사업 기획부터 시공·운영까지 한 팀" },
-  { label: "근거", them: "디자이너 감각에 의존", us: "고객 동선·체류시간 데이터 기반(특허 출원)" },
+  { label: "근거", them: "디자이너 감각에 의존", us: "업종·손님·동선을 먼저 따진 설계" },
   { label: "사후", them: "시공 끝나면 끝", us: "오픈 후 매출 데이터로 개선" },
 ];
 
@@ -78,8 +82,8 @@ const STEPS = [
   },
   {
     n: "03",
-    t: "검증된 프리미엄 시공",
-    d: "백화점·명품 매장을 시공한 팀이 그대로 구현.",
+    t: "프로젝트에 맞는 시공",
+    d: "업종·규모에 맞는 시공 파트너와, 기획 의도 그대로.",
     // 완성 매장이 실제 시공작처럼 보이지 않도록, 시공 과정(도면·자재) 느낌 이미지 + 영상 제거
     img: "/insights/interior-quote-guide.png",
     video: "",
@@ -87,19 +91,44 @@ const STEPS = [
   {
     n: "04",
     t: "오픈 후 매출까지",
-    d: "동선·체류시간 데이터로 계속 개선.",
+    d: "오픈 후 매출을 같이 보며 계속 손봅니다.",
     img: "/concepts/plate.jpg",
     video: "/videos/plate.mp4",
   },
 ];
 
-const BADGES = [
-  "공간 최적화 특허 출원",
-  "정부 인정 R&D 전담부서",
-  "실내건축공사업 면허 보유",
+// 신청 후 진행 — 신청 폼 옆에 둔다.
+const APPLY_STEPS = [
+  "남겨주신 연락처로 연락드려 업종·자리·예산·일정을 듣습니다.",
+  "지금 단계에서 먼저 할 일과 아껴야 할 지출을 정리해 드립니다.",
+  "그다음 진행은 그때 정하셔도 됩니다. 상담만 받으셔도 괜찮습니다.",
+];
+
+// 증거 — 실제 시공 사례가 아직 없으니, 방문자가 지금 바로 확인할 수 있는 사실만 쓴다.
+// (이전 파트너의 백화점·명품 시공 실적·특허·면허 문구는 10/6 대표 결정으로 전부 뺐다)
+const PROOFS = [
+  {
+    t: "국가공인 경영지도사",
+    d: "중소벤처기업부에 등록된 국가자격입니다. 공사 이야기 전에, 되는 장사인지부터 봅니다.",
+    href: "/company",
+    cta: "어떻게 일하는지",
+  },
+  {
+    t: "생각을 먼저 공개합니다",
+    d: "", // 글 수는 빌드 시점에 센다
+    href: "/insights",
+    cta: "인사이트 읽기",
+  },
+  {
+    t: "지어낸 실적은 쓰지 않습니다",
+    d: "사이트의 매장 이미지는 컨셉 예시라고 밝혀 둡니다. 확인되지 않은 숫자와 실적은 싣지 않습니다.",
+    href: "/concepts",
+    cta: "컨셉 예시 보기",
+  },
 ];
 
 export default function HomePage() {
+  const insightCount = getAllInsights().length;
   return (
     <>
       {/* 1) 히어로 */}
@@ -261,28 +290,41 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 6) 증거 (신뢰) */}
+      {/* 6) 증거 (신뢰) — "업체 말은 다 비슷하다"는 의심에, 말 대신 확인 가능한 것으로 답한다 */}
       <Section>
         <Reveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold md:text-4xl">
-            대형 백화점과 글로벌 명품 매장을 만들던 팀입니다.
+            업체 말은 다 비슷하니까, 먼저 확인하세요.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-            신세계·롯데·현대 백화점과 글로벌 명품 브랜드 매장을 시공해 왔습니다.
-            까다로운 대형 유통사가 믿고 맡긴 실력을, 이제 당신의 매장에 씁니다.
+            상담 전에 저희가 어떻게 생각하고 일하는지 전부 열어 두었습니다.
           </p>
         </Reveal>
 
-        <Reveal className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">
-          {BADGES.map((b) => (
-            <span
-              key={b}
-              className="rounded-full border border-primary/30 bg-primary/5 px-4 py-2 text-sm font-medium text-primary"
+        <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+          {PROOFS.map((p, i) => (
+            <Reveal
+              key={p.t}
+              delay={i * 80}
+              className="flex flex-col rounded-2xl border border-border bg-card p-7 shadow-sm"
             >
-              {b}
-            </span>
+              <span className="text-sm font-semibold tracking-[0.2em] text-primary">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="mt-4 text-lg font-semibold leading-snug">{p.t}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                {p.d ||
+                  `창업·인테리어 인사이트 ${insightCount}편과 1분 컨셉 진단을 무료로 열어 두었습니다. 읽어보고 맞다 싶을 때 연락 주세요.`}
+              </p>
+              <Link
+                href={p.href}
+                className="mt-5 text-sm font-medium text-primary hover:underline"
+              >
+                {p.cta} →
+              </Link>
+            </Reveal>
           ))}
-        </Reveal>
+        </div>
       </Section>
 
       {/* 7) 가격 뒤집기 — 풀블리드 시네마틱 밴드 */}
@@ -337,6 +379,28 @@ export default function HomePage() {
               아직 정리 안 되셨어도 괜찮습니다.
               <br />
               “이런 가게 하고 싶다” 한마디면 시작이에요.
+            </p>
+
+            {/* 신청 뒤에 무슨 일이 생기는지 모르면 안 남긴다 — 다음 단계와 부담 없음을 먼저 말한다 */}
+            <ol className="mt-10 space-y-5">
+              {APPLY_STEPS.map((step, i) => (
+                <li key={step} className="flex gap-4">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                    {i + 1}
+                  </span>
+                  <span className="leading-relaxed text-foreground/80">{step}</span>
+                </li>
+              ))}
+            </ol>
+
+            <p className="mt-10 text-foreground/70">
+              전화가 편하시면{" "}
+              <a
+                href={`tel:${site.business.phone}`}
+                className="font-semibold text-foreground underline-offset-4 hover:text-primary hover:underline"
+              >
+                {site.business.phone}
+              </a>
             </p>
           </Reveal>
           <div className="rounded-xl border border-border bg-card p-6 shadow-sm md:p-8">

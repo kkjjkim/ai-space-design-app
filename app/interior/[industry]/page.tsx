@@ -123,9 +123,9 @@ export default function IndustryPage({
             공사보다 먼저, 되는 장사인지부터
           </h2>
           <p className="mt-6 leading-relaxed text-muted-foreground">
-            국가공인 경영지도사가 사업·브랜드 방향을 먼저 잡고, 백화점·명품 매장을
-            시공한 파트너 팀이 공간을 만듭니다. 컨설팅 따로 시공 따로가 아니라 한
-            팀으로 이어집니다.
+            국가공인 경영지도사가 사업·브랜드 방향을 먼저 잡고, 업종에 맞는 시공
+            파트너와 공간을 만듭니다. 컨설팅 따로 시공 따로가 아니라 한 흐름으로
+            이어집니다.
           </p>
           <p className="mt-4 leading-relaxed text-muted-foreground">
             컨셉 없이 공사부터 시작하면 큰 돈을 써도 어디서 본 듯한 가게가 되기

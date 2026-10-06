@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { Section } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { PageHero } from "@/components/page-hero";
+import { getAllInsights } from "@/lib/insights";
 import { CtaSection } from "@/components/cta-section";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbLd } from "@/lib/seo";
+
+// 인사이트 글 수가 예약 발행으로 늘어나므로 주기적으로 다시 만든다.
+export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: "회사·신뢰",
@@ -12,34 +16,38 @@ export const metadata: Metadata = {
   alternates: { canonical: "/company" },
 };
 
-// 핵심 지표 — 지어내지 않은 사실만. (업계 경력 10년+ / 소셜벤처 확인 / 시공 이력)
-const FACTS = [
-  { value: "10년+", label: "시공 파트너 업계 경력" },
-  { value: "소셜벤처", label: "확인 기업" },
-  { value: "백화점·명품", label: "매장 시공 팀" },
-];
+// 핵심 지표 — 방문자가 지금 확인할 수 있는 사실만.
+// (이전 시공 파트너의 경력·소셜벤처·백화점 시공·특허·면허 문구는 10/6 대표 결정으로 뺐다)
+function facts(insightCount: number) {
+  return [
+    { value: "국가공인", label: "경영지도사가 직접 봅니다" },
+    { value: `${insightCount}편`, label: "공개한 창업·인테리어 인사이트" },
+    { value: "0원", label: "상담·컨셉 진단 비용" },
+  ];
+}
 
-// 신뢰 근거 — PRD 회사·신뢰
+// 일하는 원칙 — 약속할 수 있는 것만.
 const TRUST = [
   {
-    title: "공간 최적화 시스템 특허 출원",
-    desc: "고객 동선·체류시간을 데이터로 설계합니다.",
+    title: "공사 전에 사업부터",
+    desc: "업종·자리·예산이 되는 장사인지부터 봅니다. 공사는 그다음입니다.",
   },
   {
-    title: "정부 인정 R&D 전담부서",
-    desc: "감(感)이 아니라 연구로 공간을 검증합니다.",
+    title: "프로젝트마다 맞는 시공 파트너",
+    desc: "업종·규모·지역에 맞는 파트너를 매번 직접 고르고, 기획한 사람이 끝까지 챙깁니다.",
   },
   {
-    title: "실내건축공사업 면허",
-    desc: "정식 면허를 갖춘 팀이 직접 시공합니다.",
+    title: "지어낸 실적은 쓰지 않습니다",
+    desc: "매장 이미지는 컨셉 예시라고 밝혀 둡니다. 확인되지 않은 숫자와 실적은 싣지 않습니다.",
   },
   {
-    title: "사업자·납세 투명성",
-    desc: "믿고 맡길 수 있게, 투명하게 운영합니다.",
+    title: "사업자 정보 공개",
+    desc: "사업자 정보와 연락처를 화면 아래에 공개합니다. 누가 하는지 알고 맡기실 수 있게.",
   },
 ];
 
 export default function CompanyPage() {
+  const FACTS = facts(getAllInsights().length);
   return (
     <>
       <JsonLd data={breadcrumbLd([{ name: "회사·신뢰", path: "/company" }])} />
@@ -55,12 +63,12 @@ export default function CompanyPage() {
         {/* 핵심 지표 — 말보다 사실로 */}
         <Reveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold leading-snug md:text-4xl">
-            말보다, 쌓아온 것으로 증명합니다.
+            말보다, 확인할 수 있는 것으로.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-            공간 브랜딩·시공을 맡는 파트너 팀은 업계 경력 10년 이상.
+            국가공인 경영지도사가 사업 계획부터 공간·시공까지 한 흐름으로 봅니다.
             <br />
-            거기에 국가공인 경영지도사의 사업 전략이 한 팀으로 더해집니다.
+            어떻게 생각하는지는 인사이트와 컨셉 진단에 전부 열어 두었습니다.
           </p>
         </Reveal>
 
@@ -110,7 +118,7 @@ export default function CompanyPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/concepts/ember.jpg"
-                alt="대표 · 팀"
+                alt="컨셉 예시 공간"
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div
@@ -123,12 +131,12 @@ export default function CompanyPage() {
                 People
               </p>
               <h2 className="mt-4 text-2xl font-bold md:text-[1.75rem]">
-                검증된 사람들이 만듭니다.
+                상담한 사람이 끝까지 봅니다.
               </h2>
               <p className="mt-5 leading-relaxed text-background/85">
-                팀에는 디자인 전공자와 업계 경력 10년 이상의 설계·시공 전문가가
-                다수 함께합니다. 백화점·명품 매장을 만들던 실력을, 이제 당신의
-                매장에 씁니다.
+                처음 이야기를 듣는 사람과 방향을 잡는 사람이 같습니다. 국가공인
+                경영지도사가 사업 계획부터 공간·시공 과정까지 챙기고, 시공은
+                프로젝트에 맞는 파트너와 함께합니다.
               </p>
             </div>
           </div>

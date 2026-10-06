@@ -34,7 +34,7 @@ const SERVICES = [
   {
     eyebrow: "Space Design",
     name: "공간 디자인·시공",
-    desc: "컨셉을 공간으로. 백화점·명품 매장을 시공한 파트너 팀이 프리미엄으로 설계·시공합니다.",
+    desc: "컨셉을 공간으로. 업종·규모에 맞는 시공 파트너를 프로젝트마다 골라, 기획 의도 그대로 설계·시공합니다.",
     image: "/concepts/plate.jpg",
   },
 ];
