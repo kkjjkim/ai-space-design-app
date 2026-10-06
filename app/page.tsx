@@ -12,6 +12,7 @@ import { JsonLd } from "@/components/json-ld";
 import { faqLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { getAllInsights } from "@/lib/insights";
+import { CONCEPTS } from "@/lib/concepts";
 import { buttonVariants } from "@/components/ui/button";
 
 // 인사이트 글 수가 예약 발행으로 늘어나므로 주기적으로 다시 만든다.
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
 const FAQS = [
   {
     q: "인테리어만 해주나요, 사업·브랜드 컨설팅도 하나요?",
-    a: "국가공인 경영지도사의 창업·사업 전략과 검증된 시공 파트너의 공간 설계·시공을 한 팀으로 제공합니다. 창업 첫걸음부터 매출까지 이어서 함께합니다.",
+    a: "국가공인 경영지도사의 창업·사업 전략과 업종에 맞는 시공 파트너의 공간 설계·시공을 한 흐름으로 이어 갑니다. 창업 첫걸음부터 매출까지 이어서 함께합니다.",
   },
   {
     q: "상담은 무료인가요?",
@@ -120,10 +121,10 @@ const PROOFS = [
     cta: "인사이트 읽기",
   },
   {
-    t: "지어낸 실적은 쓰지 않습니다",
-    d: "사이트의 매장 이미지는 컨셉 예시라고 밝혀 둡니다. 확인되지 않은 숫자와 실적은 싣지 않습니다.",
+    t: "컨셉을 먼저 보여드립니다",
+    d: "", // 컨셉 수는 데이터에서 센다
     href: "/concepts",
-    cta: "컨셉 예시 보기",
+    cta: "컨셉 제안 보기",
   },
 ];
 
@@ -314,7 +315,9 @@ export default function HomePage() {
               <h3 className="mt-4 text-lg font-semibold leading-snug">{p.t}</h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                 {p.d ||
-                  `창업·인테리어 인사이트 ${insightCount}편과 1분 컨셉 진단을 무료로 열어 두었습니다. 읽어보고 맞다 싶을 때 연락 주세요.`}
+                  (p.href === "/insights"
+                    ? `창업·인테리어 인사이트 ${insightCount}편과 1분 컨셉 진단을 무료로 열어 두었습니다. 읽어보고 맞다 싶을 때 연락 주세요.`
+                    : `업종별 컨셉 제안 ${CONCEPTS.length}가지로, "이런 가게 하고 싶다"가 공간으로 어떻게 풀리는지 미리 보실 수 있습니다.`)}
               </p>
               <Link
                 href={p.href}
@@ -327,10 +330,11 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* 7) 가격 뒤집기 — 풀블리드 시네마틱 밴드 */}
+      {/* 7) 컨셉이 곧 좋은 인테리어의 시작 — 풀블리드 시네마틱 밴드.
+          "컨설팅은 추가 비용이 아니라"처럼 부정하면 오히려 비용을 먼저 떠올리게 해서 바꿨다(10/6 대표 지적) */}
       <CinematicBand
         src="/concepts/ember.jpg"
-        title="컨설팅은 ‘추가 비용’이 아니라, 더 큰 손실을 줄이는 첫 단계입니다."
+        title="인테리어를 잘하는 첫 단계는, 무엇을 팔 가게인지 정하는 것입니다."
         body={
           <>
             정말 비싼 건, 큰 돈 들여 만든 평범한 가게예요.
@@ -338,7 +342,7 @@ export default function HomePage() {
             방향을 먼저 잡으면 헛돈을 줄이고 더 오래갑니다.
           </>
         }
-        caption="INVEST IN DIRECTION"
+        caption="DESIGN STARTS WITH DIRECTION"
         align="right"
         minH="min-h-[70vh]"
       />
