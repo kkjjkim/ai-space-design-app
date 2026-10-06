@@ -11,6 +11,7 @@ import { Select } from "@/components/ui/select";
 import { BUDGET_OPTIONS } from "@/lib/leads";
 import { readSource } from "@/lib/attribution";
 import { site } from "@/lib/site";
+import { track } from "@/lib/track";
 
 type Form = {
   name: string;
@@ -58,6 +59,16 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
   const [error, setError] = useState<string | null>(null);
   const captchaRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+  const startedRef = useRef(false);
+
+  // 폼을 건드렸는데 제출을 안 했다면 폼 자체가 문제다(칸이 많거나 부담스럽거나).
+  // 진단 결과에서 온 폼인지 구분해야 진단→신청 전환이 따로 보인다.
+  const formType = defaults?.message ? "diagnosis" : "direct";
+  function onFirstInput() {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    track("form_start", { form_type: formType });
+  }
 
   // 자동 렌더링(implicit)은 스크립트가 처음 로드될 때 한 번만 화면을 훑는다.
   // 그래서 링크로 다른 폼 페이지에 넘어가면 위젯이 안 그려져 신청이 막혔다(7/20~10/6 신청 0건).
@@ -97,12 +108,14 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    track("form_submit", { form_type: formType });
     try {
       const captchaToken =
         (widgetIdRef.current &&
           window.turnstile?.getResponse(widgetIdRef.current)) ||
         "";
       if (TURNSTILE_SITE_KEY && !captchaToken) {
+        track("form_error", { form_type: formType, reason: "captcha_missing" });
         setError("잠시만요, 봇 방지 확인이 끝나면 다시 눌러주세요.");
         setLoading(false);
         return;
@@ -120,7 +133,10 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "신청 중 문제가 발생했습니다.");
+      if (!res.ok) {
+        track("form_error", { form_type: formType, reason: `http_${res.status}` });
+        throw new Error(data.error || "신청 중 문제가 발생했습니다.");
+      }
       router.push("/complete");
     } catch (err) {
       setError(err instanceof Error ? err.message : "잠시 후 다시 시도해주세요.");
@@ -130,7 +146,12 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} className="grid gap-5">
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      onInput={onFirstInput}
+      className="grid gap-5"
+    >
       {/* 허니팟 — 사람 눈에 안 보이는 칸. 봇이 채우면 서버가 폐기한다. */}
       <div
         aria-hidden

@@ -9,15 +9,7 @@ import { Eyebrow } from "@/components/section";
 import { QUESTIONS, diagnose, type Answers } from "@/lib/diagnosis";
 import { CONCEPTS } from "@/lib/concepts";
 import { cn } from "@/lib/utils";
-
-// 진단을 끝까지 마친 사람만 GA4에 집계한다 — 중간 이탈과 구분하기 위해.
-// (ConversionTracker 와 같은 방식으로 gtag 가 있을 때만 호출한다)
-function trackDiagnosisComplete() {
-  const w = window as unknown as {
-    gtag?: (...args: unknown[]) => void;
-  };
-  w.gtag?.("event", "diagnosis_complete");
-}
+import { track } from "@/lib/track";
 
 // 한 번에 한 질문만 보여준다. 긴 폼을 한 화면에 깔면 끝까지 안 채운다.
 export function DiagnosisWizard({
@@ -36,8 +28,17 @@ export function DiagnosisWizard({
     if (!question) return;
     const next = { ...answers, [question.key]: value };
     setAnswers(next);
+    // 단계별로 남겨야 어느 질문에서 이탈하는지 보인다. 완료는 선택값까지 남겨
+    // 어떤 업종·단계의 손님이 오는지 집계한다(개인정보 아님).
+    if (step === 0) track("diagnosis_start", { industry: value });
+    track("diagnosis_step", { step: step + 1, question: question.key });
     if (step + 1 >= QUESTIONS.length) {
-      trackDiagnosisComplete();
+      track("diagnosis_complete", {
+        industry: next.industry,
+        stage: next.stage,
+        size: next.size,
+        concern: next.concern,
+      });
     }
     setStep(step + 1);
   }
