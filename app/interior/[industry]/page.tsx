@@ -12,6 +12,9 @@ import { getAllInsights } from "@/lib/insights";
 import { CONCEPTS } from "@/lib/concepts";
 import { site } from "@/lib/site";
 
+// 예약 글이 날짜가 되면 나타나도록 6시간마다 다시 만든다.
+export const revalidate = 21600;
+
 export function generateStaticParams() {
   return INDUSTRIES.map((i) => ({ industry: i.slug }));
 }

@@ -7,6 +7,9 @@ import { JsonLd } from "@/components/json-ld";
 import { blogLd, breadcrumbLd } from "@/lib/seo";
 import { getAllInsights } from "@/lib/insights";
 
+// 예약 글이 날짜가 되면 나타나도록 6시간마다 다시 만든다.
+export const revalidate = 21600;
+
 export const metadata: Metadata = {
   title: "인사이트",
   description:

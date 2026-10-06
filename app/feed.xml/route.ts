@@ -1,6 +1,9 @@
 import { site } from "@/lib/site";
 import { getAllInsights } from "@/lib/insights";
 
+// 예약 글이 날짜가 되면 나타나도록 6시간마다 다시 만든다.
+export const revalidate = 21600;
+
 // RSS 피드. 네이버 서치어드바이저·구글이 새 글을 빨리 잡아가는 통로다.
 // 사이트맵은 "어떤 주소가 있나", RSS는 "무엇이 새로 올라왔나"를 알린다.
 

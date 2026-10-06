@@ -9,6 +9,9 @@ import { JsonLd } from "@/components/json-ld";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
 import { getAllInsights, getInsight } from "@/lib/insights";
 
+// 예약 글이 날짜가 되면 나타나도록 6시간마다 다시 만든다.
+export const revalidate = 21600;
+
 // 빌드 시 모든 글을 정적 생성 (빠르고 SEO 유리).
 export function generateStaticParams() {
   return getAllInsights().map((p) => ({ slug: p.slug }));

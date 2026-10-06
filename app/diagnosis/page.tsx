@@ -7,6 +7,9 @@ import { breadcrumbLd, faqLd } from "@/lib/seo";
 import { getAllInsights } from "@/lib/insights";
 import { QUESTIONS } from "@/lib/diagnosis";
 
+// 예약 글이 날짜가 되면 나타나도록 6시간마다 다시 만든다.
+export const revalidate = 21600;
+
 // 검색 의도가 "업체 찾기"가 아니라 "내가 뭘 해야 하지"인 사람을 받는 페이지.
 // 인사이트 글은 읽고 나가지만, 도구는 입력하고 결과를 받으려 남는다.
 export const metadata: Metadata = {
