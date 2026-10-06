@@ -34,7 +34,12 @@ export async function GET() {
     });
     if (error || !Array.isArray(data)) return json([]);
 
-    const items = data.map((r: Record<string, unknown>) => ({
+    // 최근 30일 안의 신청만 쓴다. 오래된 신청을 날짜 없이 돌리면 "지금 신청이 들어오는 중"처럼 보여
+    // 사실과 다른 소셜 프루프가 된다(10/6 확인: 7월의 테스트·스팸 4건이 석 달째 돌고 있었다).
+    const since = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const items = data
+      .filter((r: Record<string, unknown>) => Date.parse(String(r.created_at ?? "")) >= since)
+      .map((r: Record<string, unknown>) => ({
       name: String(r.masked_name ?? "고객님"),
       industry: industryLabel(r.industry),
       at: String(r.created_at ?? ""),
