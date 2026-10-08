@@ -14,6 +14,14 @@ function json(items: unknown[]) {
 // (예: 인테리어 상담에 "Technology"). 한글이 없는 값은 라벨로 쓰지 않고 비운다.
 // 신청 건 자체는 그대로 노출한다 — "OO님이 상담을 신청했어요"로 표시된다.
 const HAS_KOREAN = /[가-힣]/;
+// 점검용 신청(이름·업종에 "테스트"/"test", 이름이 "["로 시작)은 손님에게 보이지 않게 뺀다.
+// 운영 폼을 실제로 눌러 점검하는 일이 있어서다(10/8 Aside 점검 신청).
+const TEST_MARK = /테스트|test/i;
+function isTestLead(r: Record<string, unknown>): boolean {
+  const name = String(r.masked_name ?? "");
+  return TEST_MARK.test(name) || name.startsWith("[") || TEST_MARK.test(String(r.industry ?? ""));
+}
+
 function industryLabel(v: unknown): string {
   const s = v ? String(v).trim() : "";
   return HAS_KOREAN.test(s) ? s : "";
@@ -36,6 +44,7 @@ export async function GET() {
     const since = Date.now() - 30 * 24 * 60 * 60 * 1000;
     const items = data
       .filter((r: Record<string, unknown>) => Date.parse(String(r.created_at ?? "")) >= since)
+      .filter((r: Record<string, unknown>) => !isTestLead(r))
       .map((r: Record<string, unknown>) => ({
       name: String(r.masked_name ?? "고객님"),
       industry: industryLabel(r.industry),
