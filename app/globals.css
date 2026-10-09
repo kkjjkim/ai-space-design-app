@@ -78,7 +78,7 @@
     @apply text-[1.0625rem] leading-[1.85] text-foreground/85;
   }
   .prose-insight h2 {
-    @apply mt-12 mb-4 text-2xl font-bold text-foreground;
+    @apply mt-14 mb-5 font-display text-[1.65rem] font-semibold leading-snug tracking-[-0.01em] text-foreground;
   }
   .prose-insight h3 {
     @apply mt-8 mb-3 text-xl font-bold text-foreground;
@@ -123,4 +123,16 @@ html.lenis body {
 }
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+/* 인쇄(자료 받기 예산표 등) — 메뉴·떠 있는 버튼·알림은 빼고 본문만 */
+@media print {
+  header,
+  footer,
+  [data-print-hide] {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
 }

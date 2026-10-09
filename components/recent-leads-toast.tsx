@@ -51,6 +51,7 @@ export function RecentLeadsToast() {
 
   return (
     <div
+      data-print-hide
       aria-live="polite"
       className={cn(
         "fixed bottom-5 left-5 z-30 max-w-[86vw] transition-all duration-500",

@@ -1,41 +1,47 @@
 import type { Metadata } from "next";
-import { Section } from "@/components/section";
+import Link from "next/link";
+import { Section, SectionHeading } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
+import { TwoExperts } from "@/components/home/two-experts";
+import { ProcessFlow } from "@/components/home/process-flow";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbLd } from "@/lib/seo";
-import Link from "next/link";
 import { INDUSTRIES } from "@/lib/industries";
 
 export const metadata: Metadata = {
-  title: "서비스",
+  title: "서비스 — 창업 컨설팅·브랜드 컨설팅·공간 설계와 시공",
   description:
-    "창업 컨설팅 · 브랜드 컨설팅 · 공간 디자인. 창업 첫걸음부터 오픈까지, 한 팀으로.",
+    "국가공인 경영지도사의 창업·브랜드 컨설팅과, 백화점·대형 쇼핑몰 브랜드 매장을 시공해 온 팀의 공간 설계·시공. 창업 첫걸음부터 오픈까지 한 테이블에서.",
   alternates: { canonical: "/service" },
 };
 
-// 세 가지 색깔을 또렷하게: 창업 / 브랜드 / 공간.
-// 국가공인 경영지도사(사업·브랜드) + 검증된 시공 파트너(공간)가 한 팀으로 이어서 만든다.
-// 시공 파트너는 프로젝트마다 운영자가 선정하므로, 특정 업체명을 화면에 노출하지 않는다.
+// 세 가지 일 — 무엇을 해주는지 구체적으로(범위). 오픈 후 운영 컨설팅은 별도 계약이라 여기 넣지 않는다.
 const SERVICES = [
   {
-    eyebrow: "Consulting",
+    n: "01",
     name: "창업 컨설팅",
-    desc: "국가공인 경영지도사가 “되는 장사인지”부터. 사업 기획·자금·운영 전략을 먼저 잡습니다.",
-    image: "/concepts/cityline.jpg",
+    who: "국가공인 경영지도사",
+    lead: "되는 장사인지부터 숫자로 봅니다.",
+    items: ["상권·자리 타당성 검토", "권리금·임대 조건 판단", "예산 배분과 자금 계획 (정책자금 포함)", "사업계획서"],
+    image: "/hero/stage-sketch-1280.webp",
   },
   {
-    eyebrow: "Branding",
+    n: "02",
     name: "브랜드 컨설팅",
-    desc: "“왜 꼭 여기 와야 하지?” 손님을 부르는 브랜드 컨셉과 방향을 만듭니다.",
-    image: "/concepts/daon.jpg",
+    who: "국가공인 경영지도사",
+    lead: "손님이 찾아올 이유를 한 문장으로 잡습니다.",
+    items: ["브랜드 컨셉 한 문장", "이름·상품 구성·가격대", "컨셉 보드 (키워드·색·재료)", "오픈 전 홍보 방향"],
+    image: "/concepts/board-select-960.webp",
   },
   {
-    eyebrow: "Space Design",
-    name: "공간 디자인·시공",
-    desc: "컨셉을 공간으로. 업종·규모에 맞는 시공 파트너를 프로젝트마다 골라, 기획 의도 그대로 설계·시공합니다.",
-    image: "/concepts/plate.jpg",
+    n: "03",
+    name: "공간 설계·시공",
+    who: "백화점·대형 쇼핑몰 브랜드 매장 시공팀",
+    lead: "컨셉을 재료와 동선으로 옮겨 짓습니다.",
+    items: ["평면·동선·도면 설계", "서면 견적과 공정표", "설비·인허가 협의", "브랜드 매장 기준의 공정·마감 관리"],
+    image: "/hero/stage-day-1280.webp",
   },
 ];
 
@@ -45,102 +51,69 @@ export default function ServicePage() {
       <JsonLd data={breadcrumbLd([{ name: "서비스", path: "/service" }])} />
 
       <PageHero
-        image="/concepts/nest.jpg"
-        eyebrow="Service"
-        title="사업의 뇌 + 공간의 뇌"
-        subtitle="창업·브랜드 전략과 공간 디자인이 한 팀으로 움직입니다."
+        image="/hero/stage-night-1920.webp"
+        eyebrow="서비스"
+        title="사업과 공간을, 한 테이블에서."
+        subtitle="창업 컨설팅과 브랜드 컨설팅은 국가공인 경영지도사가, 공간 설계와 시공은 백화점·대형 쇼핑몰 브랜드 매장을 시공해 온 팀이 맡습니다."
+        note="컨셉 분위기 예시입니다."
       />
 
       <Section>
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-semibold leading-snug md:text-4xl">
-            창업부터 오픈까지, 세 가지가 한 팀으로.
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-            따로 맡기면 방향이 흩어집니다. 창업 전략·브랜드·공간을 한 팀이
-            <br />
-            끊김 없이 이어서 만듭니다.
-          </p>
-        </Reveal>
-
-        <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+        <SectionHeading
+          eyebrow="하는 일"
+          title="세 가지 일을, 끊기지 않게 잇습니다."
+          lead="따로 맡기면 기획 의도가 현장에서 바뀝니다. 필요한 것만 맡기셔도 되고, 처음부터 끝까지 맡기셔도 됩니다."
+        />
+        <div className="mt-16 grid gap-6 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
-            <Reveal key={s.name} delay={i * 100}>
-              <ServiceCard {...s} />
+            <Reveal key={s.name} delay={i * 90} className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={s.image} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover" />
+              <div className="flex flex-1 flex-col p-7 md:p-8">
+                <div className="flex items-baseline justify-between">
+                  <h3 className="font-display text-2xl font-semibold">{s.name}</h3>
+                  <span className="text-xs tabular-nums text-primary">{s.n}</span>
+                </div>
+                <p className="mt-2 text-sm text-foreground/55">{s.who}</p>
+                <p className="mt-5 text-foreground/80">{s.lead}</p>
+                <ul className="mt-6 space-y-2.5 border-t border-border pt-5">
+                  {s.items.map((it) => (
+                    <li key={it} className="flex items-center gap-3 text-[0.9375rem] text-foreground/75">
+                      <span aria-hidden className="h-1 w-1 rounded-full bg-primary" />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Reveal>
           ))}
         </div>
-
-        <Reveal>
-          <p className="mx-auto mt-14 max-w-3xl text-center text-2xl font-bold leading-snug md:text-3xl">
-            “창업 첫걸음부터 오픈까지, 최고의 브랜드, 최고의 공간으로 태어납니다.”
-          </p>
-        </Reveal>
       </Section>
 
-      {/* 업종별 상세 — 검색에서 "미용실 인테리어"처럼 좁은 조합으로 들어오는 사람이
-          바로 자기 업종 페이지로 가게 한다. 크롤러가 랜딩을 찾아가는 길이기도 하다. */}
+      <TwoExperts />
+      <ProcessFlow />
+
+      {/* 업종별 상세 — "미용실 인테리어"처럼 좁은 검색어로 들어온 사람이 자기 업종으로 바로 가게 한다. */}
       <Section tone="muted">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="font-serif text-2xl leading-snug md:text-3xl">
-            업종별로 더 자세히
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            업종마다 공간이 해야 하는 일이 다릅니다. 준비 중인 업종을 골라보세요.
-          </p>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-            {INDUSTRIES.map((i) => (
-              <li key={i.slug}>
-                <Link
-                  href={`/interior/${i.slug}`}
-                  className="block rounded-lg border border-border bg-card px-5 py-4 transition-colors hover:border-primary hover:bg-primary/5"
-                >
-                  <span className="block font-medium">{i.keyword}</span>
-                  <span className="mt-1 block text-sm text-muted-foreground">
-                    {i.headline}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <SectionHeading
+          eyebrow="업종별로"
+          title="업종마다, 공간이 하는 일이 다릅니다."
+          lead="준비 중인 업종을 골라보세요. 업종별로 먼저 따져야 할 것과 자주 나오는 실수를 정리했습니다."
+        />
+        <ul className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+          {INDUSTRIES.map((i) => (
+            <li key={i.slug} className="bg-background">
+              <Link href={`/interior/${i.slug}`} className="group flex h-full flex-col justify-between p-7 transition-colors hover:bg-secondary/40">
+                <span className="font-display text-xl font-semibold">{i.keyword}</span>
+                <span className="mt-3 text-[0.9375rem] leading-relaxed text-foreground/65">{i.headline}</span>
+                <span className="mt-6 text-sm text-primary transition-transform group-hover:translate-x-1">자세히 →</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </Section>
 
       <CtaSection />
     </>
-  );
-}
-
-function ServiceCard({
-  eyebrow,
-  name,
-  desc,
-  image,
-}: {
-  eyebrow: string;
-  name: string;
-  desc: string;
-  image: string;
-}) {
-  return (
-    <div className="group relative isolate flex aspect-[4/5] h-full flex-col justify-end overflow-hidden rounded-xl text-background">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={image}
-        alt={name}
-        className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/45 to-black/10"
-      />
-      <div className="p-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-primary">
-          {eyebrow}
-        </p>
-        <h3 className="mt-2 text-xl font-bold md:text-2xl">{name}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-background/85">{desc}</p>
-      </div>
-    </div>
   );
 }

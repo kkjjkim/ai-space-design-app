@@ -67,7 +67,6 @@ export default function DiagnosisPage() {
       <JsonLd data={faqLd(FAQS)} />
 
       <PageHero
-        image="/concepts/nest.jpg"
         eyebrow="무료 컨셉 진단"
         title="지금 뭐부터 해야 하는지 알려드립니다"
         subtitle={`${QUESTIONS.length}가지만 고르면 됩니다. 1분이면 끝납니다.`}

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -9,7 +8,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { navItems, site, CTA_LABEL } from "@/lib/site";
 
 export function SiteHeader() {
-  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -23,9 +21,8 @@ export function SiteHeader() {
   // 홈·서브페이지 모두 상단에 어두운 시네마틱 히어로가 깔린다.
   // 스크롤 전에는 그 위에 떠 있으므로 밝은 글자로 보여야 한다.
   // (히어로가 없는 /complete 등은 제외 → 기본 짙은 글자)
-  // 홈은 2026-10 개편으로 밝은 도면지 첫 화면이 됐다 → 제외.
-  const darkHeroRoutes = ["/service", "/company", "/concepts"];
-  const overDarkHero = !scrolled && darkHeroRoutes.includes(pathname);
+  // 2026-10 개편으로 모든 페이지 머리말이 밝은 종이색이 됐다 → 어두운 머리말 위 흰 글자 처리는 쓰지 않는다.
+  const overDarkHero = false;
 
   return (
     <header

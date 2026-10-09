@@ -26,6 +26,7 @@ export function FloatingCta() {
 
   return (
     <div
+      data-print-hide
       className={cn(
         "fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] transition-all duration-300",
         show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"

@@ -1,53 +1,48 @@
-import { Reveal } from "@/components/reveal";
+import { Eyebrow } from "@/components/section";
+import { ImageReveal } from "@/components/image-reveal";
 
-// 서브페이지 상단 시네마틱 헤더: 공간 이미지 + 슬로우 줌 + 어두운 오버레이 위 제목.
+// 서브 페이지 머리말 (2026-10 개편) — 홈 첫 화면과 같은 종이색 바탕 + 명조 제목,
+// 그 아래 사진이 스크롤에 맞춰 펼쳐진다. 예전 어두운 영상형 머리말을 대체.
 export function PageHero({
   image,
   eyebrow,
   title,
   subtitle,
   note,
+  compact = false,
 }: {
-  image: string;
+  image?: string;
   eyebrow?: string;
   title: string;
   subtitle?: string;
   note?: string;
+  // 글 제목처럼 긴 제목은 한 단계 작게
+  compact?: boolean;
 }) {
   return (
-    <section className="relative isolate flex min-h-[56vh] items-end overflow-hidden text-background">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={image}
-        alt={title}
-        className="absolute inset-0 -z-10 h-full w-full object-cover motion-safe:animate-kenburns"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/45 to-black/55"
-      />
-      <div className="container relative w-full pb-16 pt-32 md:pb-20">
-        <Reveal className="max-w-3xl">
+    <section className="bg-background pb-16 pt-32 md:pb-24 md:pt-40">
+      <div className="container">
+        <div className={compact ? "reveal max-w-4xl" : "reveal max-w-3xl"}>
           {eyebrow && (
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-              {eyebrow}
-            </p>
+            <div className="mb-7">
+              <Eyebrow>{eyebrow}</Eyebrow>
+            </div>
           )}
-          <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight md:text-6xl">
+          <h1
+            className={
+              compact
+                ? "font-display text-[1.8rem] font-semibold leading-[1.3] tracking-[-0.02em] sm:text-[2.5rem] lg:text-[2.9rem]"
+                : "font-display text-[2.2rem] font-semibold leading-[1.22] tracking-[-0.03em] sm:text-5xl lg:text-[3.6rem]"
+            }
+          >
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-background/85">
-              {subtitle}
-            </p>
+            <p className="mt-7 max-w-2xl text-[1.0625rem] leading-[1.85] text-foreground/70">{subtitle}</p>
           )}
-          {note && (
-            <p className="mt-4 inline-block rounded-full bg-white/10 px-4 py-1.5 text-sm text-background/80 backdrop-blur">
-              {note}
-            </p>
-          )}
-        </Reveal>
+        </div>
       </div>
+      {image && <ImageReveal src={image} alt={title} caption={note} className="mt-14 md:mt-20" />}
     </section>
   );
 }

@@ -50,7 +50,18 @@ declare global {
 
 // 진단 결과처럼 앞 단계에서 이미 받은 정보는 미리 채워준다.
 // 같은 걸 두 번 묻지 않아야 폼을 끝까지 채운다.
-export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
+// variant="resource": 자료 받기용 간단형(이름·연락처·업종만). 제출 뒤 /complete 로 가지 않고 onDone 을 부른다.
+// 아직 상담할 단계가 아닌 정보 탐색형 방문자(글로 들어온 대부분)를 연락처로 바꾸는 장치.
+export function LeadForm({
+  defaults,
+  variant = "consult",
+  onDone,
+}: {
+  defaults?: Partial<Form>;
+  variant?: "consult" | "resource";
+  onDone?: () => void;
+} = {}) {
+  const isResource = variant === "resource";
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const honeypotRef = useRef<HTMLInputElement>(null);
@@ -63,7 +74,11 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
 
   // 폼을 건드렸는데 제출을 안 했다면 폼 자체가 문제다(칸이 많거나 부담스럽거나).
   // 진단 결과에서 온 폼인지 구분해야 진단→신청 전환이 따로 보인다.
-  const formType = defaults?.message ? "diagnosis" : "direct";
+  const formType = isResource
+    ? "resource"
+    : defaults?.message
+      ? "diagnosis"
+      : "direct";
   function onFirstInput() {
     if (startedRef.current) return;
     startedRef.current = true;
@@ -134,12 +149,22 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
       });
       const data = await res.json();
       if (!res.ok) {
-        track("form_error", { form_type: formType, reason: `http_${res.status}` });
+        track("form_error", {
+          form_type: formType,
+          reason: `http_${res.status}`,
+        });
         throw new Error(data.error || "신청 중 문제가 발생했습니다.");
+      }
+      if (onDone) {
+        setLoading(false);
+        onDone();
+        return;
       }
       router.push("/complete");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "잠시 후 다시 시도해주세요.");
+      setError(
+        err instanceof Error ? err.message : "잠시 후 다시 시도해주세요.",
+      );
       setLoading(false);
       resetCaptcha();
     }
@@ -196,9 +221,9 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
         />
       </div>
 
-      <div className="grid gap-2 sm:grid-cols-2">
+      {isResource ? (
         <div className="grid gap-2">
-          <Label htmlFor="industry">업종</Label>
+          <Label htmlFor="industry">업종 (선택)</Label>
           <Input
             id="industry"
             value={form.industry}
@@ -206,42 +231,56 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
             placeholder="예: 카페, 레스토랑, 베이커리"
           />
         </div>
-        <div className="grid gap-2">
-          <Label htmlFor="location">매장 위치·평수</Label>
-          <Input
-            id="location"
-            value={form.location}
-            onChange={(e) => set("location", e.target.value)}
-            placeholder="예: 서울 성수동 / 40평"
-          />
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="industry">업종</Label>
+              <Input
+                id="industry"
+                value={form.industry}
+                onChange={(e) => set("industry", e.target.value)}
+                placeholder="예: 카페, 레스토랑, 베이커리"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="location">매장 위치·평수</Label>
+              <Input
+                id="location"
+                value={form.location}
+                onChange={(e) => set("location", e.target.value)}
+                placeholder="예: 서울 성수동 / 40평"
+              />
+            </div>
+          </div>
 
-      <div className="grid gap-2">
-        <Label htmlFor="budget">예산대 (선택)</Label>
-        <Select
-          id="budget"
-          value={form.budget}
-          onChange={(e) => set("budget", e.target.value)}
-        >
-          <option value="">선택 안 함</option>
-          {BUDGET_OPTIONS.map((b) => (
-            <option key={b} value={b}>
-              {b}
-            </option>
-          ))}
-        </Select>
-      </div>
+          <div className="grid gap-2">
+            <Label htmlFor="budget">예산대 (선택)</Label>
+            <Select
+              id="budget"
+              value={form.budget}
+              onChange={(e) => set("budget", e.target.value)}
+            >
+              <option value="">선택 안 함</option>
+              {BUDGET_OPTIONS.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+            </Select>
+          </div>
 
-      <div className="grid gap-2">
-        <Label htmlFor="message">하고 싶은 가게 한 줄</Label>
-        <Textarea
-          id="message"
-          value={form.message}
-          onChange={(e) => set("message", e.target.value)}
-          placeholder='"이런 가게 하고 싶다" 한마디면 충분해요.'
-        />
-      </div>
+          <div className="grid gap-2">
+            <Label htmlFor="message">하고 싶은 가게 한 줄</Label>
+            <Textarea
+              id="message"
+              value={form.message}
+              onChange={(e) => set("message", e.target.value)}
+              placeholder='"이런 가게 하고 싶다" 한마디면 충분해요.'
+            />
+          </div>
+        </>
+      )}
 
       {/* 봇 방지 캡차 (사이트 키 있을 때만 표시) */}
       {TURNSTILE_SITE_KEY && (
@@ -263,11 +302,17 @@ export function LeadForm({ defaults }: { defaults?: Partial<Form> } = {}) {
 
       <div>
         <Button type="submit" size="lg" className="w-full" disabled={loading}>
-          {loading ? "보내는 중…" : "무료 상담 문의"}
+          {loading
+            ? "보내는 중…"
+            : isResource
+              ? "예산표·체크리스트 받기"
+              : "무료 상담 문의"}
         </Button>
         {/* PRD 원문 — 남기기 전의 마지막 망설임(영업 전화·계약 압박)을 없앤다 */}
         <p className="mt-3 text-center text-sm text-muted-foreground">
-          영업 전화 없음 · 상담 후 결정은 자유
+          {isResource
+            ? "영업 전화 없음 · 자료는 바로 열립니다"
+            : "영업 전화 없음 · 상담 후 결정은 자유"}
         </p>
       </div>
     </form>

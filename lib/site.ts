@@ -91,7 +91,7 @@ export const navItems = [
   { href: "/service", label: "서비스" },
   { href: "/concepts", label: "컨셉" },
   { href: "/insights", label: "인사이트" },
-  { href: "/company", label: "회사·신뢰" },
+  { href: "/company", label: "회사 소개" },
   { href: "/#apply", label: "상담 신청" },
 ] as const;
 

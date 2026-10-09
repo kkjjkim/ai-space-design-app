@@ -17,7 +17,7 @@ export default function CompletePage() {
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
           <Check className="h-8 w-8" />
         </div>
-        <h1 className="mt-8 text-3xl font-semibold md:text-4xl">
+        <h1 className="mt-8 font-display text-3xl font-semibold md:text-4xl">
           신청 완료됐습니다.
         </h1>
         <p className="mt-5 text-lg leading-relaxed text-foreground/70">

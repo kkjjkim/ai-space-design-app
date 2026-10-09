@@ -1,98 +1,67 @@
 import type { Metadata } from "next";
+import { Section, SectionHeading } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { PageHero } from "@/components/page-hero";
 import { CtaSection } from "@/components/cta-section";
+import { ConceptBoardSpread } from "@/components/concept-board-spread";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbLd } from "@/lib/seo";
-import { MediaFrame } from "@/components/media-frame";
-import { cn } from "@/lib/utils";
+import { CONCEPT_BOARDS } from "@/lib/concept-boards";
 import { CONCEPTS } from "@/lib/concepts";
 
 export const metadata: Metadata = {
-  title: "컨셉 제안",
+  title: "업종별 컨셉 보드 — 카페·베이커리·레스토랑·미용실·편집숍·와인바",
   description:
-    "“이런 브랜드를 하고 싶다”가 공간으로 어떻게 풀리는지 보여주는 업종별 컨셉 제안.",
+    "사장님의 고민을 한 문장의 컨셉으로 정리하고, 그 문장을 재료와 동선으로 옮기는 방법을 업종별 컨셉 보드로 보여드립니다.",
   alternates: { canonical: "/concepts" },
 };
 
+// 2026-10 개편: 새 컨셉 보드 6개(고민 → 컨셉 문장 → 공간으로 푸는 법 → 키워드·색·재료)를 앞세우고,
+// 예전 컨셉 10개는 아래 "더 많은 컨셉"으로 짧게 남긴다(옛 링크 /concepts#slug 가 계속 닿도록 id 유지).
 export default function ConceptsPage() {
   return (
     <>
-      <JsonLd data={breadcrumbLd([{ name: "컨셉 제안", path: "/concepts" }])} />
+      <JsonLd data={breadcrumbLd([{ name: "컨셉 보드", path: "/concepts" }])} />
 
       <PageHero
-        image="/concepts/sora.jpg"
-        eyebrow="Concepts"
-        title="당신의 생각과 가치가, 공간이 되는 방식"
-        subtitle="대표자의 철학과 사업 의도가 입구·동선·조명·집기로 어떻게 번역되는지를 업종별 컨셉으로 정리했습니다."
-        note="컨셉 분위기 예시입니다."
+        eyebrow="업종별 컨셉 보드"
+        title="같은 고민도, 업종마다 답이 다릅니다."
+        subtitle="상담에서는 사장님의 고민을 한 문장의 컨셉으로 정리하고, 그 문장을 재료와 동선으로 옮깁니다. 그 과정을 업종별로 펼쳐 보았습니다."
       />
 
-      {CONCEPTS.map((c, i) => (
-        <section
-          key={c.slug}
-          id={c.slug}
-          className={cn(
-            "scroll-mt-24 border-t border-border py-16 md:py-24",
-            i % 2 === 1 && "bg-secondary/40"
-          )}
-        >
-          <div className="container">
-            <div
-              className={cn(
-                "grid items-center gap-10 lg:grid-cols-2 lg:gap-16",
-                i % 2 === 1 && "lg:[&>*:first-child]:order-2"
-              )}
-            >
-              <Reveal>
-                <MediaFrame
-                  src={c.image}
-                  ratio="aspect-[4/3]"
-                  alt={`${c.name} 컨셉 이미지`}
-                  caption={c.name}
-                  label={`이미지 자리 · /concepts/${c.slug}.jpg`}
-                />
-              </Reveal>
+      <section className="bg-background pb-24 md:pb-32">
+        <div className="container space-y-24 md:space-y-32">
+          <p className="-mt-6 text-sm text-foreground/50">컨셉 분위기 예시입니다.</p>
+          {CONCEPT_BOARDS.map((b, i) => (
+            <ConceptBoardSpread key={b.slug} board={b} flip={i % 2 === 1} />
+          ))}
+        </div>
+      </section>
 
-              <Reveal delay={120}>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                  {c.type}
-                </p>
-                <h2 className="mt-3 font-serif text-3xl font-semibold uppercase tracking-wide md:text-4xl">
-                  {c.name}
-                </h2>
-
-                <div className="mt-6 space-y-5 text-foreground/75">
-                  <div>
-                    <h3 className="text-sm font-semibold text-foreground">
-                      브랜드 방향성
-                    </h3>
-                    <p className="mt-1.5 leading-relaxed">{c.direction}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-foreground">
-                      공간디자인 전략
-                    </h3>
-                    <p className="mt-1.5 leading-relaxed">{c.strategy}</p>
-                  </div>
-                  {c.intent && (
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground">
-                        사업적 의도
-                      </h3>
-                      <p className="mt-1.5 leading-relaxed">{c.intent}</p>
-                    </div>
-                  )}
+      <Section tone="muted">
+        <SectionHeading
+          eyebrow="더 많은 컨셉"
+          title="그 밖의 컨셉 예시"
+          lead="브랜드 철학이 입구·동선·조명·집기로 어떻게 옮겨지는지 짧게 정리했습니다."
+        />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {CONCEPTS.map((c, i) => (
+            <Reveal key={c.slug} delay={(i % 3) * 70}>
+              <article id={c.slug} className="h-full scroll-mt-28 overflow-hidden rounded-2xl border border-border bg-background">
+                {c.image && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={c.image} alt={`${c.type} 컨셉 분위기 예시`} loading="lazy" className="aspect-[16/10] w-full object-cover" />
+                )}
+                <div className="p-6">
+                  <span className="text-[0.8125rem] text-primary">{c.type}</span>
+                  <h3 className="mt-2 font-display text-lg font-semibold">{c.name}</h3>
+                  <p className="mt-3 line-clamp-3 text-[0.9375rem] leading-relaxed text-foreground/70">{c.direction}</p>
                 </div>
-
-                <p className="mt-6 border-l-2 border-primary pl-4 font-medium text-foreground">
-                  {c.oneLiner}
-                </p>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-      ))}
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
       <CtaSection />
     </>

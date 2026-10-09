@@ -76,7 +76,7 @@ export function DiagnosisWizard({
           </div>
         </div>
 
-        <h2 className="font-serif text-2xl leading-snug md:text-3xl">
+        <h2 className="font-display text-2xl font-semibold leading-snug md:text-3xl">
           {question.title}
         </h2>
         {question.hint && (
@@ -118,7 +118,7 @@ export function DiagnosisWizard({
   return (
     <div className="mx-auto max-w-3xl">
       <Eyebrow>진단 결과</Eyebrow>
-      <h2 className="mt-4 font-serif text-3xl leading-snug md:text-4xl">
+      <h2 className="mt-4 font-display text-3xl font-semibold leading-snug md:text-4xl">
         {result.headline}
       </h2>
       <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
@@ -219,7 +219,7 @@ export function DiagnosisWizard({
         className="mt-14 scroll-mt-20 rounded-xl border border-border bg-card p-7 md:p-9"
       >
         <Eyebrow>무료 상담</Eyebrow>
-        <h3 className="mt-4 font-serif text-2xl leading-snug md:text-3xl">
+        <h3 className="mt-4 font-display text-2xl font-semibold leading-snug md:text-3xl">
           진단 결과를 두고 더 구체적으로 봐드립니다
         </h3>
         <p className="mt-4 leading-relaxed text-muted-foreground">

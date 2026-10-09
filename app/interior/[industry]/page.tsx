@@ -9,8 +9,18 @@ import { LeadForm } from "@/components/lead-form";
 import { breadcrumbLd, faqLd } from "@/lib/seo";
 import { INDUSTRIES, getIndustry } from "@/lib/industries";
 import { getAllInsights } from "@/lib/insights";
-import { CONCEPTS } from "@/lib/concepts";
+import { CONCEPT_BOARDS } from "@/lib/concept-boards";
+import { ConceptBoardSpread } from "@/components/concept-board-spread";
 import { site } from "@/lib/site";
+
+// 업종 → 컨셉 보드 (2026-10 개편 새 이미지·보드)
+const BOARD_BY_INDUSTRY: Record<string, string> = {
+  "beauty-salon": "salon",
+  bakery: "bakery",
+  "large-cafe": "roastery",
+  restaurant: "dining",
+  retail: "select",
+};
 
 // 예약 글이 날짜가 되면 나타나도록 6시간마다 다시 만든다.
 export const revalidate = 21600;
@@ -53,9 +63,7 @@ export default function IndustryPage({
   const reads = ind.insightSlugs
     .map((s) => posts.find((p) => p.slug === s))
     .filter(Boolean);
-  const concepts = ind.conceptSlugs
-    .map((s) => CONCEPTS.find((c) => c.slug === s))
-    .filter(Boolean);
+  const board = CONCEPT_BOARDS.find((b) => b.slug === BOARD_BY_INDUSTRY[ind.slug]);
 
   return (
     <>
@@ -67,7 +75,8 @@ export default function IndustryPage({
       <JsonLd data={faqLd(ind.faqs)} />
 
       <PageHero
-        image={ind.image}
+        image={board ? `${board.image}-1600.webp` : ind.image}
+        note="컨셉 분위기 예시입니다."
         eyebrow={ind.keyword}
         title={ind.headline}
         subtitle={ind.lead}
@@ -77,14 +86,14 @@ export default function IndustryPage({
       <Section>
         <div className="mx-auto max-w-3xl">
           <Eyebrow>이 업종의 원리</Eyebrow>
-          <h2 className="mt-4 font-serif text-3xl leading-snug md:text-4xl">
+          <h2 className="mt-6 font-display text-3xl font-semibold leading-snug md:text-4xl">
             {ind.shortName}에서 공간이 하는 일
           </h2>
 
           <div className="mt-12 grid gap-10">
             {ind.principle.map((p, i) => (
               <div key={i} className="border-l-2 border-primary/40 pl-6 md:pl-8">
-                <h3 className="font-serif text-xl md:text-2xl">{p.title}</h3>
+                <h3 className="font-display text-xl font-semibold md:text-2xl">{p.title}</h3>
                 <p className="mt-3 leading-relaxed text-muted-foreground">
                   {p.body}
                 </p>
@@ -97,7 +106,7 @@ export default function IndustryPage({
       {/* 자주 나오는 실수 */}
       <Section tone="muted">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-serif text-2xl leading-snug md:text-3xl">
+          <h2 className="font-display text-2xl font-semibold leading-snug md:text-3xl">
             이 업종에서 자주 나오는 실수
           </h2>
           <ul className="mt-8 grid gap-5">
@@ -119,13 +128,13 @@ export default function IndustryPage({
       <Section>
         <div className="mx-auto max-w-3xl">
           <Eyebrow>브랜드각이 하는 방식</Eyebrow>
-          <h2 className="mt-4 font-serif text-3xl leading-snug md:text-4xl">
+          <h2 className="mt-6 font-display text-3xl font-semibold leading-snug md:text-4xl">
             공사보다 먼저, 되는 장사인지부터
           </h2>
           <p className="mt-6 leading-relaxed text-muted-foreground">
-            국가공인 경영지도사가 사업·브랜드 방향을 먼저 잡고, 업종에 맞는 시공
-            파트너와 공간을 만듭니다. 컨설팅 따로 시공 따로가 아니라 한 흐름으로
-            이어집니다.
+            사업·브랜드는 국가공인 경영지도사가 먼저 잡고, 공간 설계와 시공은
+            백화점·대형 쇼핑몰 브랜드 매장을 시공해 온 팀이 맡습니다. 컨설팅 따로
+            시공 따로가 아니라 한 테이블에서 이어집니다.
           </p>
           <p className="mt-4 leading-relaxed text-muted-foreground">
             컨셉 없이 공사부터 시작하면 큰 돈을 써도 어디서 본 듯한 가게가 되기
@@ -143,32 +152,16 @@ export default function IndustryPage({
         </div>
       </Section>
 
-      {/* 컨셉 예시 */}
-      {concepts.length > 0 && (
+      {/* 이 업종의 컨셉 보드 */}
+      {board && (
         <Section tone="muted">
-          <div className="mx-auto max-w-3xl">
-            <h2 className="font-serif text-2xl leading-snug md:text-3xl">
-              이 업종의 컨셉 예시
+          <div className="mb-12">
+            <Eyebrow>이 업종의 컨셉 보드</Eyebrow>
+            <h2 className="mt-6 font-display text-3xl font-semibold leading-snug md:text-4xl">
+              고민을 한 문장으로, 문장을 공간으로
             </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              컨셉 분위기 예시입니다.
-            </p>
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-              {concepts.map((c) => (
-                <li key={c!.slug}>
-                  <Link
-                    href={`/concepts#${c!.slug}`}
-                    className="block rounded-lg border border-border bg-card px-5 py-4 transition-colors hover:border-primary hover:bg-primary/5"
-                  >
-                    <span className="block font-medium">{c!.name}</span>
-                    <span className="mt-1 block text-sm text-muted-foreground">
-                      {c!.type}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
+          <ConceptBoardSpread board={board} showLink={false} />
         </Section>
       )}
 
@@ -176,7 +169,7 @@ export default function IndustryPage({
       {reads.length > 0 && (
         <Section>
           <div className="mx-auto max-w-3xl">
-            <h2 className="font-serif text-2xl leading-snug md:text-3xl">
+            <h2 className="font-display text-2xl font-semibold leading-snug md:text-3xl">
               먼저 읽어두면 좋은 글
             </h2>
             <ul className="mt-8 grid gap-6">
@@ -200,7 +193,7 @@ export default function IndustryPage({
       {/* 자주 묻는 질문 */}
       <Section tone="muted">
         <div className="mx-auto max-w-3xl">
-          <h2 className="font-serif text-2xl leading-snug md:text-3xl">
+          <h2 className="font-display text-2xl font-semibold leading-snug md:text-3xl">
             자주 묻는 질문
           </h2>
           <dl className="mt-8 grid gap-8">
@@ -220,7 +213,7 @@ export default function IndustryPage({
       <Section id="apply">
         <div className="mx-auto max-w-2xl">
           <Eyebrow>무료 상담</Eyebrow>
-          <h2 className="mt-4 font-serif text-3xl leading-snug md:text-4xl">
+          <h2 className="mt-6 font-display text-3xl font-semibold leading-snug md:text-4xl">
             {ind.keyword}, 도면 전에 같이 보시죠
           </h2>
           <p className="mt-5 leading-relaxed text-muted-foreground">

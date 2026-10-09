@@ -26,8 +26,7 @@ export default function InsightsPage() {
       <JsonLd data={breadcrumbLd([{ name: "인사이트", path: "/insights" }])} />
 
       <PageHero
-        image="/concepts/mellow.jpg"
-        eyebrow="Insights"
+        eyebrow="인사이트"
         title="장사가 되는 공간의 원리"
         subtitle="창업·브랜드·공간 디자인·인테리어. 현장에서 통한 이야기를 나눕니다."
       />

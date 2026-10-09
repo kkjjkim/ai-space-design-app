@@ -1,146 +1,123 @@
 import type { Metadata } from "next";
-import { Section } from "@/components/section";
+import { Section, SectionHeading } from "@/components/section";
 import { Reveal } from "@/components/reveal";
 import { PageHero } from "@/components/page-hero";
-import { getAllInsights } from "@/lib/insights";
 import { CtaSection } from "@/components/cta-section";
+import { Promises } from "@/components/home/promises";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbLd } from "@/lib/seo";
+import { getAllInsights } from "@/lib/insights";
+import { site } from "@/lib/site";
 
 // 인사이트 글 수가 예약 발행으로 늘어나므로 주기적으로 다시 만든다.
 export const revalidate = 21600;
 
 export const metadata: Metadata = {
-  title: "회사·신뢰",
-  description: "공간 너머 브랜드 가치를 디자인한다.",
+  title: "회사 소개 — 가게의 각을 잡는 사람들",
+  description:
+    "브랜드각은 국가공인 경영지도사와 백화점·대형 쇼핑몰 브랜드 매장을 시공해 온 팀이 함께 일하는 창업·브랜드·공간 컨설팅입니다.",
   alternates: { canonical: "/company" },
 };
 
-// 핵심 지표 — 방문자가 지금 확인할 수 있는 사실만.
-// (이전 시공 파트너의 경력·소셜벤처·백화점 시공·특허·면허 문구는 10/6 대표 결정으로 뺐다)
-function facts(insightCount: number) {
-  return [
-    { value: "국가공인", label: "경영지도사가 직접 봅니다" },
-    { value: `${insightCount}편`, label: "공개한 창업·인테리어 인사이트" },
-    { value: "0원", label: "상담·컨셉 진단 비용" },
-  ];
-}
-
-// 일하는 원칙 — 약속할 수 있는 것만.
-const TRUST = [
+// 회사 소개 — 실적·발주처 이름은 쓰지 않는다(대표 결정: 클라이언트가 알아보는 실적은 노출하지 않음).
+// 신뢰는 이름의 뜻, 팀 구조, 일하는 원칙, 확인 가능한 사실로만 만든다.
+const PRINCIPLES = [
   {
-    title: "공사 전에 사업부터",
-    desc: "업종·자리·예산이 되는 장사인지부터 봅니다. 공사는 그다음입니다.",
+    t: "공사 전에 숫자부터",
+    d: "자리·예산·객단가가 맞는지 먼저 봅니다. 숫자가 맞지 않으면 공사를 권하지 않습니다.",
   },
   {
-    title: "프로젝트마다 맞는 시공 파트너",
-    desc: "업종·규모·지역에 맞는 파트너를 매번 직접 고르고, 기획한 사람이 끝까지 챙깁니다.",
+    t: "컨셉은 한 문장으로",
+    d: "손님이 왜 와야 하는지 한 문장으로 말할 수 없으면, 아직 도면을 그릴 때가 아닙니다.",
   },
   {
-    title: "업종마다 기준이 다릅니다",
-    desc: "카페·베이커리·미용실·레스토랑·리테일은 먼저 따질 것이 다릅니다. 업종에 맞춰 봅니다.",
+    t: "기획한 사람이 현장까지",
+    d: "방향을 잡은 사람과 짓는 사람이 처음부터 같은 테이블에 앉아, 의도가 현장에서 바뀌지 않게 합니다.",
   },
   {
-    title: "사업자 정보 공개",
-    desc: "사업자 정보와 연락처를 화면 아래에 공개합니다. 누가 하는지 알고 맡기실 수 있게.",
+    t: "생각을 먼저 공개합니다",
+    d: "", // 글 수는 빌드 시점에 센다
   },
 ];
 
 export default function CompanyPage() {
-  const FACTS = facts(getAllInsights().length);
+  const insightCount = getAllInsights().length;
   return (
     <>
-      <JsonLd data={breadcrumbLd([{ name: "회사·신뢰", path: "/company" }])} />
+      <JsonLd data={breadcrumbLd([{ name: "회사 소개", path: "/company" }])} />
 
       <PageHero
-        image="/concepts/sodam.jpg"
-        eyebrow="Company"
-        title="왜 믿을 수 있나요?"
-        subtitle="“공간 너머 브랜드 가치를 디자인한다.”"
+        image="/concepts/board-roastery-1600.webp"
+        eyebrow="회사 소개"
+        title="가게의 각을 잡는 사람들."
+        subtitle="'각을 잡는다'는 흐트러진 것을 바로 세운다는 뜻입니다. 브랜드각은 자리·예산·컨셉·공간이 한 방향을 보도록 맞추는 일을 합니다."
+        note="컨셉 분위기 예시입니다."
       />
 
+      {/* 팀 */}
       <Section>
-        {/* 핵심 지표 — 말보다 사실로 */}
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-semibold leading-snug md:text-4xl">
-            말보다, 확인할 수 있는 것으로.
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-foreground/70">
-            국가공인 경영지도사가 사업 계획부터 공간·시공까지 한 흐름으로 봅니다.
-            <br />
-            어떻게 생각하는지는 인사이트와 컨셉 진단에 전부 열어 두었습니다.
-          </p>
-        </Reveal>
+        <SectionHeading
+          eyebrow="누가 하나요"
+          title="사업을 아는 사람과, 공간을 짓는 사람."
+          lead="두 전문가가 처음부터 함께 결정합니다. 상담을 받은 사람이 방향을 잡고, 그 방향 그대로 현장이 지어집니다."
+        />
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
+          <Reveal className="rounded-2xl border border-border bg-card p-8 md:p-10">
+            <span className="text-[0.8125rem] font-medium tracking-[0.04em] text-primary">사업 · 브랜드</span>
+            <h3 className="mt-5 font-display text-2xl font-semibold">국가공인 경영지도사</h3>
+            <p className="mt-4 leading-relaxed text-foreground/70">
+              경영지도사는 중소벤처기업부에 등록하는 국가자격입니다. 상권·예산·자금 계획부터 브랜드 컨셉까지, 되는 장사인지
+              숫자로 먼저 봅니다.
+            </p>
+          </Reveal>
+          <Reveal delay={90} className="rounded-2xl border border-border bg-card p-8 md:p-10">
+            <span className="text-[0.8125rem] font-medium tracking-[0.04em] text-primary">공간 · 시공</span>
+            <h3 className="mt-5 font-display text-2xl font-semibold">백화점·대형 쇼핑몰 브랜드 매장 시공팀</h3>
+            <p className="mt-4 leading-relaxed text-foreground/70">
+              까다로운 기준의 브랜드 매장을 지어 온 팀이 설계와 시공을 맡습니다. 공정·마감·일정을 브랜드 매장의 기준으로
+              관리합니다.
+            </p>
+          </Reveal>
+        </div>
+      </Section>
 
-        <div className="mx-auto mt-12 grid max-w-3xl gap-4 sm:grid-cols-3">
-          {FACTS.map((f, i) => (
-            <Reveal
-              key={f.label}
-              delay={i * 80}
-              className="rounded-2xl border border-border bg-card p-7 text-center shadow-sm"
-            >
-              <div className="text-2xl font-extrabold tracking-tight text-primary md:text-3xl">
-                {f.value}
-              </div>
-              <div className="mt-2 text-sm leading-snug text-muted-foreground">
-                {f.label}
-              </div>
+      {/* 원칙 */}
+      <Section tone="muted">
+        <SectionHeading eyebrow="일하는 원칙" title="말보다 순서를 지킵니다." />
+        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2">
+          {PRINCIPLES.map((p, i) => (
+            <Reveal key={p.t} delay={i * 70} className="bg-background p-8 md:p-10">
+              <span className="text-xs tabular-nums text-primary">{String(i + 1).padStart(2, "0")}</span>
+              <h3 className="mt-4 font-display text-xl font-semibold sm:text-[1.4rem]">{p.t}</h3>
+              <p className="mt-3 text-[0.975rem] leading-relaxed text-foreground/70">
+                {p.d ||
+                  `창업·인테리어 인사이트 ${insightCount}편과 1분 컨셉 진단을 무료로 열어 두었습니다. 읽어 보고 맞다 싶을 때 연락 주세요.`}
+              </p>
             </Reveal>
           ))}
         </div>
+      </Section>
 
-        {/* 신뢰 근거 — 얇은 구분선의 에디토리얼 그리드 */}
-        <Reveal className="mx-auto mt-16 max-w-4xl overflow-hidden rounded-2xl border border-border bg-border">
-          <div className="grid gap-px sm:grid-cols-2">
-            {TRUST.map((t, i) => (
-              <div
-                key={t.title}
-                className="group bg-card p-8 transition-colors hover:bg-secondary/30"
-              >
-                <span className="text-sm font-semibold tracking-[0.2em] text-primary">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-4 text-lg font-semibold leading-snug text-foreground">
-                  {t.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {t.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+      <Promises />
 
-        {/* 대표·팀 — 사실 기반, 프리미엄 블록 */}
-        <Reveal className="mx-auto mt-6 max-w-4xl overflow-hidden rounded-2xl border border-border">
-          <div className="grid md:grid-cols-5">
-            <div className="relative min-h-[280px] md:col-span-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/concepts/ember.jpg"
-                alt="컨셉 예시 공간"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent md:bg-gradient-to-r"
-              />
+      {/* 사업자 정보 — 누가 하는지 알고 맡기실 수 있게 */}
+      <Section>
+        <SectionHeading eyebrow="사업자 정보" title="누가 하는지 알고 맡기세요." />
+        <dl className="mt-10 grid max-w-2xl gap-px overflow-hidden rounded-2xl border border-border bg-border text-[0.975rem] sm:grid-cols-2">
+          {[
+            ["브랜드", site.brandNameKo],
+            ["사업자", site.business.name],
+            ["사업자등록번호", site.business.registration],
+            ["소재지", site.business.address],
+            ["전화", site.business.phone],
+            ["상담 지역", "전국 (시공은 현장 지역 협의)"],
+          ].map(([k, v]) => (
+            <div key={k} className="bg-background px-6 py-5">
+              <dt className="text-xs text-foreground/45">{k}</dt>
+              <dd className="mt-1.5 font-medium">{v}</dd>
             </div>
-            <div className="bg-foreground p-8 text-background md:col-span-3 md:p-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-                People
-              </p>
-              <h2 className="mt-4 text-2xl font-bold md:text-[1.75rem]">
-                상담한 사람이 끝까지 봅니다.
-              </h2>
-              <p className="mt-5 leading-relaxed text-background/85">
-                처음 이야기를 듣는 사람과 방향을 잡는 사람이 같습니다. 국가공인
-                경영지도사가 사업 계획부터 공간·시공 과정까지 챙기고, 시공은
-                프로젝트에 맞는 파트너와 함께합니다.
-              </p>
-            </div>
-          </div>
-        </Reveal>
+          ))}
+        </dl>
       </Section>
 
       <CtaSection />
