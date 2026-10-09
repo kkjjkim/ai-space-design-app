@@ -22,9 +22,9 @@ const FOCUS_X = 0.56;
 const PAPER = "#f3eee6";
 
 const PHASES = [
-  { n: "01", t: "선", d: "숫자로 먼저 그리는 사업 계획" },
-  { n: "02", t: "면", d: "컨셉이 재료와 동선이 되는 설계" },
-  { n: "03", t: "빛", d: "불이 켜진 뒤의 매출까지" },
+  { n: "01", t: "선", d: "경영지도사의 사업 계획" },
+  { n: "02", t: "면", d: "브랜드 매장 시공팀의 설계" },
+  { n: "03", t: "빛", d: "오픈 후 매출까지 함께" },
 ];
 
 export function BlueprintHero() {
@@ -205,9 +205,11 @@ export function BlueprintHero() {
               <br />
               공사 전에 정해집니다.
             </h1>
-            <p className="mt-7 max-w-[26rem] text-[1.0625rem] leading-[1.8] opacity-80">
-              국가공인 경영지도사가 사업 계획에서 시작해 브랜드와 공간, 시공까지 한 흐름으로
-              설계합니다.
+            {/* 두 전문가의 분업이 한 번에 읽히게 (2026-10-09 대표 요청).
+                시공 파트너의 이력은 발주처 이름 없이 "백화점·대형 쇼핑몰 브랜드 매장"으로만 쓴다. */}
+            <p className="mt-7 max-w-[27rem] text-[1.0625rem] leading-[1.8] opacity-80">
+              사업은 국가공인 경영지도사가, 공간은 백화점·대형 쇼핑몰 브랜드 매장을 시공해 온 팀이
+              맡습니다.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Link href="#apply" className={buttonVariants({ size: "lg" })}>
