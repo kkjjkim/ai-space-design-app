@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Instagram } from "lucide-react";
 import { site, navItems } from "@/lib/site";
+import { INDUSTRIES } from "@/lib/industries";
 
 export function SiteFooter() {
   return (
@@ -21,6 +22,22 @@ export function SiteFooter() {
                 className="text-sm text-foreground/70 hover:text-foreground"
               >
                 {item.label}
+              </Link>
+            ))}
+          </nav>
+          {/* 업종별 랜딩 — 전 페이지에서 링크해야 구글이 크롤링·색인한다.
+              (10/8 서치콘솔: /service 에서만 링크돼 5개 전부 "발견됨-색인 안 됨") */}
+          <nav
+            aria-label="업종별 인테리어"
+            className="mt-4 flex flex-wrap gap-x-4 gap-y-2 md:justify-end"
+          >
+            {INDUSTRIES.map((i) => (
+              <Link
+                key={i.slug}
+                href={`/interior/${i.slug}`}
+                className="text-xs text-foreground/60 hover:text-foreground"
+              >
+                {i.keyword}
               </Link>
             ))}
           </nav>
