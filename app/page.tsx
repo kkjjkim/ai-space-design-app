@@ -22,7 +22,7 @@ export const revalidate = 21600;
 export const metadata: Metadata = {
   title: "창업 컨설팅·브랜드 컨설팅·공간 디자인 | 브랜드각",
   description:
-    "국가공인 경영지도사가 창업·사업 전략부터 브랜드 컨셉, 공간 디자인·인테리어 시공까지 한 흐름으로 함께합니다. 창업 첫걸음부터 매출까지, 전국 상담.",
+    "국가공인 경영지도사가 창업·사업 전략부터 브랜드 컨셉, 공간 디자인·인테리어 시공까지 한 흐름으로 함께합니다. 창업 첫걸음부터 오픈까지, 전국 상담.",
   alternates: {
     canonical: "/",
     types: { "application/rss+xml": `${site.url}/feed.xml` },

@@ -24,7 +24,7 @@ const PAPER = "#f3eee6";
 const PHASES = [
   { n: "01", t: "선", d: "경영지도사의 사업 계획" },
   { n: "02", t: "면", d: "브랜드 매장 시공팀의 설계" },
-  { n: "03", t: "빛", d: "오픈 후 매출까지 함께" },
+  { n: "03", t: "빛", d: "불이 켜진 뒤의 매출을 생각한 설계" },
 ];
 
 export function BlueprintHero() {

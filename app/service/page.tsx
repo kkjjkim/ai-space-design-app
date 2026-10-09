@@ -11,7 +11,7 @@ import { INDUSTRIES } from "@/lib/industries";
 export const metadata: Metadata = {
   title: "서비스",
   description:
-    "창업 컨설팅 · 브랜드 컨설팅 · 공간 디자인. 창업 첫걸음부터 매출까지, 한 팀으로.",
+    "창업 컨설팅 · 브랜드 컨설팅 · 공간 디자인. 창업 첫걸음부터 오픈까지, 한 팀으로.",
   alternates: { canonical: "/service" },
 };
 
@@ -54,7 +54,7 @@ export default function ServicePage() {
       <Section>
         <Reveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold leading-snug md:text-4xl">
-            창업부터 매출까지, 세 가지가 한 팀으로.
+            창업부터 오픈까지, 세 가지가 한 팀으로.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-foreground/70">
             따로 맡기면 방향이 흩어집니다. 창업 전략·브랜드·공간을 한 팀이
@@ -73,7 +73,7 @@ export default function ServicePage() {
 
         <Reveal>
           <p className="mx-auto mt-14 max-w-3xl text-center text-2xl font-bold leading-snug md:text-3xl">
-            “창업 첫걸음부터 매출까지, 최고의 브랜드, 최고의 공간으로 태어납니다.”
+            “창업 첫걸음부터 오픈까지, 최고의 브랜드, 최고의 공간으로 태어납니다.”
           </p>
         </Reveal>
       </Section>
