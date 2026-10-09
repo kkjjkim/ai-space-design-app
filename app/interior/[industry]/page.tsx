@@ -151,7 +151,7 @@ export default function IndustryPage({
               이 업종의 컨셉 예시
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              실제 시공 사례가 아니라 브랜드 방향을 보여주는 컨셉 예시입니다.
+              컨셉 분위기 예시입니다.
             </p>
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {concepts.map((c) => (

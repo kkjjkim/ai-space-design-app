@@ -193,7 +193,7 @@ export function DiagnosisWizard({
         <div className="mt-6 rounded-xl border border-border p-7 md:p-9">
           <h3 className="font-serif text-xl">비슷한 결의 컨셉 예시</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            실제 시공 사례가 아니라 브랜드 방향을 보여주는 컨셉 예시입니다.
+            컨셉 분위기 예시입니다.
           </p>
           <ul className="mt-6 grid gap-3 sm:grid-cols-2">
             {concepts.map((c) => (

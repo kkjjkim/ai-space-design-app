@@ -25,7 +25,7 @@ export default function ConceptsPage() {
         eyebrow="Concepts"
         title="당신의 생각과 가치가, 공간이 되는 방식"
         subtitle="대표자의 철학과 사업 의도가 입구·동선·조명·집기로 어떻게 번역되는지를 업종별 컨셉으로 정리했습니다."
-        note="※ 실제 시공 사례가 아닌 컨셉 제안 예시입니다."
+        note="컨셉 분위기 예시입니다."
       />
 
       {CONCEPTS.map((c, i) => (
