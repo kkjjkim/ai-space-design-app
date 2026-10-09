@@ -124,15 +124,3 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
-
-/* 첫 화면 도면지 — 조명이 켜질수록(--hero-p → 1) 옅어진다 */
-.blueprint-grid {
-  background-image:
-    linear-gradient(hsl(var(--primary) / 0.13) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--primary) / 0.13) 1px, transparent 1px),
-    linear-gradient(hsl(var(--primary) / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--primary) / 0.06) 1px, transparent 1px);
-  background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
-  opacity: calc(1 - var(--hero-p, 0) * 0.75);
-  mask-image: radial-gradient(ellipse at 65% 55%, black 35%, transparent 85%);
-}
