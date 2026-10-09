@@ -41,7 +41,7 @@ export function SiteHeader() {
           overDarkHero ? "text-background" : "text-foreground"
         )}
       >
-        <Link href="/" className="font-serif text-lg font-semibold uppercase tracking-[0.25em]">
+        <Link href="/" className="font-serif text-xl font-semibold tracking-[0.12em]">
           {site.brandName}
         </Link>
 

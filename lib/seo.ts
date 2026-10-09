@@ -16,7 +16,7 @@ export function localBusinessLd(): Record<string, unknown> {
     "@id": `${site.url}/#business`,
     name: site.business.name, // 폴앤마리
     // 별칭에 한글 브랜드명을 먼저 둔다 — 검색엔진이 "브랜드각 = 이 사업자"로 묶게.
-    alternateName: [site.brandNameKo, site.brandName],
+    alternateName: [site.brandNameEn, site.business.name],
     description: site.description,
     url: site.url,
     image: abs(site.ogImage),
@@ -63,7 +63,7 @@ export function websiteLd(): Record<string, unknown> {
     "@id": `${site.url}/#website`,
     url: site.url,
     name: site.brandNameKo,
-    alternateName: site.brandName,
+    alternateName: site.brandNameEn,
     description: site.description,
     inLanguage: "ko-KR",
     publisher: { "@id": `${site.url}/#business` },

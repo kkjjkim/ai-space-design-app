@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: `${site.tagline} | ${site.brandNameKo}`,
     description: site.description,
     url: site.url,
-    siteName: `${site.brandNameKo} (${site.brandName})`,
+    siteName: site.brandNameKo,
     type: "website",
     locale: "ko_KR",
     images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.tagline }],
