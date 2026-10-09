@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { pretendard } from "./fonts";
+import { pretendard, notoSerif } from "./fonts";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { FloatingCta } from "@/components/layout/floating-cta";
@@ -63,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko" className={pretendard.variable}>
+    <html lang="ko" className={`${pretendard.variable} ${notoSerif.variable}`}>
       <body className="min-h-screen">
         <JsonLd data={localBusinessLd()} />
         <JsonLd data={websiteLd()} />

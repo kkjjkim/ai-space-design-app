@@ -151,9 +151,12 @@ export async function createHeroShaderScene(
 
   function frame() {
     raf = requestAnimationFrame(frame);
-    uniforms.uTime.value = clock.getElapsedTime();
-    uniforms.uProgress.value += (target - uniforms.uProgress.value) * 0.09;
-    uniforms.uMouse.value.lerp(mouseTarget, 0.05);
+    // 프레임 수가 아니라 시간 기준으로 따라간다 — 느린 휴대폰(30fps)에서도 같은 속도.
+    const dt = Math.min(clock.getDelta(), 0.1);
+    uniforms.uTime.value = clock.elapsedTime;
+    const follow = 1 - Math.pow(1 - 0.09, dt * 60);
+    uniforms.uProgress.value += (target - uniforms.uProgress.value) * follow;
+    uniforms.uMouse.value.lerp(mouseTarget, 1 - Math.pow(1 - 0.05, dt * 60));
     renderer.render(scene, camera);
   }
 

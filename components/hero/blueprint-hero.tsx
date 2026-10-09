@@ -22,9 +22,9 @@ const FOCUS_X = 0.56;
 const PAPER = "#f3eee6";
 
 const PHASES = [
-  { n: "01", t: "선", d: "되는 장사인지, 숫자로 먼저 그립니다" },
-  { n: "02", t: "면", d: "컨셉이 공간의 재료와 동선이 됩니다" },
-  { n: "03", t: "빛", d: "불이 켜진 뒤의 매출까지 함께 봅니다" },
+  { n: "01", t: "선", d: "숫자로 먼저 그리는 사업 계획" },
+  { n: "02", t: "면", d: "컨셉이 재료와 동선이 되는 설계" },
+  { n: "03", t: "빛", d: "불이 켜진 뒤의 매출까지" },
 ];
 
 export function BlueprintHero() {
@@ -194,29 +194,32 @@ export function BlueprintHero() {
               : "color-mix(in srgb, hsl(var(--background)) calc(var(--night) * 100%), hsl(var(--foreground)))",
           }}
         >
-          <div className="reveal max-w-xl">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-              창업 첫걸음부터 매출까지
+          <div className="reveal max-w-2xl">
+            {/* 한글 머리글은 넓은 자간을 주면 흩어져 보인다 → 짧은 금색 선 + 보통 자간 */}
+            <p className="mb-7 flex items-center gap-3 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
+              <span aria-hidden className="h-px w-8 bg-primary" />
+              창업 컨설팅 · 브랜드 · 공간 디자인
             </p>
-            <h1 className="text-[2.4rem] font-extrabold leading-[1.1] tracking-tight sm:text-6xl lg:text-[4.2rem]">
-              인테리어가 아니라,
+            <h1 className="font-display text-[2.15rem] font-semibold leading-[1.22] tracking-[-0.03em] sm:text-[3.6rem] lg:text-[4.4rem]">
+              잘되는 가게는,
               <br />
-              장사 되는 브랜드를 만듭니다.
+              공사 전에 정해집니다.
             </h1>
-            <p className="mt-6 max-w-lg text-base leading-relaxed opacity-80 sm:text-lg">
-              국가공인 경영지도사가 사업 계획부터 공간·시공까지 한 흐름으로.
-              <br className="hidden sm:block" /> 창업 첫걸음부터 매출까지, 한 곳에서.
+            <p className="mt-7 max-w-[26rem] text-[1.0625rem] leading-[1.8] opacity-80">
+              국가공인 경영지도사가 사업 계획에서 시작해 브랜드와 공간, 시공까지 한 흐름으로
+              설계합니다.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Link href="#apply" className={buttonVariants({ size: "lg" })}>
                 무료 상담 문의
               </Link>
               {/* 아직 상담할 단계가 아닌 방문자(대부분 글로 들어온다)에게 주는 낮은 문턱 */}
               <Link
                 href="/diagnosis"
-                className="border-b border-current pb-1 text-base opacity-90 transition-colors hover:border-primary hover:text-primary"
+                className="group inline-flex items-center gap-2 text-[0.9375rem] font-medium opacity-90 transition-colors hover:text-primary"
               >
                 1분 컨셉 진단
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
             </div>
           </div>
@@ -241,7 +244,7 @@ export function BlueprintHero() {
                 </div>
                 <div className="flex items-baseline gap-2">
                   <span className="text-xs tabular-nums text-primary">{ph.n}</span>
-                  <span className="text-xl font-semibold">{ph.t}</span>
+                  <span className="font-display text-xl font-semibold">{ph.t}</span>
                 </div>
                 <p className="mt-1 text-sm leading-snug opacity-75">{ph.d}</p>
               </li>

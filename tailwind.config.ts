@@ -53,6 +53,8 @@ const config: Config = {
         // 전체 Pretendard 자체 호스팅. font-serif 클래스도 동일 스택으로 통일.
         sans: ["var(--font-sans)", "Pretendard", "system-ui", "sans-serif"],
         serif: ["var(--font-sans)", "Pretendard", "system-ui", "sans-serif"],
+        // 큰 제목 명조 (Noto Serif KR) — font-display
+        display: ["var(--font-display)", "Noto Serif KR", "serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
