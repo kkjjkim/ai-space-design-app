@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check, X } from "lucide-react";
 import { Section } from "@/components/section";
 import { Reveal } from "@/components/reveal";
-import { SiteHero } from "@/components/site-hero";
+import { BlueprintHero } from "@/components/hero/blueprint-hero";
 import { CinematicBand } from "@/components/cinematic-band";
 import { ConceptCarousel } from "@/components/concept-carousel";
 import { VideoBg } from "@/components/video-bg";
@@ -133,7 +133,7 @@ export default function HomePage() {
   return (
     <>
       {/* 1) 히어로 */}
-      <SiteHero />
+      <BlueprintHero />
 
       {/* 2) 공감 */}
       <Section>

@@ -108,3 +108,31 @@
     @apply my-10 border-border;
   }
 }
+
+/* ── 2026-10 개편: 움직임 기반 ───────────────────────── */
+/* Lenis 부드러운 스크롤 — 라이브러리 권장 CSS */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* 첫 화면 도면지 — 조명이 켜질수록(--hero-p → 1) 옅어진다 */
+.blueprint-grid {
+  background-image:
+    linear-gradient(hsl(var(--primary) / 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--primary) / 0.13) 1px, transparent 1px),
+    linear-gradient(hsl(var(--primary) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--primary) / 0.06) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  opacity: calc(1 - var(--hero-p, 0) * 0.75);
+  mask-image: radial-gradient(ellipse at 65% 55%, black 35%, transparent 85%);
+}

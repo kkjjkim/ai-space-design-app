@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { FloatingCta } from "@/components/layout/floating-cta";
 import { RecentLeadsToast } from "@/components/recent-leads-toast";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Analytics } from "@/components/analytics";
 import { JsonLd } from "@/components/json-ld";
 import { localBusinessLd, websiteLd, serviceLd } from "@/lib/seo";
@@ -72,6 +73,7 @@ export default function RootLayout({
         <SiteFooter />
         <FloatingCta />
         <RecentLeadsToast />
+        <SmoothScroll />
         <Analytics />
       </body>
     </html>
