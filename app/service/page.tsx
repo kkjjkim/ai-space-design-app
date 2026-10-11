@@ -52,6 +52,7 @@ export default function ServicePage() {
 
       <PageHero
         image="/hero/stage-night-1920.webp"
+        imageSrcSet="/hero/stage-night-1280.webp 1280w, /hero/stage-night-1920.webp 1920w"
         eyebrow="서비스"
         title="사업과 공간을, 한 테이블에서."
         subtitle="창업 컨설팅과 브랜드 컨설팅은 국가공인 경영지도사가, 공간 설계와 시공은 백화점·대형 쇼핑몰 브랜드 매장을 시공해 온 팀이 맡습니다."

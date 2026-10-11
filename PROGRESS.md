@@ -142,8 +142,11 @@
 - [x] 05 약속·FAQ 사진 장 구성 (docs/redesign-2026-10.md 7장): 05는 견적서·공정표·자재 샘플 테이블 사진이 열리고
       금색 선이 그어지며 약속 4개가 한 줄로. FAQ는 2단(왼쪽 고정: 제목·전화·현장 사진 / 오른쪽 아코디언 그대로).
       사진 2장 힉스필드 gpt_image_2_5(장당 0.25크레딧), public/home/promise-desk(2K 업스케일)·faq-site(원본 1024, 업스케일 2회 실패 → 960 한 장).
-- [ ] 다음 후보: 서비스·회사 페이지 사진 장 구성 맞추기(/service 모바일 66점 — 머리말 사진(ImageReveal)이 LCP 8.3s, 같이 잡기),
-      Resend 도메인 인증 후 자료 메일 발송, 업체 등록(구글 비즈니스·네이버 플레이스 — Aside 지시서 4·5번).
+- [x] 서브 페이지: 머리말 사진(ImageReveal)에 srcSet(1280/1920, 960/1600) + fetchpriority high — 휴대폰에서 이 사진이 LCP인데
+      1920px 판을 늦게 받아 /service 66점·LCP 8.3s 였음. /company 팀 카드를 홈 03과 같은 사진 카드(사업 테이블·시공 현장)로,
+      CTA 띠 저녁 사진도 srcSet. /company 약속은 홈 05 컴포넌트 공유라 사진 장이 자동 반영.
+- [ ] 다음 후보: Resend 도메인 인증 후 자료 메일 발송, 업체 등록(구글 비즈니스·네이버 플레이스 — Aside 지시서 4·5번),
+      FAQ 사진(faq-site) 업스케일 재시도 또는 재생성(원본 1024px), 가치잇다와 Vercel 팀 분리 검토.
 
 ## 다음 할 것 (운영자/대표님)
 - [ ] Supabase 프로젝트 생성 → `supabase/schema.sql` 실행 → `.env.local` 에 URL/anon 키 입력

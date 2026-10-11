@@ -5,6 +5,7 @@ import { ImageReveal } from "@/components/image-reveal";
 // 그 아래 사진이 스크롤에 맞춰 펼쳐진다. 예전 어두운 영상형 머리말을 대체.
 export function PageHero({
   image,
+  imageSrcSet,
   eyebrow,
   title,
   subtitle,
@@ -12,6 +13,8 @@ export function PageHero({
   compact = false,
 }: {
   image?: string;
+  // 휴대폰에 1920px 판을 보내지 않게 — "작은판 960w, 큰판 1600w" 꼴
+  imageSrcSet?: string;
   eyebrow?: string;
   title: string;
   subtitle?: string;
@@ -42,7 +45,7 @@ export function PageHero({
           )}
         </div>
       </div>
-      {image && <ImageReveal src={image} alt={title} caption={note} className="mt-14 md:mt-20" />}
+      {image && <ImageReveal src={image} srcSet={imageSrcSet} alt={title} caption={note} className="mt-14 md:mt-20" />}
     </section>
   );
 }

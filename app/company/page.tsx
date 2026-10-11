@@ -21,6 +21,21 @@ export const metadata: Metadata = {
 
 // 회사 소개 — 실적·발주처 이름은 쓰지 않는다(대표 결정: 클라이언트가 알아보는 실적은 노출하지 않음).
 // 신뢰는 이름의 뜻, 팀 구조, 일하는 원칙, 확인 가능한 사실로만 만든다.
+const TEAM = [
+  {
+    role: "사업 · 브랜드",
+    who: "국가공인 경영지도사",
+    d: "경영지도사는 중소벤처기업부에 등록하는 국가자격입니다. 상권·예산·자금 계획부터 브랜드 컨셉까지, 되는 장사인지 숫자로 먼저 봅니다.",
+    img: "team-business",
+  },
+  {
+    role: "공간 · 시공",
+    who: "백화점·대형 쇼핑몰 브랜드 매장 시공팀",
+    d: "까다로운 기준의 브랜드 매장을 지어 온 팀이 설계와 시공을 맡습니다. 공정·마감·일정을 브랜드 매장의 기준으로 관리합니다.",
+    img: "team-site",
+  },
+];
+
 const PRINCIPLES = [
   {
     t: "공사 전에 숫자부터",
@@ -48,6 +63,7 @@ export default function CompanyPage() {
 
       <PageHero
         image="/concepts/board-roastery-1600.webp"
+        imageSrcSet="/concepts/board-roastery-960.webp 960w, /concepts/board-roastery-1600.webp 1600w"
         eyebrow="회사 소개"
         title="가게의 각을 잡는 사람들."
         subtitle="'각을 잡는다'는 흐트러진 것을 바로 세운다는 뜻입니다. 브랜드각은 자리·예산·컨셉·공간이 한 방향을 보도록 맞추는 일을 합니다."
@@ -61,23 +77,29 @@ export default function CompanyPage() {
           title="사업을 아는 사람과, 공간을 짓는 사람."
           lead="두 전문가가 처음부터 함께 결정합니다. 상담을 받은 사람이 방향을 잡고, 그 방향 그대로 현장이 지어집니다."
         />
+        {/* 2026-10-11: 글 카드 → 홈 03과 같은 사진(사업 테이블 / 시공 현장) 위에 글. 두 사람이 앉는 두 자리. */}
         <div className="mt-14 grid gap-6 md:grid-cols-2">
-          <Reveal className="rounded-2xl border border-border bg-card p-8 md:p-10">
-            <span className="text-[0.8125rem] font-medium tracking-[0.04em] text-primary">사업 · 브랜드</span>
-            <h3 className="mt-5 font-display text-2xl font-semibold">국가공인 경영지도사</h3>
-            <p className="mt-4 leading-relaxed text-foreground/70">
-              경영지도사는 중소벤처기업부에 등록하는 국가자격입니다. 상권·예산·자금 계획부터 브랜드 컨셉까지, 되는 장사인지
-              숫자로 먼저 봅니다.
-            </p>
-          </Reveal>
-          <Reveal delay={90} className="rounded-2xl border border-border bg-card p-8 md:p-10">
-            <span className="text-[0.8125rem] font-medium tracking-[0.04em] text-primary">공간 · 시공</span>
-            <h3 className="mt-5 font-display text-2xl font-semibold">백화점·대형 쇼핑몰 브랜드 매장 시공팀</h3>
-            <p className="mt-4 leading-relaxed text-foreground/70">
-              까다로운 기준의 브랜드 매장을 지어 온 팀이 설계와 시공을 맡습니다. 공정·마감·일정을 브랜드 매장의 기준으로
-              관리합니다.
-            </p>
-          </Reveal>
+          {TEAM.map((t, i) => (
+            <Reveal
+              key={t.role}
+              delay={i * 90}
+              className="relative isolate flex min-h-[30rem] flex-col justify-end overflow-hidden rounded-2xl p-8 text-background md:min-h-[34rem] md:p-10"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/home/${t.img}-1600.webp`}
+                srcSet={`/home/${t.img}-960.webp 960w, /home/${t.img}-1600.webp 1600w`}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 -z-20 h-full w-full object-cover"
+              />
+              <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-[#120e0b] via-[#120e0b]/75 to-[#120e0b]/10" />
+              <span className="text-[0.8125rem] font-medium tracking-[0.04em] text-primary">{t.role}</span>
+              <h3 className="mt-5 font-display text-2xl font-semibold">{t.who}</h3>
+              <p className="mt-4 leading-relaxed text-background/75">{t.d}</p>
+            </Reveal>
+          ))}
         </div>
       </Section>
 

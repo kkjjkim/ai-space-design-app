@@ -9,6 +9,8 @@ export function CtaSection() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/hero/stage-night-1920.webp"
+        srcSet="/hero/stage-night-1280.webp 1280w, /hero/stage-night-1920.webp 1920w"
+        sizes="100vw"
         alt=""
         loading="lazy"
         className="absolute inset-0 -z-20 h-full w-full object-cover opacity-55"
