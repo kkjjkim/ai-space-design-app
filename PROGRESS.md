@@ -145,6 +145,7 @@
 - [x] 서브 페이지: 머리말 사진(ImageReveal)에 srcSet(1280/1920, 960/1600) + fetchpriority high — 휴대폰에서 이 사진이 LCP인데
       1920px 판을 늦게 받아 /service 66점·LCP 8.3s 였음. /company 팀 카드를 홈 03과 같은 사진 카드(사업 테이블·시공 현장)로,
       CTA 띠 저녁 사진도 srcSet. /company 약속은 홈 05 컴포넌트 공유라 사진 장이 자동 반영.
+      운영 측정(웜): /service 66→95(LCP 2.9s), /company 78→99(LCP 2.1s), 홈 92~98(LCP 2.0s).
 - [ ] 다음 후보: Resend 도메인 인증 후 자료 메일 발송, 업체 등록(구글 비즈니스·네이버 플레이스 — Aside 지시서 4·5번),
       FAQ 사진(faq-site) 업스케일 재시도 또는 재생성(원본 1024px), 가치잇다와 Vercel 팀 분리 검토.
 
