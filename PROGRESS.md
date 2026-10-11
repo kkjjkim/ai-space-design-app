@@ -133,7 +133,16 @@
       위험: 가치잇다와 같은 Vercel 팀이라 지출 한도($10+일시정지)를 공유 — 가치잇다가 한도에 닿으면 브랜드각도 멈춤(분리 검토).
 - [x] 캡차: 손님 브라우저가 Cloudflare 에 못 닿아 위젯 오류면 전화 안내 + 토큰 없이 접수(메일 제목 [캡차 미확인], source captcha=unverified).
       대표 승인. 스팸 늘면 app/api/leads/route.ts 의 captchaUnverified 분기 삭제.
-- [ ] 다음 후보: 05 약속·FAQ도 시각 보강, 휴대폰 성능 추가 개선(첫 글자 7.5s), 서비스·회사 페이지 사진 장 구성 맞추기,
+- [x] 휴대폰 속도 2차 (저녁): Lighthouse 모바일 홈 79 → 96~98, LCP 4.3s → 2.1~2.4s, CLS 0.08 → 0.
+      원인은 트레이스로 찾음 — h1이 opacity 0 페이드인으로 시작하면 Chrome이 LCP를 글꼴·사진 다 받은 뒤 다음 페인트로 기록
+      (첫 페인트 239ms인데 h1 545ms). 고친 것: .reveal 을 위치 이동만(animate-rise), 서버 렌더 히어로 100svh(CLS),
+      gtag lazyOnload(176KB preload 제거), 컨셉 보드 배경 사진은 섹션 600px 근처에서만·휴대폰 960px, --night 변수는 바뀔 때만.
+      측정은 `npx lighthouse@12 <url> --preset=perf --form-factor=mobile --screenEmulation.mobile --throttling-method=simulate`
+      (배포 직후 콜드 캐시 1회는 59점 — 두 번째부터 봐야 함). 로컬(next start)은 글꼴이 너무 빨라 LCP가 높게 나오니 운영으로 잰다.
+- [x] 05 약속·FAQ 사진 장 구성 (docs/redesign-2026-10.md 7장): 05는 견적서·공정표·자재 샘플 테이블 사진이 열리고
+      금색 선이 그어지며 약속 4개가 한 줄로. FAQ는 2단(왼쪽 고정: 제목·전화·현장 사진 / 오른쪽 아코디언 그대로).
+      사진 2장 힉스필드 gpt_image_2_5(장당 0.25크레딧), public/home/promise-desk(2K 업스케일)·faq-site(원본 1024, 업스케일 2회 실패 → 960 한 장).
+- [ ] 다음 후보: 서비스·회사 페이지 사진 장 구성 맞추기(/service 모바일 66점 — 머리말 사진(ImageReveal)이 LCP 8.3s, 같이 잡기),
       Resend 도메인 인증 후 자료 메일 발송, 업체 등록(구글 비즈니스·네이버 플레이스 — Aside 지시서 4·5번).
 
 ## 다음 할 것 (운영자/대표님)

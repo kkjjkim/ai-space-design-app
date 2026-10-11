@@ -83,23 +83,50 @@ export default function HomePage() {
 
       {/* 7.5) 자주 묻는 질문 (FAQ) — 검색·AI 답변 노출용 */}
       <Section>
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <h2 className="font-display text-[1.9rem] font-semibold tracking-[-0.02em] sm:text-[2.6rem]">자주 묻는 질문</h2>
-        </Reveal>
-        <div className="mx-auto mt-10 max-w-3xl divide-y divide-border overflow-hidden rounded-2xl border border-border">
-          {FAQS.map((f, i) => (
-            <Reveal key={f.q} delay={i * 60}>
-              <details className="group px-6 py-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-foreground">
-                  {f.q}
-                  <span className="shrink-0 text-primary transition-transform group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-3 leading-relaxed text-foreground/70">{f.a}</p>
-              </details>
+        {/* 2026-10-11: 글만 있던 가운데 정렬 → 2단. 왼쪽은 제목·전화·현장 사진이 따라오고, 오른쪽이 질문.
+            아코디언 구조(details)는 검색·AI 답변 인용용이라 그대로 둔다. */}
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.45fr] lg:gap-20">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <Reveal>
+              <h2 className="font-display text-[1.9rem] font-semibold tracking-[-0.02em] sm:text-[2.6rem]">자주 묻는 질문</h2>
+              <p className="mt-6 max-w-md text-[1.0625rem] leading-[1.85] text-foreground/70">
+                여기 없는 질문은 전화로 바로 답해 드립니다.
+              </p>
+              <a
+                href={`tel:${site.business.phone}`}
+                className="mt-4 inline-block font-semibold text-foreground underline-offset-4 hover:text-primary hover:underline"
+              >
+                {site.business.phone}
+              </a>
             </Reveal>
-          ))}
+            {/* 빈 상가에서 도면·줄자를 든 손 — 질문이 생기는 자리(계약 전 현장) */}
+            <div className="mt-10 overflow-hidden rounded-[1.25rem] bg-secondary">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {/* 원본이 1024px라 960 한 장만 (표시 폭은 최대 490px) */}
+              <img
+                src="/home/faq-site-960.webp"
+                alt="공사 전 빈 상가에서 도면과 줄자를 든 손"
+                loading="lazy"
+                className="aspect-[3/2] w-full object-cover lg:aspect-[4/5]"
+              />
+            </div>
+          </div>
+
+          <div className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-background">
+            {FAQS.map((f, i) => (
+              <Reveal key={f.q} delay={i * 60}>
+                <details className="group px-6 py-5">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-foreground">
+                    {f.q}
+                    <span className="shrink-0 text-primary transition-transform group-open:rotate-45">
+                      +
+                    </span>
+                  </summary>
+                  <p className="mt-3 leading-relaxed text-foreground/70">{f.a}</p>
+                </details>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </Section>
 
