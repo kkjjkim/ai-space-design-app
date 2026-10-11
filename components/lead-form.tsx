@@ -74,6 +74,9 @@ export function LeadForm({
   // 캡차 스크립트(약 0.7MB)는 폼이 화면 가까이 오거나 손님이 입력을 시작할 때만 불러온다.
   // 예전엔 페이지를 열자마자 받아서 휴대폰 첫 화면을 느리게 했다(2026-10-11 Lighthouse).
   const [captchaWanted, setCaptchaWanted] = useState(false);
+  // 손님 브라우저가 Cloudflare 확인 서버에 닿지 못하면(광고 차단·VPN 등) 위젯이 오류로 끝난다.
+  // 이때는 전화·문자로 바로 연락할 수 있게 안내를 띄운다(봇 방지 자체는 약하게 하지 않는다).
+  const [captchaFailed, setCaptchaFailed] = useState(false);
   useEffect(() => {
     const el = formRef.current;
     if (!TURNSTILE_SITE_KEY || !el) return;
@@ -114,6 +117,11 @@ export function LeadForm({
     widgetIdRef.current = window.turnstile.render(el, {
       sitekey: TURNSTILE_SITE_KEY,
       theme: "auto",
+      "error-callback": () => {
+        setCaptchaFailed(true);
+        track("form_error", { form_type: "captcha", reason: "widget_error" });
+      },
+      callback: () => setCaptchaFailed(false),
     });
   }, []);
 
@@ -312,6 +320,15 @@ export function LeadForm({
             />
           )}
           <div ref={captchaRef} />
+          {captchaFailed && (
+            <p className="rounded-md bg-secondary px-4 py-3 text-sm leading-relaxed text-foreground/80">
+              봇 방지 확인이 이 브라우저에서 연결되지 않고 있어요. 다른 브라우저로 시도하시거나,{" "}
+              <a href={`tel:${site.business.phone}`} className="font-semibold text-foreground underline underline-offset-4">
+                {site.business.phone}
+              </a>
+              로 전화·문자 주시면 바로 연락드립니다.
+            </p>
+          )}
         </>
       )}
 

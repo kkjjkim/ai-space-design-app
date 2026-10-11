@@ -58,7 +58,7 @@ export function ConceptBoards() {
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div className="max-w-2xl">
             <p className="mb-6 flex items-baseline gap-4 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
-              <span className="font-display text-2xl text-foreground/80">05</span>
+              <span className="font-display text-2xl text-foreground/80">04</span>
               업종별 컨셉 보드
             </p>
             <h2 className="font-display text-[1.9rem] font-semibold leading-[1.3] tracking-[-0.02em] sm:text-[2.8rem]">

@@ -5,10 +5,8 @@ import { BlueprintHero } from "@/components/hero/blueprint-hero";
 import { Manifesto } from "@/components/home/manifesto";
 import { SquareUp } from "@/components/home/square-up";
 import { TwoExperts } from "@/components/home/two-experts";
-import { ProcessFlow } from "@/components/home/process-flow";
 import { ConceptBoards } from "@/components/home/concept-boards";
 import { Promises } from "@/components/home/promises";
-import { ResourceOffer } from "@/components/resource-offer";
 import { LeadForm } from "@/components/lead-form";
 import { JsonLd } from "@/components/json-ld";
 import { faqLd } from "@/lib/seo";
@@ -78,14 +76,10 @@ export default function HomePage() {
       <SquareUp />
       {/* 4) 한 테이블, 두 전문가 */}
       <TwoExperts chapter="03" />
-      {/* 5) 진행 순서와 받는 결과물 */}
-      <ProcessFlow chapter="04" />
       {/* 6) 업종별 컨셉 보드 */}
       <ConceptBoards />
       {/* 7) 약속 */}
-      <Promises chapter="06" />
-      {/* 8) 아직 상담까진 이른 방문자 — 예산표·체크리스트 받기 */}
-      <ResourceOffer />
+      <Promises chapter="05" />
 
       {/* 7.5) 자주 묻는 질문 (FAQ) — 검색·AI 답변 노출용 */}
       <Section>
