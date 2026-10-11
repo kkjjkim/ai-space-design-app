@@ -13,14 +13,40 @@ const ROWS = 4;
 
 export function ConceptBoards() {
   const [active, setActive] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
   const tilesRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  // 사진은 섹션이 화면 가까이 올 때부터 받는다. CSS 배경 이미지는 lazy 속성이 없어 페이지를 열자마자
+  // 218KB를 첫 화면 글꼴과 같이 받았다(2026-10-11 트레이스). 휴대폰은 960px 판으로.
+  const [near, setNear] = useState(false);
+  const [width, setWidth] = useState<960 | 1600>(1600);
   const b = CONCEPT_BOARDS[active];
-  const src = `${b.image}-1600.webp`;
+  const src = near ? `${b.image}-${width}.webp` : undefined;
 
-  // 바뀔 때마다 조각이 모이는 전환
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    setWidth(window.innerWidth < 768 ? 960 : 1600);
+    if (typeof IntersectionObserver === "undefined") {
+      setNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // 바뀔 때마다 조각이 모이는 전환 (사진이 처음 들어올 때도 한 번)
+  useEffect(() => {
+    if (!near || prefersReducedMotion()) return;
     let cancelled = false;
     (async () => {
       const { gsap } = await import("gsap");
@@ -50,10 +76,10 @@ export function ConceptBoards() {
     return () => {
       cancelled = true;
     };
-  }, [active]);
+  }, [active, near]);
 
   return (
-    <section className="bg-background py-28 md:py-36">
+    <section ref={sectionRef} className="bg-background py-28 md:py-36">
       <div className="container">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div className="max-w-2xl">
@@ -111,7 +137,7 @@ export function ConceptBoards() {
                   style={{
                     // 조각 사이 1px 미만 틈이 보이지 않게 살짝 겹친다
                     margin: "-0.5px",
-                    backgroundImage: `url(${src})`,
+                    backgroundImage: src ? `url(${src})` : undefined,
                     backgroundSize: `${COLS * 100}% ${ROWS * 100}%`,
                     backgroundPosition: `${(c / (COLS - 1)) * 100}% ${(r / (ROWS - 1)) * 100}%`,
                   }}

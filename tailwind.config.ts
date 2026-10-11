@@ -66,6 +66,13 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(16px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
+        // 페이지 머리말(h1)용 — 투명도는 건드리지 않는다. opacity 0에서 시작하면 Chrome이 제목을
+        // "아직 안 그려진 것"으로 보고 LCP 기록을 다음 메인스레드 페인트(글꼴·사진 다 받은 뒤)로 미룬다.
+        // 휴대폰 LCP 1.4초→4.3초 차이가 여기서 났다(2026-10-11 Lighthouse 트레이스).
+        rise: {
+          from: { transform: "translateY(14px)" },
+          to: { transform: "translateY(0)" },
+        },
         // 정지 이미지에 천천히 밀어들어가기(드론 글라이드 느낌, 흔들림 없음)
         kenburns: {
           "0%": { transform: "scale(1.05) translate(0, 0)" },
@@ -74,6 +81,7 @@ const config: Config = {
       },
       animation: {
         "fade-in-up": "fade-in-up 0.7s ease-out both",
+        rise: "rise 0.7s ease-out both",
         kenburns: "kenburns 16s ease-in-out infinite alternate",
       },
     },

@@ -67,10 +67,12 @@
   }
 }
 
-/* 섹션 진입 시 은은한 페이드인 */
+/* 페이지 머리말(첫 화면·서브 페이지 h1) 등장 — 위치만 살짝 올라오고 투명도는 그대로.
+   페이드인(opacity 0→1)을 쓰면 Chrome이 제목의 LCP를 다음 페인트(글꼴·사진 뒤)로 늦게 기록한다
+   → 휴대폰 LCP 4.3초. 글은 서버에서 그려진 그대로 첫 페인트에 보여야 한다. (tailwind.config.ts rise 참고) */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
-    @apply animate-fade-in-up;
+    @apply animate-rise;
   }
 }
 

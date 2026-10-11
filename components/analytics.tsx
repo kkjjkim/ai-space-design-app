@@ -45,9 +45,11 @@ export function Analytics() {
     <>
       {gtagId && (
         <>
+          {/* 로더(176KB)는 페이지 load 뒤에. afterInteractive 면 <link rel=preload>로 CSS·글꼴과 같은 때 받아
+              휴대폰 첫 화면을 늦춘다. 그 전의 이벤트는 아래 init 의 dataLayer 에 쌓였다가 로더가 오면 보내진다. */}
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
           <Script id="gtag-init" strategy="afterInteractive">
             {`

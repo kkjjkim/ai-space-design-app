@@ -90,14 +90,18 @@ export function BlueprintHero() {
 
       const intro = { p: 0 };
       let scrollP = 0;
+      let lastNight = "";
       const update = () => {
         // 처음엔 스크롤 없이도 도면이 그려지고(0→0.3), 스크롤이 그다음을 이어간다.
         const p = scrollP > 0 ? Math.max(intro.p, 0.3 + scrollP * 0.7) : intro.p;
         scene.setProgress(p);
-        section.style.setProperty("--hero-p", p.toFixed(3));
-        // 불이 켜지면 종이색 → 어둠, 차콜 글자 → 밝은 글자로 함께 바뀐다
-        const night = Math.min(1, Math.max(0, (p - 0.74) / 0.2));
-        section.style.setProperty("--night", night.toFixed(3));
+        // 불이 켜지면 종이색 → 어둠, 차콜 글자 → 밝은 글자로 함께 바뀐다.
+        // CSS 변수는 값이 바뀔 때만 쓴다 — 매 프레임 쓰면 글자 전체 스타일 재계산이 도면 그리는 2.6초 내내 돈다(휴대폰 CPU).
+        const night = Math.min(1, Math.max(0, (p - 0.74) / 0.2)).toFixed(3);
+        if (night !== lastNight) {
+          lastNight = night;
+          section.style.setProperty("--night", night);
+        }
         setPhase(p < 0.33 ? 0 : p < 0.7 ? 1 : 2);
       };
       const introTween = gsap.to(intro, { p: 0.3, duration: 2.6, ease: "power2.inOut", delay: 0.1, onUpdate: update });
@@ -152,9 +156,10 @@ export function BlueprintHero() {
     <section
       ref={sectionRef}
       className={cn("relative bg-background", pinned ? "h-[280vh]" : "")}
-      style={{ ["--hero-p" as string]: 0, ["--night" as string]: 0 }}
+      style={{ ["--night" as string]: 0 }}
     >
-      <div className={cn("overflow-hidden", pinned ? "sticky top-0 h-[100svh]" : "relative min-h-[92svh]")}>
+      {/* 서버 렌더·정지 화면도 100svh — 3D가 켜지며 섹션이 280vh로 늘 때 보이는 요소가 밀리지 않게(92svh였을 땐 CLS 0.08) */}
+      <div className={cn("overflow-hidden", pinned ? "sticky top-0 h-[100svh]" : "relative min-h-[100svh]")}>
         {/* 3D 기기는 빈 종이에서 시작, 정지 기기(그리고 판단 전 서버 렌더)는 완성된 저녁 사진 */}
         {!isStatic ? (
           <div aria-hidden className="absolute inset-0" style={{ background: PAPER }} />
