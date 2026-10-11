@@ -156,7 +156,9 @@ export function LeadForm({
         (widgetIdRef.current &&
           window.turnstile?.getResponse(widgetIdRef.current)) ||
         "";
-      if (TURNSTILE_SITE_KEY && !captchaToken) {
+      // 위젯이 연결 실패로 확정된 손님은 캡차 없이 접수(서버가 [캡차 미확인]으로 표시) — 2026-10-11 대표 결정
+      const captchaUnavailable = Boolean(TURNSTILE_SITE_KEY && !captchaToken && captchaFailed);
+      if (TURNSTILE_SITE_KEY && !captchaToken && !captchaUnavailable) {
         track("form_error", { form_type: formType, reason: "captcha_missing" });
         setError("잠시만요, 봇 방지 확인이 끝나면 다시 눌러주세요.");
         setLoading(false);
@@ -172,6 +174,7 @@ export function LeadForm({
           source,
           company_website: honeypotRef.current?.value || "", // 허니팟
           captchaToken,
+          captchaUnavailable,
         }),
       });
       const data = await res.json();
@@ -322,7 +325,7 @@ export function LeadForm({
           <div ref={captchaRef} />
           {captchaFailed && (
             <p className="rounded-md bg-secondary px-4 py-3 text-sm leading-relaxed text-foreground/80">
-              봇 방지 확인이 이 브라우저에서 연결되지 않고 있어요. 다른 브라우저로 시도하시거나,{" "}
+              봇 방지 확인이 이 브라우저에서 연결되지 않고 있어요. 그대로 제출하셔도 접수됩니다. 불편하시면{" "}
               <a href={`tel:${site.business.phone}`} className="font-semibold text-foreground underline underline-offset-4">
                 {site.business.phone}
               </a>

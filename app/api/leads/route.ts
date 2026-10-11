@@ -64,7 +64,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<CaptchaResult
 }
 
 // 운영자에게 신규 상담 알림 메일 발송. 실패해도 신청 저장은 성공 처리.
-async function notifyOwner(lead: Record<string, unknown>) {
+async function notifyOwner(lead: Record<string, unknown>, opts: { unverified?: boolean } = {}) {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.LEAD_NOTIFY_TO;
   if (!apiKey || !to) return;
@@ -91,7 +91,7 @@ async function notifyOwner(lead: Record<string, unknown>) {
     await resend.emails.send({
       from,
       to: to.split(",").map((s) => s.trim()),
-      subject: `[${site.mailTag} · 새 상담 신청] ${lead.name} (${lead.phone})`,
+      subject: `${opts.unverified ? "[캡차 미확인] " : ""}[${site.mailTag} · 새 상담 신청] ${lead.name} (${lead.phone})`,
       html: `<h2>[${site.mailTag}] 새 무료 컨셉 상담 신청</h2><table cellpadding="6">${rows}</table>`,
     });
   } catch (err) {
@@ -130,7 +130,13 @@ export async function POST(req: NextRequest) {
   // 예전엔 성공처럼 응답하고 버렸는데, 사람 손님도 "접수됐다"고 믿고 떠나 신청이 증발했다.
   // 봇은 허니팟과 이 단계에서 어차피 걸러진다.
   const ip = clientIp(req);
-  const captcha = await verifyTurnstile(String(body.captchaToken || ""), ip);
+  const token = String(body.captchaToken || "");
+  // 손님 브라우저가 Cloudflare 확인 서버에 닿지 못해 위젯이 오류로 끝난 경우(광고 차단·개인정보 보호·VPN 등),
+  // 클라이언트가 captchaUnavailable 을 보낸다. 이때 막으면 진짜 손님을 잃으므로(7~10월 신청 0건의 교훈)
+  // 허니팟·휴대폰 형식·중복 검사는 그대로 두고 접수하되, 알림 메일 제목에 [캡차 미확인]을 붙여 대표가 거른다.
+  // (2026-10-11 대표 결정. 스팸이 늘면 이 분기만 지우면 원래대로 막힌다)
+  const captchaUnverified = !token && body.captchaUnavailable === true;
+  const captcha = captchaUnverified ? "ok" : await verifyTurnstile(token, ip);
   if (captcha === "bad-token") {
     return NextResponse.json(
       { error: "봇 방지 확인이 만료됐어요. 확인 표시 후 한 번 더 눌러주세요." },
@@ -185,7 +191,8 @@ export async function POST(req: NextRequest) {
         location: data.location || null,
         budget: data.budget || null,
         message: data.message || null,
-        source: data.source || null,
+        // 캡차 없이 들어온 건은 유입 칸 끝에 표시해 DB에서도 구분되게
+        source: captchaUnverified ? `${data.source || ""} | captcha=unverified`.slice(0, 200) : data.source || null,
       },
       status
     );
@@ -207,7 +214,7 @@ export async function POST(req: NextRequest) {
 
   // 7) 정상 건만 알림 메일 (의심 건은 저장만, 알림 없음)
   if (status === "정상") {
-    await notifyOwner(data);
+    await notifyOwner(data, { unverified: captchaUnverified });
   }
 
   return NextResponse.json({ ok: true });
