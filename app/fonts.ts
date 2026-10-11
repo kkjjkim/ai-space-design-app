@@ -7,7 +7,7 @@ import { Noto_Serif_KR } from "next/font/google";
 // 큰 제목용 명조 (AGENTS.md 9번: 큰 제목·인용문 = 명조). 2026-10 개편 첫 화면부터 쓴다.
 // 펜 도면 → 공간으로 이어지는 첫 화면의 "설계 도면" 느낌과 맞춘다.
 export const notoSerif = Noto_Serif_KR({
-  weight: ["500", "600"],
+  weight: ["600"], // 제목은 전부 600 — 굵기 하나만 받아 글꼴 조각 수를 절반으로(휴대폰 속도)
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
