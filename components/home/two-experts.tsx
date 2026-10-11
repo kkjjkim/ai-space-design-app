@@ -13,6 +13,7 @@ const EXPERTS = [
     who: "국가공인 경영지도사",
     lead: "되는 장사인지부터 숫자로 봅니다.",
     items: ["상권·자리 타당성", "예산·자금 계획 (정책자금 포함)", "브랜드 컨셉·이름·상품 구성", "오픈 후 운영 컨설팅 (별도 계약)"],
+    img: "team-business",
   },
   {
     mark: "면",
@@ -20,6 +21,7 @@ const EXPERTS = [
     who: "백화점·대형 쇼핑몰 브랜드 매장 시공팀",
     lead: "까다로운 브랜드 기준으로 짓습니다.",
     items: ["평면·동선·도면 설계", "자재·마감 기준", "공정·안전·일정 관리", "설비·인허가 협의"],
+    img: "team-site",
   },
 ];
 
@@ -30,7 +32,7 @@ const CONTRAST = [
   { apart: "문제가 생기면 서로 책임을 미룹니다", together: "창구가 하나라 결정과 책임이 한곳에 있습니다" },
 ];
 
-export function TwoExperts() {
+export function TwoExperts({ chapter }: { chapter?: string } = {}) {
   const ref = useRef<HTMLElement>(null);
 
   useGsap(ref, (gsap) => {
@@ -70,10 +72,13 @@ export function TwoExperts() {
     <section ref={ref} className="overflow-hidden bg-foreground py-28 text-background md:py-36">
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-6 inline-flex items-center gap-3 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
-            <span aria-hidden className="h-px w-8 bg-primary" />
+          <p className="mb-6 inline-flex items-baseline gap-4 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
+            {chapter ? (
+              <span className="font-display text-2xl text-background/90">{chapter}</span>
+            ) : (
+              <span aria-hidden className="h-px w-8 self-center bg-primary" />
+            )}
             브랜드각이 일하는 방식
-            <span aria-hidden className="h-px w-8 bg-primary" />
           </p>
           <h2 className="font-display text-[1.9rem] font-semibold leading-[1.3] tracking-[-0.02em] sm:text-[2.8rem]">
             한 테이블에, 두 전문가가 앉습니다.
@@ -83,19 +88,30 @@ export function TwoExperts() {
           </p>
         </div>
 
-        <div className="relative mx-auto mt-16 grid max-w-5xl gap-5 md:grid-cols-2 md:gap-10">
+        <div className="relative mx-auto mt-16 grid max-w-6xl gap-5 md:grid-cols-2 md:gap-6">
           {/* 가운데를 잇는 금색 선 (데스크톱) */}
           <div
             aria-hidden
             data-join
-            className="absolute left-1/2 top-1/2 hidden h-px w-24 -translate-x-1/2 bg-primary md:block"
+            className="absolute left-1/2 top-1/2 z-10 hidden h-px w-24 -translate-x-1/2 bg-primary md:block"
           />
           {EXPERTS.map((e, i) => (
             <article
               key={e.role}
               data-expert={i}
-              className="rounded-2xl border border-background/10 bg-background/[0.04] p-8 md:p-10"
+              className="relative isolate flex min-h-[34rem] flex-col justify-end overflow-hidden rounded-[1.5rem] p-8 md:min-h-[40rem] md:p-10"
             >
+              {/* 사업 테이블 / 시공 현장 사진 — 두 사람이 앉는 두 자리 */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/home/${e.img}-1600.webp`}
+                srcSet={`/home/${e.img}-960.webp 960w, /home/${e.img}-1600.webp 1600w`}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-[1.2s] hover:scale-105"
+              />
+              <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-[#120e0b] via-[#120e0b]/75 to-[#120e0b]/10" />
               <div className="flex items-center justify-between">
                 <span className="text-[0.8125rem] font-medium tracking-[0.04em] text-primary">{e.role}</span>
                 <span className="font-display text-3xl font-semibold text-background/25">{e.mark}</span>

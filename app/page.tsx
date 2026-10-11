@@ -77,13 +77,13 @@ export default function HomePage() {
       {/* 3) 각 잡기 — 공사 전에 정할 7가지 */}
       <SquareUp />
       {/* 4) 한 테이블, 두 전문가 */}
-      <TwoExperts />
+      <TwoExperts chapter="03" />
       {/* 5) 진행 순서와 받는 결과물 */}
-      <ProcessFlow />
+      <ProcessFlow chapter="04" />
       {/* 6) 업종별 컨셉 보드 */}
       <ConceptBoards />
       {/* 7) 약속 */}
-      <Promises />
+      <Promises chapter="06" />
       {/* 8) 아직 상담까진 이른 방문자 — 예산표·체크리스트 받기 */}
       <ResourceOffer />
 

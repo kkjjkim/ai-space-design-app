@@ -21,13 +21,17 @@ const PROMISES = [
   },
 ];
 
-export function Promises() {
+export function Promises({ chapter }: { chapter?: string } = {}) {
   return (
     <section className="bg-secondary/40 py-28 md:py-36">
       <div className="container">
         <div className="max-w-2xl">
-          <p className="mb-6 flex items-center gap-3 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
-            <span aria-hidden className="h-px w-8 bg-primary" />
+          <p className="mb-6 flex items-baseline gap-4 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
+            {chapter ? (
+              <span className="font-display text-2xl text-foreground/80">{chapter}</span>
+            ) : (
+              <span aria-hidden className="h-px w-8 self-center bg-primary" />
+            )}
             상담 전에 약속드리는 것
           </p>
           <h2 className="font-display text-[1.9rem] font-semibold leading-[1.3] tracking-[-0.02em] sm:text-[2.8rem]">

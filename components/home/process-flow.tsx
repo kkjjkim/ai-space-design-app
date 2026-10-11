@@ -5,14 +5,14 @@ import { useGsap } from "@/lib/use-gsap";
 
 // 5) 진행 순서와 받는 결과물 — "상담하면 뭘 받는데?"에 단계별로 답한다.
 // 데스크톱: 화면을 고정하고 가로로 흐른다. 휴대폰: 세로로 쌓인다.
-// 첫 화면과 같은 사진(도면 → 낮 → 저녁)을 단계 배경으로 다시 써서 이야기를 잇는다.
+// 모든 단계가 큰 사진 카드(2026-10-11 대표: "텍스트만 있어 별로"). 첫 화면 사진(도면→낮→저녁)도 다시 써서 이야기를 잇는다.
 const STEPS = [
   {
     n: "01",
     t: "무료 상담",
     d: "업종·자리·예산·일정을 듣고, 지금 단계에서 먼저 할 일과 아껴야 할 지출을 정리합니다.",
     get: "지금 할 일 정리",
-    img: null,
+    img: "/home/team-business-960.webp",
   },
   {
     n: "02",
@@ -33,7 +33,7 @@ const STEPS = [
     t: "시공",
     d: "브랜드 매장 기준으로 공정표대로 짓습니다. 대금은 공정 단계에 맞춰 나눠 받습니다.",
     get: "공정표 · 단계별 점검",
-    img: null,
+    img: "/home/team-site-960.webp",
   },
   {
     n: "05",
@@ -45,7 +45,7 @@ const STEPS = [
   },
 ];
 
-export function ProcessFlow() {
+export function ProcessFlow({ chapter }: { chapter?: string } = {}) {
   const ref = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -72,8 +72,12 @@ export function ProcessFlow() {
   return (
     <section ref={ref} className="overflow-hidden bg-background py-24 lg:flex lg:h-screen lg:flex-col lg:justify-center lg:py-0">
       <div className="container">
-        <p className="mb-6 flex items-center gap-3 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
-          <span aria-hidden className="h-px w-8 bg-primary" />
+        <p className="mb-6 flex items-baseline gap-4 text-[0.8125rem] font-medium tracking-[0.04em] text-primary">
+          {chapter ? (
+            <span className="font-display text-2xl text-foreground/80">{chapter}</span>
+          ) : (
+            <span aria-hidden className="h-px w-8 self-center bg-primary" />
+          )}
           진행 순서
         </p>
         <h2 className="max-w-3xl font-display text-[1.9rem] font-semibold leading-[1.3] tracking-[-0.02em] sm:text-[2.8rem]">
@@ -88,23 +92,22 @@ export function ProcessFlow() {
         {STEPS.map((s) => (
           <article
             key={s.n}
-            className="relative isolate flex min-h-[19rem] flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-7 lg:h-[26rem] lg:w-[24rem] lg:shrink-0"
+            className="group relative isolate flex min-h-[30rem] flex-col justify-between overflow-hidden rounded-[1.5rem] p-7 text-background lg:h-[34rem] lg:w-[27rem] lg:shrink-0"
           >
-            {s.img && (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.img} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover" />
-                <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-card via-card/90 to-card/60" />
-              </>
-            )}
-            <div className="flex items-baseline justify-between">
-              <span className="font-display text-5xl font-semibold text-primary/80">{s.n}</span>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={s.img}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+            />
+            <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-[#120e0b] via-[#120e0b]/70 to-[#120e0b]/5" />
+            <span className="font-display text-6xl font-semibold text-background/90">{s.n}</span>
             <div>
               <h3 className="font-display text-2xl font-semibold">{s.t}</h3>
-              <p className="mt-3 text-[0.975rem] leading-relaxed text-foreground/75">{s.d}</p>
-              <div className="mt-6 border-t border-border pt-4">
-                <span className="text-xs font-medium tracking-[0.04em] text-foreground/45">받는 것</span>
+              <p className="mt-3 text-[0.975rem] leading-relaxed text-background/80">{s.d}</p>
+              <div className="mt-6 border-t border-background/25 pt-4">
+                <span className="text-xs font-medium tracking-[0.04em] text-primary">받는 것</span>
                 <p className="mt-1 font-medium">{s.get}</p>
               </div>
             </div>
