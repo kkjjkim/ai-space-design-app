@@ -71,6 +71,24 @@ export function LeadForm({
   const captchaRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   const startedRef = useRef(false);
+  // 캡차 스크립트(약 0.7MB)는 폼이 화면 가까이 오거나 손님이 입력을 시작할 때만 불러온다.
+  // 예전엔 페이지를 열자마자 받아서 휴대폰 첫 화면을 느리게 했다(2026-10-11 Lighthouse).
+  const [captchaWanted, setCaptchaWanted] = useState(false);
+  useEffect(() => {
+    const el = formRef.current;
+    if (!TURNSTILE_SITE_KEY || !el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCaptchaWanted(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // 폼을 건드렸는데 제출을 안 했다면 폼 자체가 문제다(칸이 많거나 부담스럽거나).
   // 진단 결과에서 온 폼인지 구분해야 진단→신청 전환이 따로 보인다.
@@ -80,6 +98,7 @@ export function LeadForm({
       ? "diagnosis"
       : "direct";
   function onFirstInput() {
+    setCaptchaWanted(true);
     if (startedRef.current) return;
     startedRef.current = true;
     track("form_start", { form_type: formType });
@@ -285,11 +304,13 @@ export function LeadForm({
       {/* 봇 방지 캡차 (사이트 키 있을 때만 표시) */}
       {TURNSTILE_SITE_KEY && (
         <>
-          <Script
-            src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-            strategy="afterInteractive"
-            onReady={renderCaptcha}
-          />
+          {captchaWanted && (
+            <Script
+              src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+              strategy="afterInteractive"
+              onReady={renderCaptcha}
+            />
+          )}
           <div ref={captchaRef} />
         </>
       )}

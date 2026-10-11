@@ -8,6 +8,8 @@
 */
 @layer base {
   :root {
+    /* 본문 글꼴 — app/pretendard-subset.css 의 가변 글꼴 */
+    --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     --background: 40 36% 95%;
     --foreground: 36 14% 10%;
 

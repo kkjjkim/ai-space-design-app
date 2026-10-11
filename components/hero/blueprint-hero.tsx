@@ -49,6 +49,16 @@ export function BlueprintHero() {
     let cleanup = () => {};
 
     (async () => {
+      // 휴대폰은 첫 화면 글자가 다 그려진 뒤 한가할 때 3D를 시작한다(느린 기기에서 첫 화면 버벅임 방지).
+      if (window.innerWidth < 768) {
+        await new Promise<void>((resolve) => {
+          const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number })
+            .requestIdleCallback;
+          if (ric) ric(() => resolve(), { timeout: 2500 });
+          else setTimeout(resolve, 1200);
+        });
+        if (disposed) return;
+      }
       const [{ createHeroShaderScene }, { gsap }, { ScrollTrigger }] = await Promise.all([
         import("./hero-shader-scene"),
         import("gsap"),

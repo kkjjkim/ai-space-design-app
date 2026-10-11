@@ -7,6 +7,7 @@ const nextConfig = {
     const longCache = [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }];
     return [
       { source: "/hero/:path*", headers: longCache },
+      { source: "/fonts/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       { source: "/concepts/:path*", headers: longCache },
       { source: "/insights/:file(.*\\.(?:jpg|png|webp))", headers: longCache },
       { source: "/interior/:file(.*\\.(?:jpg|png|webp))", headers: longCache },
