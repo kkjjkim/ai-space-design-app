@@ -129,7 +129,7 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* 인쇄(자료 받기 예산표 등) — 메뉴·떠 있는 버튼·알림은 빼고 본문만 */
+/* 인쇄 — 메뉴·떠 있는 버튼·알림은 빼고 본문만 */
 @media print {
   header,
   footer,

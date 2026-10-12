@@ -4,7 +4,6 @@ import Link from "next/link";
 import { marked } from "marked";
 import { Section } from "@/components/section";
 import { PageHero } from "@/components/page-hero";
-import { ResourceOffer } from "@/components/resource-offer";
 import { CtaSection } from "@/components/cta-section";
 import { InsightDiagnosisCard } from "@/components/insight-diagnosis-card";
 import { ReadTracker } from "@/components/read-tracker";
@@ -86,9 +85,6 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
           </Link>
         </div>
       </Section>
-
-      {/* 글만 읽고 나가는 방문자(대부분)에게 상담보다 가벼운 첫 단계 */}
-      <ResourceOffer />
 
       <CtaSection />
 
