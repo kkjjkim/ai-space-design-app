@@ -63,6 +63,17 @@ async function verifyTurnstile(token: string, ip: string): Promise<CaptchaResult
   }
 }
 
+// 손님 입력을 메일 HTML에 그대로 넣으면 <a>·<img> 같은 태그가 운영자 메일함에서 진짜처럼 보인다.
+// 태그 문자를 전부 문자 그대로 보이게 바꾼다.
+function escapeHtml(v: unknown): string {
+  return String(v)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 // 운영자에게 신규 상담 알림 메일 발송. 실패해도 신청 저장은 성공 처리.
 async function notifyOwner(lead: Record<string, unknown>, opts: { unverified?: boolean } = {}) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -85,13 +96,14 @@ async function notifyOwner(lead: Record<string, unknown>, opts: { unverified?: b
       ["유입", lead.source],
     ]
       .filter(([, v]) => v)
-      .map(([k, v]) => `<tr><td><b>${k}</b></td><td>${v}</td></tr>`)
+      .map(([k, v]) => `<tr><td><b>${k}</b></td><td>${escapeHtml(v)}</td></tr>`)
       .join("");
 
     await resend.emails.send({
       from,
       to: to.split(",").map((s) => s.trim()),
-      subject: `${opts.unverified ? "[캡차 미확인] " : ""}[${site.mailTag} · 새 상담 신청] ${lead.name} (${lead.phone})`,
+      // 제목은 HTML이 아니라 이스케이프 불필요. 줄바꿈만 제거(헤더 삽입 방지).
+      subject: `${opts.unverified ? "[캡차 미확인] " : ""}[${site.mailTag} · 새 상담 신청] ${String(lead.name).replace(/[\r\n]+/g, " ")} (${lead.phone})`,
       html: `<h2>[${site.mailTag}] 새 무료 컨셉 상담 신청</h2><table cellpadding="6">${rows}</table>`,
     });
   } catch (err) {
