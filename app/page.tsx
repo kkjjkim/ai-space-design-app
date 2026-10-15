@@ -101,10 +101,12 @@ export default function HomePage() {
             </Reveal>
             {/* 빈 상가에서 도면·줄자를 든 손 — 질문이 생기는 자리(계약 전 현장) */}
             <div className="mt-10 overflow-hidden rounded-[1.25rem] bg-secondary">
+              {/* 레티나에서 표시 폭(최대 490px)의 두세 배를 쓰므로 1600 판까지 둔다 */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              {/* 원본이 1024px라 960 한 장만 (표시 폭은 최대 490px) */}
               <img
-                src="/home/faq-site-960.webp"
+                src="/home/faq-site-1600.webp"
+                srcSet="/home/faq-site-960.webp 960w, /home/faq-site-1600.webp 1600w"
+                sizes="(min-width: 1024px) 490px, 100vw"
                 alt="공사 전 빈 상가에서 도면과 줄자를 든 손"
                 loading="lazy"
                 className="aspect-[3/2] w-full object-cover lg:aspect-[4/5]"
