@@ -9,7 +9,8 @@ import { InsightDiagnosisCard } from "@/components/insight-diagnosis-card";
 import { ReadTracker } from "@/components/read-tracker";
 import { JsonLd } from "@/components/json-ld";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
-import { getAllInsights, getInsight } from "@/lib/insights";
+import { RelatedInsights } from "@/components/related-insights";
+import { getAllInsights, getInsight, getRelatedInsights } from "@/lib/insights";
 
 // 예약 글이 날짜가 되면 나타나도록 6시간마다 다시 만든다.
 export const revalidate = 21600;
@@ -75,6 +76,8 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
           />
         )}
         <ReadTracker slug={post.slug} />
+
+        <RelatedInsights posts={getRelatedInsights(post.slug)} />
 
         <div className="mx-auto mt-14 max-w-2xl border-t border-border pt-8">
           <Link

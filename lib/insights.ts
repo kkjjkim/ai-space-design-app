@@ -65,3 +65,25 @@ export function getAllInsights(): InsightMeta[] {
     .sort((a, b) => (a.date < b.date ? 1 : -1))
     .map(({ content: _content, ...meta }) => meta);
 }
+
+// 글 끝 "함께 읽으면 좋은 글". 글로 들어온 손님이 한 페이지만 보고 나가서(GA4 실측),
+// 다음 글로 이어지게 하고 깊은 글까지 내부 링크가 닿게 하려는 것.
+// 같은 카테고리 > 겹치는 키워드 수 > 최신순으로 고른다.
+export function getRelatedInsights(slug: string, limit = 3): InsightMeta[] {
+  const all = getAllInsights();
+  const current = all.find((p) => p.slug === slug);
+  if (!current) return all.filter((p) => p.slug !== slug).slice(0, limit);
+  const keywords = new Set(current.keywords);
+  return all
+    .filter((p) => p.slug !== slug)
+    .map((p, index) => ({
+      post: p,
+      score:
+        (p.category === current.category ? 10 : 0) +
+        p.keywords.filter((k) => keywords.has(k)).length,
+      index,
+    }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
