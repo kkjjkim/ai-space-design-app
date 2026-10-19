@@ -36,6 +36,8 @@ export function generateMetadata({
       title: post.title,
       description: post.description,
       type: "article",
+      publishedTime: post.date,
+      modifiedTime: post.updated,
       images: [{ url: post.cover }],
     },
   };
@@ -98,6 +100,7 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
           description: post.description,
           cover: post.cover,
           date: post.date,
+          updated: post.updated,
         })}
       />
       <JsonLd

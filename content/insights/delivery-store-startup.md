@@ -4,6 +4,7 @@ description: "배달전문점 창업 비용과 순서, 배달앱 수수료 구�
 category: "창업 컨설팅"
 cover: "/hero/stage-sketch-1920.webp"
 date: "2026-07-06"
+updated: "2026-10-09"
 keywords: ["배달전문점 창업", "배달전문점 창업 비용", "배달전문점 창업 순서", "배달전문점 창업 수익", "배달앱 수수료"]
 ---
 

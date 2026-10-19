@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const insightPages: MetadataRoute.Sitemap = getAllInsights().map((p) => ({
     url: `${site.url}/insights/${p.slug}`,
-    lastModified: p.date || undefined,
+    lastModified: p.updated || undefined,
     changeFrequency: "monthly",
     priority: 0.7,
   }));

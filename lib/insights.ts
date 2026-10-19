@@ -15,6 +15,9 @@ export type InsightMeta = {
   category: string;
   cover: string; // /public 기준 경로 (예: /concepts/sora.jpg)
   date: string; // YYYY-MM-DD
+  // 본문을 크게 고친 날(YYYY-MM-DD). 없으면 date 와 같다.
+  // 사이트맵 lastmod·dateModified 로 나가서, 검색엔진이 보강한 글을 다시 읽게 한다.
+  updated: string;
   keywords: string[];
 };
 
@@ -44,14 +47,18 @@ export function getInsight(slug: string): Insight | null {
   if (!fs.existsSync(file)) return null;
   const raw = fs.readFileSync(file, "utf8");
   const { data, content } = matter(raw);
-  if (!isPublished(String(data.date ?? ""))) return null;
+  const date = String(data.date ?? "");
+  if (!isPublished(date)) return null;
+  const updated = String(data.updated ?? "");
   return {
     slug,
     title: String(data.title ?? slug),
     description: String(data.description ?? ""),
     category: String(data.category ?? "인사이트"),
     cover: String(data.cover ?? "/concepts/sora.jpg"),
-    date: String(data.date ?? ""),
+    date,
+    // 발행일보다 이른 수정일은 잘못 적은 값이라 무시한다.
+    updated: updated > date ? updated : date,
     keywords: Array.isArray(data.keywords) ? data.keywords.map(String) : [],
     content,
   };

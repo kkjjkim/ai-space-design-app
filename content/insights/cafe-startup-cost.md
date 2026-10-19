@@ -4,6 +4,7 @@ description: "카페 창업 비용(카페 차리는 비용·초기비용)을 보
 category: "창업 컨설팅"
 cover: "/concepts/cityline.jpg"
 date: "2026-07-06"
+updated: "2026-10-09"
 keywords: ["카페 창업 비용", "카페 창업 비용 계산", "작은 카페 창업 비용", "1인 카페 창업 비용", "카페 창업 자금"]
 ---
 

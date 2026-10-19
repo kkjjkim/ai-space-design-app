@@ -120,6 +120,7 @@ export function articleLd(a: {
   description: string;
   cover: string;
   date: string;
+  updated: string;
 }): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
@@ -128,7 +129,7 @@ export function articleLd(a: {
     description: a.description,
     image: abs(a.cover),
     datePublished: a.date,
-    dateModified: a.date,
+    dateModified: a.updated,
     inLanguage: "ko-KR",
     mainEntityOfPage: `${site.url}/insights/${a.slug}`,
     author: { "@type": "Organization", name: site.brandNameKo },

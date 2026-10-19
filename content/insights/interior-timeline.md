@@ -4,6 +4,7 @@ description: "상가 인테리어 순서와 공사 기간을 계약 전 확인�
 category: "인테리어"
 cover: "/concepts/ember.jpg"
 date: "2026-07-06"
+updated: "2026-10-09"
 keywords: ["상가 인테리어 순서", "상가 인테리어 기간", "인테리어 공사 절차", "매장 인테리어 순서", "인테리어 공사 일정"]
 ---
 
