@@ -178,6 +178,16 @@
 - **다음 주 볼 것**: 서치콘솔 검색어(11~20위) · GA4 글 페이지의 세션당 페이지 수가 1에서 오르는지 · form_start/form_submit.
   무인 실행이 브라우저 승인에 막히지 않도록 Chrome 사이트 허용(search.google.com, analytics.google.com) 필요.
 
+### 2026-10-19 (월, 자동 실행)
+- **수치**: 서치콘솔·GA4 **확인 못 함** — 2주 연속 Chrome 접근 승인이 5분 대기 후 막힘(서치콘솔 첫 접속에서 멈춰 GA4는 시도 안 함).
+  신청(최근 30일 API) **0건**. 상태: 주요 5페이지 200, /api/health 401(정상). 10/16 예약 글(베이커리 설계) 공개 확인, 10/20 글은 아직 404(정상).
+- **가장 큰 누수(관찰)**: 여전히 노출 부족이 1순위(지난 실측 90일 노출 353·클릭 4). 데이터가 없어 단계별 이탈은 계산 못 함.
+- **이번 주 한 일**: 글 프런트매터에 `updated`(본문을 크게 고친 날) 추가 → 사이트맵 lastmod·Article dateModified·OG modifiedTime 에 반영.
+  10/8 보강한 3편(배달전문점 창업·상가 인테리어 순서·카페 창업 비용)이 사이트맵에 7/6 그대로 나가 재수집 신호가 없었다 → updated 2026-10-09.
+  **앞으로 글을 보강하면 updated 를 그날로 적을 것.** 예약 글은 11/27까지 12편 남아 보충 불필요.
+- **다음 주 볼 것**: 서치콘솔에서 보강 3편 재수집일·순위 변화(배달전문점 창업 29위 → ?), 11~20위 검색어, GA4 form_start/form_submit.
+  **대표님께**: Chrome에서 search.google.com·analytics.google.com 을 Claude 확장에 '항상 허용'으로 해 주셔야 무인 점검이 데이터를 읽습니다.
+
 ## 다음 할 것 (운영자/대표님)
 - [ ] Supabase 프로젝트 생성 → `supabase/schema.sql` 실행 → `.env.local` 에 URL/anon 키 입력
 - [ ] Resend 가입 → 도메인 인증 → `RESEND_API_KEY`, `LEAD_NOTIFY_TO`, `LEAD_NOTIFY_FROM` 입력
