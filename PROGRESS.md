@@ -188,6 +188,25 @@
 - **다음 주 볼 것**: 서치콘솔에서 보강 3편 재수집일·순위 변화(배달전문점 창업 29위 → ?), 11~20위 검색어, GA4 form_start/form_submit.
   **대표님께**: Chrome에서 search.google.com·analytics.google.com 을 Claude 확장에 '항상 허용'으로 해 주셔야 무인 점검이 데이터를 읽습니다.
 
+### 2026-10-21 (수, 수동 — Claude Code가 대표님 Chrome으로 직접 읽음)
+- **읽는 법(자동 점검도 이 주소로)**: 서치콘솔은 **URL 속성 `https://www.brandgak.com/`** (도메인 속성 `sc-domain:brandgak.com` 은 이 계정에 없음).
+  GA4는 계정 **웹앱개발(400226958) > 속성 브랜드각(546153639)** — 홈이 가치잇다 속성으로 열리니 꼭 바꿀 것.
+  네이버 서치어드바이저는 Claude 브라우저 도구가 접속 차단(안전 제한) → Aside 지시서 3.
+- **서치콘솔**: 3개월(7/19~10/18) 클릭 6·노출 390·평균 20.7위 / 28일(9/21~10/18) 클릭 2·노출 115·18.9위.
+  **"배달전문점창업" 29.3위(3개월) → 16.9위(28일, 노출 45)** — 10/8 보강이 먹히는 중. 그 밖에 10위 안: 배달전문점주방 3.0, 매장이름 7.0, 무인 창업 7.0.
+  11~20위(보강 후보): 인테리어 업체 고르는 법 12.5 / 고르는법 11.3, 가게브랜딩 10.1, 가게 인테리어 18.8, 배달 창업 16.2 / 배달창업 17.6.
+  색인 35 / 미색인 6(중복 1·발견됨 4·크롤링됨 1), 보고서 기준일 10/12.
+- **중복 판정 원인 (location-analysis)**: 사용자 선언 표준 "없음"(구글 마지막 크롤 9/28, canonical은 10/6 추가라 아직 못 봄),
+  **구글이 선택한 표준 = `https://www.747live.bet/`** — 도박 스팸이 글을 베껴 갔고 구글이 그쪽을 원본으로 봄(지금 그 주소는 404).
+  참조 페이지에 옛 배포 주소 `ai-space-design-app.vercel.app/insights` (200으로 같은 글을 그대로 냄).
+  → 10/21 재색인 요청. **옛 vercel.app 주소 → www.brandgak.com 308 리다이렉트 추가**(`next.config.mjs`, `/api/*` 는 크론 때문에 제외).
+- **GA4 28일(9/23~10/20)**: 사용자 99·세션 120(자연 63·직접 53·추천 3). **최근 7일 사용자 32, m.search.naver.com 유입 27세션(+800%)** — 네이버 모바일 검색이 살아남(가게 이름 짓기 15뷰).
+  이벤트: insight_read 25(20명) · cta_click 7(4명) · diagnosis_start 5(4명) · diagnosis_complete 6(5명) · **form_start 3(2명) · form_submit 1 · generate_lead 1(10/8 테스트)**
+  · form_error 45(2명, 전부 captcha widget_error — 10/11 대표 22건 + 방문자 1명. 10/11 이후엔 연결 실패여도 접수되므로 손실 아님).
+  페이지: / 90뷰(37명) · cafe-startup-cost 21 · store-naming 21 · /company 16 · /diagnosis 13 · /service 12 · delivery-store-startup 10(평균 참여 5분 23초) · /concepts 8.
+- **가장 큰 누수**: 진단 완료 5명 → 폼 입력 시작 2명 → 실제 제출 0. 진단 결과 화면 안의 폼에서 멈춘다(`components/diagnosis-wizard.tsx` 하단 LeadForm). 다음 코드 작업 1순위 후보.
+- Aside 지시서 3 작성: iCloud `사업마켓/브랜드각/Aside-작업지시서-3.md` (네이버 유입어·수집 확인, 미색인 5개 URL 색인 요청, 도용 페이지 확인, 진단 손님 매개변수).
+
 ## 다음 할 것 (운영자/대표님)
 - [ ] Supabase 프로젝트 생성 → `supabase/schema.sql` 실행 → `.env.local` 에 URL/anon 키 입력
 - [ ] Resend 가입 → 도메인 인증 → `RESEND_API_KEY`, `LEAD_NOTIFY_TO`, `LEAD_NOTIFY_FROM` 입력
