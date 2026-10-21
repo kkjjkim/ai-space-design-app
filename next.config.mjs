@@ -13,9 +13,20 @@ const securityHeaders = [
 
 const nextConfig = {
   reactStrictMode: true,
-  // 자료 받기(예산표 페이지)는 2026-10-12 없앴다(대표 결정: 상담 문의 하나로). 예전에 받은 링크는 상담 폼으로 보낸다.
   async redirects() {
-    return [{ source: "/resources/:path*", destination: "/#apply", permanent: true }];
+    return [
+      // 옛 배포 주소(ai-space-design-app.vercel.app)가 같은 글을 200으로 그대로 내보내서 구글이 "중복 페이지"로 봤다
+      // (2026-10-21 서치콘솔: 상권분석 글의 참조 페이지가 vercel.app). 모든 경로를 본 주소로 영구 이동.
+      // /api 는 뺀다 — Vercel 크론(/api/health·/api/indexnow)이 이 옛 주소로 들어올 수 있어서.
+      {
+        source: "/:path((?!api/).*)",
+        has: [{ type: "host", value: "ai-space-design-app.vercel.app" }],
+        destination: "https://www.brandgak.com/:path*",
+        permanent: true,
+      },
+      // 자료 받기(예산표 페이지)는 2026-10-12 없앴다(대표 결정: 상담 문의 하나로). 예전에 받은 링크는 상담 폼으로 보낸다.
+      { source: "/resources/:path*", destination: "/#apply", permanent: true },
+    ];
   },
   // 사진은 바뀌면 파일 이름을 바꾸는 방식이라 브라우저에 30일 보관시킨다.
   // 재방문·여러 페이지 이동 때 같은 사진을 다시 묻지 않아 요청·전송량이 준다(Vercel 비용 방어, 가치잇다 9월 교훈).
