@@ -187,7 +187,14 @@
       ⑤ analytics.google.com Chrome 허용 완료 ⑥ **Resend brandgak.com 인증 완료**(가비아 DNS 4개, Claude 쪽 Resend API로 verified·sending enabled 확인).
       주의: 브라우저 네이버가 seri414 로 로그인돼 있음 — 원탑 블로그(thegungri) 작업 전 계정 전환.
       10/21 기록의 iCloud 지시서 3 파일은 폴더에 없었음 — 내용은 10/21 항목 참고.
-- [ ] Resend 인증 후 남은 한 가지: Vercel 환경변수 `LEAD_NOTIFY_FROM` 을 `브랜드각 <notify@brandgak.com>` 으로 바꾸고 재배포(지금은 onboarding@resend.dev 발신).
+- [x] Vercel 환경변수 `LEAD_NOTIFY_FROM` = `브랜드각 <notify@brandgak.com>` 추가·재배포 → "[테스트] 발신주소 확인" 점검 신청으로 메일 delivered 확인(10/22 18:24, 캡차 미확인 경로).
+      이제 운영자 알림이 brandgak.com 발신. 손님에게 보내는 메일은 아직 없음(만들 거면 같은 발신 주소 사용).
+
+### 내일(10/23) 새 세션에서 볼 것
+1. 10/23 예약 글(interior-site-checklist) 공개 확인 + 크론 IndexNow 접수.
+2. 다음 코드 작업: 11~20위 검색어 글 4편 보강 + summary·faq (인테리어 업체 고르는 법·가게브랜딩·가게 인테리어·배달 창업).
+3. 대표 결정 대기: 지금 사이트로 소액 검색광고 테스트할지(업종 랜딩·진단 페이지 착지, 2~3주). 결정되면 키워드·예산·판단 기준 계획.
+4. 다음 주간 점검에서 GA4 form_view → form_start → form_submit, 빙 `site:brandgak.com` 색인 수, AI 유입 세션.
 - [x] **진단 → 폼 누수 수정(10/21 1순위)**. 휴대폰(390px)에서 직접 진단을 끝내 보니 원인이 셋:
       ① 폼이 결과 첫 줄에서 2,781px 아래(3화면 뒤)에 있고 그 앞에 글·컨셉 링크 상자가 있어 폼 전에 나감 → 폼을 '순서·조심할 것' 바로 뒤로 올리고(1,305px) 글·컨셉 링크는 폼 뒤로.
       ② 떠 있는 "무료 상담 문의"와 헤더 버튼이 /#apply 로 홈에 보내 진단 결과·미리 채운 내용을 버림 → 페이지 안에 #apply 가 있으면 거기로 내려감(`use-apply-link.ts`).
