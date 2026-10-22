@@ -244,6 +244,7 @@ export type Result = {
   readSlugs: string[];
   conceptSlugs: string[];
   summary: string; // 상담 폼에 자동으로 담기는 요약
+  industryLabel: string; // 상담 폼 업종 칸에 미리 채울 이름
 };
 
 // 같은 글이 여러 곳에서 추천될 수 있으니 순서를 지키며 중복만 제거한다.
@@ -295,5 +296,6 @@ export function diagnose(a: Answers): Result {
     readSlugs,
     conceptSlugs: CONCEPTS_BY_INDUSTRY[a.industry] ?? CONCEPTS_BY_INDUSTRY.other,
     summary,
+    industryLabel: a.industry === "other" ? "" : labelOf("industry", a.industry),
   };
 }

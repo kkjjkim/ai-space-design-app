@@ -6,11 +6,14 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Phone } from "lucide-react";
 import { CTA_LABEL, site } from "@/lib/site";
+import { useApplyLink } from "@/components/layout/use-apply-link";
 
 // 스크롤을 따라다니는 고정 CTA. AvroKO식 약한 링크로 숨기지 말고 또렷하게.
 export function FloatingCta() {
   const pathname = usePathname();
   const [show, setShow] = useState(false);
+  // 지금 페이지에 신청 폼(#apply)이 있으면 그리로, 없으면 홈 폼으로 (진단 결과를 버리지 않게)
+  const apply = useApplyLink();
 
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 480);
@@ -21,8 +24,6 @@ export function FloatingCta() {
 
   // 신청 완료 페이지에서는 숨김
   if (pathname?.startsWith("/complete")) return null;
-
-  const href = pathname === "/" ? "#apply" : "/#apply";
 
   return (
     <div
@@ -42,7 +43,8 @@ export function FloatingCta() {
           <Phone className="h-5 w-5" />
         </a>
         <Link
-          href={href}
+          href={apply.href}
+          onClick={apply.onClick}
           className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-colors hover:bg-primary/90"
         >
           {CTA_LABEL}

@@ -50,10 +50,14 @@ declare global {
 
 // 진단 결과처럼 앞 단계에서 이미 받은 정보는 미리 채워준다.
 // 같은 걸 두 번 묻지 않아야 폼을 끝까지 채운다.
+// compact: 진단 결과처럼 업종·상황을 이미 아는 자리에서 쓴다. 이름·연락처만 바로 보이고
+// 나머지 칸은 접어 둔다 — "연락처만 남기면 된다"고 써 놓고 칸 6개를 보여주면 시작만 하고 나간다.
 export function LeadForm({
   defaults,
+  compact = false,
 }: {
   defaults?: Partial<Form>;
+  compact?: boolean;
 } = {}) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
@@ -89,6 +93,23 @@ export function LeadForm({
   // 폼을 건드렸는데 제출을 안 했다면 폼 자체가 문제다(칸이 많거나 부담스럽거나).
   // 진단 결과에서 온 폼인지 구분해야 진단→신청 전환이 따로 보인다.
   const formType = defaults?.message ? "diagnosis" : "direct";
+
+  // 폼이 실제로 화면에 보였는지(30% 이상) 한 번만 남긴다 — "결과는 봤는데 폼까지 못 내려왔다"를 가려내려고.
+  useEffect(() => {
+    const el = formRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          track("form_view", { form_type: formType });
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [formType]);
   function onFirstInput() {
     setCaptchaWanted(true);
     if (startedRef.current) return;
@@ -235,6 +256,20 @@ export function LeadForm({
         />
       </div>
 
+      {compact && form.industry && (
+        <p className="text-sm text-muted-foreground">
+          업종 <b className="font-medium text-foreground">{form.industry}</b> · 진단에서 답하신 내용이 함께 전달됩니다.
+        </p>
+      )}
+
+      {/* compact 에서는 아래 칸들을 접어 둔다. 열지 않아도 제출된다. */}
+      <details className={compact ? "group" : "contents"} open={!compact || undefined}>
+        {compact && (
+          <summary className="cursor-pointer list-none text-sm font-medium text-foreground/70 underline-offset-4 hover:text-primary hover:underline">
+            위치·평수·예산도 적어두기 (선택)
+          </summary>
+        )}
+        <div className={compact ? "mt-5 grid gap-5" : "contents"}>
       <div className="grid gap-2 sm:grid-cols-2">
         <div className="grid gap-2">
           <Label htmlFor="industry">업종</Label>
@@ -281,6 +316,8 @@ export function LeadForm({
           placeholder='"이런 가게 하고 싶다" 한마디면 충분해요.'
         />
       </div>
+        </div>
+      </details>
 
       {/* 봇 방지 캡차 (사이트 키 있을 때만 표시) */}
       {TURNSTILE_SITE_KEY && (

@@ -148,6 +148,31 @@ export function DiagnosisWizard({
         </p>
       </div>
 
+      {/* 상담 — 진단 내용이 이미 담겨 있으니 연락처만 받으면 된다.
+          글·컨셉 링크보다 앞에 둔다: 휴대폰에서 폼이 3화면 아래(2,781px)에 있고 그 사이 링크로 나가서
+          진단 완료 5명 중 제출 0이었다(10/21 GA4). */}
+      <div
+        id="apply"
+        className="mt-10 scroll-mt-20 rounded-xl border border-primary/40 bg-card p-7 md:p-9"
+      >
+        <Eyebrow>무료 상담</Eyebrow>
+        <h3 className="mt-4 font-display text-2xl font-semibold leading-snug md:text-3xl">
+          진단 결과를 두고 더 구체적으로 봐드립니다
+        </h3>
+        <p className="mt-4 leading-relaxed text-muted-foreground">
+          위 내용은 일반적인 원칙입니다. 실제로는 자리·예산·업종에 따라 답이
+          달라집니다. 답해주신 내용은 아래에 이미 담겨 있으니 연락처만
+          남겨주시면 됩니다.
+        </p>
+
+        <div className="mt-8">
+          <LeadForm
+            compact
+            defaults={{ message: result.summary, industry: result.industryLabel }}
+          />
+        </div>
+      </div>
+
       {/* 공간에서 봐야 할 것 */}
       <div className="mt-6 rounded-xl border border-border p-7 md:p-9">
         <h3 className="font-serif text-xl">이 조건에서 공간이 져야 할 몫</h3>
@@ -212,26 +237,6 @@ export function DiagnosisWizard({
           </ul>
         </div>
       )}
-
-      {/* 상담 — 진단 내용이 이미 담겨 있으니 연락처만 받으면 된다 */}
-      <div
-        id="apply"
-        className="mt-14 scroll-mt-20 rounded-xl border border-border bg-card p-7 md:p-9"
-      >
-        <Eyebrow>무료 상담</Eyebrow>
-        <h3 className="mt-4 font-display text-2xl font-semibold leading-snug md:text-3xl">
-          진단 결과를 두고 더 구체적으로 봐드립니다
-        </h3>
-        <p className="mt-4 leading-relaxed text-muted-foreground">
-          위 내용은 일반적인 원칙입니다. 실제로는 자리·예산·업종에 따라 답이
-          달라집니다. 답해주신 내용은 아래에 이미 담겨 있으니 연락처만
-          남겨주시면 됩니다.
-        </p>
-
-        <div className="mt-8">
-          <LeadForm defaults={{ message: result.summary }} />
-        </div>
-      </div>
 
       <div className="mt-10 text-center">
         <Button variant="ghost" onClick={restart}>

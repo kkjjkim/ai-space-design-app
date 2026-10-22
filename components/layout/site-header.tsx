@@ -6,8 +6,10 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { navItems, site, CTA_LABEL } from "@/lib/site";
+import { useApplyLink } from "@/components/layout/use-apply-link";
 
 export function SiteHeader() {
+  const apply = useApplyLink();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -59,7 +61,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/#apply" className={buttonVariants({ size: "sm" })}>
+          <Link href={apply.href} onClick={apply.onClick} className={buttonVariants({ size: "sm" })}>
             {CTA_LABEL}
           </Link>
         </nav>
