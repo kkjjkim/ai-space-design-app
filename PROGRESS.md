@@ -180,8 +180,14 @@
       **앞으로 글을 쓰거나 보강할 때 summary·faq를 같이 넣을 것(본문에 있는 사실만, 숫자 새로 만들지 않기).**
 - [x] 유입 기록 확인: lib/attribution.ts 가 리퍼러 호스트를 leads.source 에 남기므로 ChatGPT 경유 신청은 `ref=chatgpt.com` 으로 찍힌다.
 - [x] Resend: Claude 에 연결된 계정엔 도메인 0개 → 인증은 Aside 6번.
-- [ ] Aside 지시서 4 `docs/aside-2026-10-22.md`(iCloud 같은 폴더에도 복사): 빙 등록 → 서치콘솔 색인 요청 → 네이버 수집 → GA4 AI 유입 확인 → Chrome 허용 → Resend 도메인.
-      10/21 기록의 iCloud 지시서 3 파일은 폴더에 없었음(비어 있음) — 내용은 10/21 항목에 있으니 그걸 보면 됨.
+- [x] **Aside 지시서 4 전부 완료(10/22 저녁, Aside 보고)** `docs/aside-2026-10-22.md`:
+      ① 빙 웹마스터: 사이트맵 재제출 + 6편 색인 요청 ② 서치콘솔: 보강 3편 "색인 생성 요청됨"
+      ③ 네이버(seri414 계정): 보강 3편 + 신규 3편(unmanned-store-management·bakery-store-layout·interior-consulting) 수집 요청 18:14 접수, IndexNow 43개 17:07 접수 확인
+      ④ **GA4 브랜드각 9/24~10/21: chatgpt·perplexity·copilot 유입 0세션(전체 122세션)** — 빙 색인이 잡힌 뒤 다시 볼 것
+      ⑤ analytics.google.com Chrome 허용 완료 ⑥ **Resend brandgak.com 인증 완료**(가비아 DNS 4개, Claude 쪽 Resend API로 verified·sending enabled 확인).
+      주의: 브라우저 네이버가 seri414 로 로그인돼 있음 — 원탑 블로그(thegungri) 작업 전 계정 전환.
+      10/21 기록의 iCloud 지시서 3 파일은 폴더에 없었음 — 내용은 10/21 항목 참고.
+- [ ] Resend 인증 후 남은 한 가지: Vercel 환경변수 `LEAD_NOTIFY_FROM` 을 `브랜드각 <notify@brandgak.com>` 으로 바꾸고 재배포(지금은 onboarding@resend.dev 발신).
 - [x] **진단 → 폼 누수 수정(10/21 1순위)**. 휴대폰(390px)에서 직접 진단을 끝내 보니 원인이 셋:
       ① 폼이 결과 첫 줄에서 2,781px 아래(3화면 뒤)에 있고 그 앞에 글·컨셉 링크 상자가 있어 폼 전에 나감 → 폼을 '순서·조심할 것' 바로 뒤로 올리고(1,305px) 글·컨셉 링크는 폼 뒤로.
       ② 떠 있는 "무료 상담 문의"와 헤더 버튼이 /#apply 로 홈에 보내 진단 결과·미리 채운 내용을 버림 → 페이지 안에 #apply 가 있으면 거기로 내려감(`use-apply-link.ts`).
