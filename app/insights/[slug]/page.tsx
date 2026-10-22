@@ -8,7 +8,9 @@ import { CtaSection } from "@/components/cta-section";
 import { InsightDiagnosisCard } from "@/components/insight-diagnosis-card";
 import { ReadTracker } from "@/components/read-tracker";
 import { JsonLd } from "@/components/json-ld";
-import { articleLd, breadcrumbLd } from "@/lib/seo";
+import { articleLd, breadcrumbLd, faqLd } from "@/lib/seo";
+import { InsightKeyPoints } from "@/components/insight-key-points";
+import { InsightFaq } from "@/components/insight-faq";
 import { RelatedInsights } from "@/components/related-insights";
 import { getAllInsights, getInsight, getRelatedInsights } from "@/lib/insights";
 
@@ -66,6 +68,7 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
       />
 
       <Section>
+        <InsightKeyPoints points={post.summary} />
         <article
           className="prose-insight mx-auto max-w-2xl"
           dangerouslySetInnerHTML={{ __html: htmlTop }}
@@ -77,6 +80,7 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
             dangerouslySetInnerHTML={{ __html: htmlRest }}
           />
         )}
+        <InsightFaq items={post.faq} />
         <ReadTracker slug={post.slug} />
 
         <RelatedInsights posts={getRelatedInsights(post.slug)} />
@@ -103,6 +107,7 @@ export default function InsightPage({ params }: { params: { slug: string } }) {
           updated: post.updated,
         })}
       />
+      {post.faq.length > 0 && <JsonLd data={faqLd(post.faq)} />}
       <JsonLd
         data={breadcrumbLd([
           { name: "인사이트", path: "/insights" },

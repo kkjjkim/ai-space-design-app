@@ -19,6 +19,11 @@ export type InsightMeta = {
   // 사이트맵 lastmod·dateModified 로 나가서, 검색엔진이 보강한 글을 다시 읽게 한다.
   updated: string;
   keywords: string[];
+  // 글 머리 "핵심 정리" 3~4줄. AI 답변엔진·검색이 글 전체를 읽지 않고도 답을 집어 가게 하려는 것.
+  // 본문에 이미 있는 사실만 줄여 적는다. 없으면 상자를 그리지 않는다.
+  summary: string[];
+  // 글 끝 "자주 묻는 질문". 화면에 그대로 보이고 FAQPage 구조화 데이터로도 나간다.
+  faq: { q: string; a: string }[];
 };
 
 export type Insight = InsightMeta & { content: string };
@@ -60,6 +65,12 @@ export function getInsight(slug: string): Insight | null {
     // 발행일보다 이른 수정일은 잘못 적은 값이라 무시한다.
     updated: updated > date ? updated : date,
     keywords: Array.isArray(data.keywords) ? data.keywords.map(String) : [],
+    summary: Array.isArray(data.summary) ? data.summary.map(String) : [],
+    faq: Array.isArray(data.faq)
+      ? data.faq
+          .filter((f) => f && typeof f === "object" && f.q && f.a)
+          .map((f) => ({ q: String(f.q), a: String(f.a) }))
+      : [],
     content,
   };
 }
