@@ -226,7 +226,7 @@
       키워드 "배달 창업/배달창업", faq 1개 추가(총 5), updated 10/23. 제목은 16.9위 "배달전문점창업" 때문에 유지.
 - [x] 4편 검사 통과(타입체크·린트·빌드 56페이지), 390px 가로 넘침 없음, JSON-LD dateModified·FAQPage 확인 → push(10/23) 배포.
       운영 4편 dateModified 10/23 확인, IndexNow 4개 URL(+사이트맵) api.indexnow.org·네이버·빙 셋 다 200.
-      서치콘솔 "색인 생성 요청"은 Chrome 구글 로그인이 필요해 안 함 — 다음 주간 점검이나 Aside 몫.
+      서치콘솔 "색인 생성 요청"은 구글 로그인이 필요해 Aside 지시서 5(`docs/aside-2026-10-23.md`, iCloud `Aside-작업지시서-5.md`)로 넘김.
 - [ ] 1~2주 뒤 서치콘솔: 4개 검색어 순위(12.5·10.1·18.8·16.2 → ?), store-interior-guide 색인 여부.
 
 ## 주간 점검
