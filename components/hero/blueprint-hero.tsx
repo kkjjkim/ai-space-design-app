@@ -9,7 +9,9 @@ import { cn } from "@/lib/utils";
 // 첫 화면 — "도면이 가게가 된다" (대표 효과 1, docs/redesign-2026-10.md).
 // 같은 구도의 사진 3장(펜 도면 → 조명 꺼진 낮 → 불 켜진 저녁)을 셰이더로 잇는다.
 // 1차(10/9)는 코드로 쌓은 상자 모형이었는데 "장난감 같다"는 대표 피드백으로 실사 사진 방식으로 교체.
-// 글(h1·버튼)은 서버에서 바로 그려지고, three.js 는 그 뒤에 동적으로 불러온다.
+// 글(h1·버튼)과 도면 사진은 서버에서 바로 그려지고, three.js 는 그 뒤에 동적으로 불러와 사진 위에 겹친다.
+// 10/23 이전엔 빈 종이에서 도면을 그리며 시작했는데, 휴대폰은 3D 준비(대기·코드·사진 3장)까지 몇 초간
+// 글만 보여 "배경이 늦게 뜬다"는 대표 피드백 → 도면이 다 그려진 장면(0.30)을 사진으로 먼저 보여 준다.
 // 3D를 못 돌리는 기기(움직임 줄이기·저사양·WebGL 없음)는 고정 없이 저녁 사진 한 장으로 대체.
 
 const IMG = {
@@ -20,6 +22,10 @@ const IMG = {
 // 사진 속 주인공(카운터·조명)이 오른쪽에 있다 → 세로 화면에서 잘라낼 때 그쪽을 남긴다.
 const FOCUS_X = 0.56;
 const PAPER = "#f3eee6";
+// 도면이 다 그려진 진행도. 첫 화면 사진과 3D 첫 프레임이 이 장면이다.
+const SKETCH_DONE = 0.3;
+// 셰이더가 이 진행도에서 사진을 확대하는 비율(hero-shader-scene.ts 의 zoom = 1.06 - p * 0.05)과 맞춘다.
+const SKETCH_ZOOM = 1.06 - SKETCH_DONE * 0.05;
 
 const PHASES = [
   { n: "01", t: "선", d: "경영지도사의 사업 계획" },
@@ -30,6 +36,7 @@ const PHASES = [
 export function BlueprintHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sketchImgRef = useRef<HTMLImageElement>(null);
   // null = 아직 판단 전(서버 렌더와 같게), true/false = 판단 후
   const [use3D, setUse3D] = useState<boolean | null>(null);
   const [phase, setPhase] = useState(0);
@@ -70,14 +77,16 @@ export function BlueprintHero() {
       // 화면 폭에 맞는 크기의 사진을 쓴다(휴대폰에 2560px 를 보내지 않게).
       const width = window.innerWidth * Math.min(window.devicePixelRatio || 1, 1.5);
       const size = width > 1700 ? 2560 : width > 1100 ? 1920 : 1280;
+      // 도면은 화면에 이미 받아 둔 사진 주소를 그대로 써서 다시 받지 않는다(브라우저 캐시).
+      const sketchSrc = sketchImgRef.current?.currentSrc || `${IMG.sketch}-${size}.webp`;
       const scene = await createHeroShaderScene(
         canvas,
         {
-          sketch: `${IMG.sketch}-${size}.webp`,
+          sketch: sketchSrc,
           day: `${IMG.day}-${size}.webp`,
           night: `${IMG.night}-${size}.webp`,
         },
-        { focusX: FOCUS_X, paper: PAPER }
+        { focusX: FOCUS_X, paper: PAPER, initialProgress: SKETCH_DONE }
       ).catch(() => null);
       if (disposed) {
         scene?.dispose();
@@ -88,12 +97,11 @@ export function BlueprintHero() {
         return;
       }
 
-      const intro = { p: 0 };
       let scrollP = 0;
       let lastNight = "";
       const update = () => {
-        // 처음엔 스크롤 없이도 도면이 그려지고(0→0.3), 스크롤이 그다음을 이어간다.
-        const p = scrollP > 0 ? Math.max(intro.p, 0.3 + scrollP * 0.7) : intro.p;
+        // 도면 완성(0.3)에서 시작해 스크롤이 공간 → 불 켜기를 이어간다.
+        const p = SKETCH_DONE + scrollP * (1 - SKETCH_DONE);
         scene.setProgress(p);
         // 불이 켜지면 종이색 → 어둠, 차콜 글자 → 밝은 글자로 함께 바뀐다.
         // CSS 변수는 값이 바뀔 때만 쓴다 — 매 프레임 쓰면 글자 전체 스타일 재계산이 도면 그리는 2.6초 내내 돈다(휴대폰 CPU).
@@ -104,8 +112,6 @@ export function BlueprintHero() {
         }
         setPhase(p < 0.33 ? 0 : p < 0.7 ? 1 : 2);
       };
-      const introTween = gsap.to(intro, { p: 0.3, duration: 2.6, ease: "power2.inOut", delay: 0.1, onUpdate: update });
-
       const st = ScrollTrigger.create({
         trigger: section,
         start: "top top",
@@ -131,9 +137,11 @@ export function BlueprintHero() {
       const onResize = () => scene.resize();
       window.addEventListener("resize", onResize);
 
+      // 새로고침으로 중간부터 열린 경우도 지금 스크롤 위치의 장면으로 맞춘다.
+      scrollP = st.progress;
+      update();
       setReady(true);
       cleanup = () => {
-        introTween.kill();
         st.kill();
         io.disconnect();
         section.removeEventListener("pointermove", onPointer);
@@ -160,9 +168,22 @@ export function BlueprintHero() {
     >
       {/* 서버 렌더·정지 화면도 100svh — 3D가 켜지며 섹션이 280vh로 늘 때 보이는 요소가 밀리지 않게(92svh였을 땐 CLS 0.08) */}
       <div className={cn("overflow-hidden", pinned ? "sticky top-0 h-[100svh]" : "relative min-h-[100svh]")}>
-        {/* 3D 기기는 빈 종이에서 시작, 정지 기기(그리고 판단 전 서버 렌더)는 완성된 저녁 사진 */}
+        {/* 3D 기기와 판단 전 서버 렌더는 도면 사진(3D 첫 프레임과 같은 장면), 정지 기기는 완성된 저녁 사진.
+            도면 사진 주소 크기는 셰이더가 고르는 크기(1280/1920/2560)와 같아서 3D가 그대로 재사용한다. */}
         {!isStatic ? (
-          <div aria-hidden className="absolute inset-0" style={{ background: PAPER }} />
+          <div aria-hidden className="absolute inset-0 overflow-hidden" style={{ background: PAPER }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              ref={sketchImgRef}
+              src={`${IMG.sketch}-1280.webp`}
+              srcSet={`${IMG.sketch}-1280.webp 1280w, ${IMG.sketch}-1920.webp 1920w, ${IMG.sketch}-2560.webp 2560w`}
+              sizes="100vw"
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: `${FOCUS_X * 100}% 50%`, transform: `scale(${SKETCH_ZOOM})` }}
+              fetchPriority="high"
+            />
+          </div>
         ) : (
           <picture>
             <source media="(max-width: 767px)" srcSet={`${IMG.night}-1280.webp`} />

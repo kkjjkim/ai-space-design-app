@@ -3,6 +3,7 @@
 //   0.30~0.66  먹이 번지듯 도면이 실제 공간이 된다 (공간 설계 = 면)
 //   0.70~1.00  밝은 조명부터 불이 켜진다 (오픈 후 = 빛)
 // three.js 는 이 파일에서만 쓰고, hero 컴포넌트가 동적 import 한다(첫 화면 글·사진이 먼저 뜨게).
+// 첫 화면은 0.30(도면 완성) 상태의 사진을 서버에서 바로 보여 주고, 이 장면은 그 위에서 이어받는다.
 import * as THREE from "three";
 
 const vertex = /* glsl */ `
@@ -101,7 +102,7 @@ export type HeroShaderScene = {
 export async function createHeroShaderScene(
   canvas: HTMLCanvasElement,
   srcs: { sketch: string; day: string; night: string },
-  opts: { focusX: number; paper: string }
+  opts: { focusX: number; paper: string; initialProgress?: number }
 ): Promise<HeroShaderScene> {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
@@ -124,7 +125,8 @@ export async function createHeroShaderScene(
     uRes: { value: new THREE.Vector2(1, 1) },
     uImg: { value: new THREE.Vector2(image.width, image.height) },
     uFocusX: { value: opts.focusX },
-    uProgress: { value: 0 },
+    // 첫 프레임부터 이 진행도로 그린다 — 밑에 깔린 도면 사진과 같은 장면이라 캔버스가 겹쳐져도 튀지 않는다.
+    uProgress: { value: opts.initialProgress ?? 0 },
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0, 0) },
     uPaper: { value: new THREE.Color(opts.paper) },
@@ -136,7 +138,7 @@ export async function createHeroShaderScene(
   scene.add(mesh);
   const camera = new THREE.Camera();
 
-  let target = 0;
+  let target = opts.initialProgress ?? 0;
   const mouseTarget = new THREE.Vector2(0, 0);
   let raf = 0;
   let running = false;
