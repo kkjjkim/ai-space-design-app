@@ -181,7 +181,8 @@ export function BlueprintHero() {
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
               style={{ objectPosition: `${FOCUS_X * 100}% 50%`, transform: `scale(${SKETCH_ZOOM})` }}
-              fetchPriority="high"
+              // fetchPriority high 로 두면 제목 글꼴보다 먼저 받아 LCP(제목)가 늦어진다 → 기본 순서.
+              decoding="async"
             />
           </div>
         ) : (
